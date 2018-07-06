@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>DeleteItem - Documentation</title>
+    <title>PutItem - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">DeleteItem</h1>
+    <h1 class="page-title">PutItem</h1>
     
 
     
@@ -49,9 +49,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Deletes a single item in a table by primary key.
-You can perform a conditional delete operation that deletes the item if it exists,
-or if it has an expected attribute value.</p></div>
+            <div class="description"><p>Create new items, or replace old items with new ones.</p></div>
         
 
         
@@ -65,7 +63,7 @@ or if it has an expected attribute value.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line2">line 2</a>
+        <a href="insert.js.html">insert.js</a>, <a href="insert.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -99,7 +97,7 @@ or if it has an expected attribute value.</p></div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html</a></li>
         </ul>
     </dd>
     
@@ -159,7 +157,7 @@ or if it has an expected attribute value.</p></div>
 
     
 
-    <h4 class="name" id="~remove"><span class="type-signature">(inner) </span>remove<span class="signature">(key, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~insert"><span class="type-signature">(inner) </span>insert<span class="signature">(item, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -171,7 +169,7 @@ or if it has an expected attribute value.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line76">line 76</a>
+        <a href="insert.js.html">insert.js</a>, <a href="insert.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -205,7 +203,7 @@ or if it has an expected attribute value.</p></div>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -218,9 +216,9 @@ or if it has an expected attribute value.</p></div>
 
 
 <div class="description">
-    <p>Deletes a single item in a table by primary key. Returns the <code>Attributes</code> present in the
-DynamoDB response, which, by default, will contain the attributes returned by setting <code>ReturnValues</code> to <code>ALL_OLD</code>.
-This function uses <code>DeleteItem</code> operation internally.</p>
+    <p>Creates a new item, or replaces an old item with a new item.
+If an item that has the same primary key as the new item already exists in the specified table,
+the new item completely replaces the existing item. This function uses <code>PutItem</code> internally.</p>
 </div>
 
 
@@ -233,8 +231,8 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>// Deletes an item of primary key `{id: 2}` in `SomeTable`
- await remove(42, { TableName: 'SomeTable' });</code></pre>
+    <pre class="prettyprint"><code>await insert({ id: 42, foo: 'bar' }, { TableName: 'SomeTable' });
+ // Upserts item of primary key `{id: 42}` of `SomTable`</code></pre>
 
 
 
@@ -264,13 +262,13 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
         <tr>
             
-                <td class="name"><code>key</code></td>
+                <td class="name"><code>item</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -280,7 +278,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
             
 
-            <td class="description last"><p>The primary key value of the item to delete.</p></td>
+            <td class="description last"><p>The item to insert. Will be converted into a map of DynamoDB attributes.</p></td>
         </tr>
 
     
@@ -303,7 +301,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>DeleteItem</code> operation. Must include, at least, a <code>TableName</code> attribute.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>PutItem</code> operation. Must contain, at least, <code>TableName</code> attribute.</p></td>
         </tr>
 
     
@@ -327,8 +325,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
         
 <div class="param-desc">
-    <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response. Unless, <code>ReturnValues</code> has
- been explicitly set, this will match all attributes of the recently deleted element.</p>
+    <p>Resolves to the response from DynamoDB client.</p>
 </div>
 
 
@@ -353,7 +350,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
     
 
-    <h4 class="name" id="~removeFor"><span class="type-signature">(inner) </span>removeFor<span class="signature">(tableName, key, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~insertFor"><span class="type-signature">(inner) </span>insertFor<span class="signature">(tableName, item, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -365,7 +362,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line103">line 103</a>
+        <a href="insert.js.html">insert.js</a>, <a href="insert.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -399,7 +396,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -412,9 +409,12 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
 
 <div class="description">
-    <p>Returns a function that deletes a single item in a table by primary key. Returns the <code>Attributes</code> present in the
-DynamoDB response, which, by default, will contain the attributes returned by setting <code>ReturnValues</code> to <code>ALL_OLD</code>.
-This function uses <code>DeleteItem</code> operation internally. You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
+    <p>Returns a function Creates a new item, or replaces an old item with a new item.
+If an item that has the same primary key as the new item already exists in the specified table,
+the new item completely replaces the existing item. This function uses <code>PutItem</code> internally.
+The last <code>request</code> argument is optional and is only required if any non mandatory attribute
+needs to be included in the request.
+You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
 </div>
 
 
@@ -427,12 +427,18 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 
     <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>// Deletes an item of primary key `{id: 2}` in `SomeTable`
- await removeFor('SomeTable')(42, { TableName: 'SomeTable' });</code></pre>
+    <pre class="prettyprint"><code>// Upserts item of primary key `{id: 42}` of `SomeTable`
+ await insertFor('SomeTable')({ id: 42, foo: 'bar' });</code></pre>
 
-    <pre class="prettyprint"><code>// Exported from `forTable`
- const { remove } = forTable('SomeTable');
- await remove(42);</code></pre>
+    <pre class="prettyprint"><code>// Upserts item of primaty key `{id: 42}` as long as `name` is not 'Alice'
+ await insertFor('SomeTable')(
+   { id: 42, name: 'Bob' },
+   { ConditionExpression: 'name &lt;> :f', ExpressionAttributeValues: { ':f': { 'S': 'Alice' } } }
+ );</code></pre>
+
+    <pre class="prettyprint"><code>// Upserts item of primary key `{id: 42}` of `SomeTable`
+ const { insert } = forTable('SomeTable');
+ await insert({ id: 42, name: 'Bob' });</code></pre>
 
 
 
@@ -470,7 +476,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
             
@@ -488,20 +494,20 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 
             
 
-            <td class="description last"><p>The name of the table to perform the operation on</p></td>
+            <td class="description last"><p>The name of the DynamoDB table to run the query on</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>key</code></td>
+                <td class="name"><code>item</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">Object</span>
 
 
             
@@ -519,7 +525,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 
             
 
-            <td class="description last"><p>The primary key value of the item to delete.</p></td>
+            <td class="description last"><p>The item to insert. Will be converted into a map of DynamoDB attributes.</p></td>
         </tr>
 
     
@@ -552,8 +558,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>DeleteItem</code> operation (optional).
- Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>PutItem</code> operation. Must contain, at least, <code>TableName</code> attribute.</p></td>
         </tr>
 
     
@@ -577,8 +582,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 
         
 <div class="param-desc">
-    <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response. Unless, <code>ReturnValues</code> has
- been explicitly set, this will match all attributes of the recently deleted element.</p>
+    <p>Resolves to the response from DynamoDB client.</p>
 </div>
 
 
@@ -616,7 +620,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

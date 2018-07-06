@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>get-all.js - Documentation</title>
+    <title>query.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">get-all.js</h1>
+    <h1 class="page-title">query.js</h1>
     
 
     
@@ -39,71 +39,101 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 /**
- * The `Scan` operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a FilterExpression operation.
- * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
- * @module Scan
+ * The `Query` operation finds items based on primary key values.
+ * You can query any table or secondary index that has a composite primary key (a partition key and a sort key).
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
+ * @module Query
  */
-const { curry, bind, pipeP, compose } = require('ramda');
+const { bind, pipeP, curry, compose } = require('ramda');
 const { unwrapAll } = require('./wrapper');
 const addTableName = require('./table-name');
 
 /**
  * @private
  */
-const createGetAll = scan =>
+const createQuery = query =>
   pipeP(
-    scan,
+    query,
     unwrapAll('Items')
   );
 
 /**
  * @private
  */
-const createGetAllFor = curry((scan, table) =>
+const createQueryFor = curry((query, table) =>
   compose(
-    createGetAll(scan),
+    createQuery(query),
     addTableName(table)
   )
 );
 
-function createAllGetter(dynamoWrapper) {
-  const scan = bind(dynamoWrapper.scan, dynamoWrapper);
+function createQuerier(dynamoWrapper) {
+  const query = bind(dynamoWrapper.query, dynamoWrapper);
   return {
     /**
-     * Returns all items in a table or a secondary index. This uses `Scan` internally.
+     * Finds items based on primary key values.
      *
      * @function
      * @example
      *
-     *  await getAll({ TableName: 'SomeTable' });
-     *  // Will return all items in `SomeTable`
+     *  // Returns all items in `SomeTable` of `id` `42` and `birthDate` between 1985 and 2019
+     *  await query({
+     *    TableName: 'SomeTable',
+     *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
+     *    ExpressionAttributeValues: {
+     *      identifier: { N: 42 },
+     *      d1: { S: '1985-01-01' },
+     *      d2: { S: '2019-01-01' }
+     *    }
+     *  });
      *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax
-     * @param {Object} request Parameters as expected by DynamoDB `Scan` operation.
-     * @returns {Promise} A promise that resolves to an array of `Items` returned by the DynamoDB response
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
+     * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
+     * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
-    getAll: createGetAll(scan),
+    query: createQuery(query),
+
     /**
-     * Returns a function that returns all items in a table or a secondary index. This uses `Scan` internally.
+     * Creates a function that finds items based on primary key values.
      * You would typically use this function through {@link forTable}.
      *
      * @function
      * @example
      *
-     *  await getAllFor('SomeTable')({ Limit: 10 });
-     * // Will return first 10 items in `SomeTable`
+     *  // Returns all items in `SomeTable` of `id` `42` and `birthDate` between 1985 and 2019
+     *  await queryFor('SomeTable')({
+     *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
+     *    ExpressionAttributeValues: {
+     *      identifier: { N: 42 },
+     *      d1: { S: '1985-01-01' },
+     *      d2: { S: '2019-01-01' }
+     *    }
+     *  });
      *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax
-     * @param tableName The name of the table to perform the operation on. This will override any `TableName`
-     *  attribute set on `request`.
-     * @param {Object=} request Parameters as expected by DynamoDB `Scan` operation.
-     * @returns {Promise} A promise that resolves to an array of `Items` returned by the DynamoDB response
+     * @example
+     *
+     *  // Exported from `forTable`
+     *  const { query } = forTable('SomeTable');
+     *  await query({
+     *    KeyConditionExpression: "id = :identifier AND postedBy BETWEEN :p1 AND :p2",
+     *    ExpressionAttributeValues: {
+     *      identifier: { N: 42 },
+     *      p1: { S: 'Alice' },
+     *      p2: { S: 'Dave' }
+     *    }
+     *  });
+     *
+     *
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
+     * @param {String} tableName The name of the table to perform the operation on
+     * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
+     * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
-    getAllFor: createGetAllFor(scan)
+    queryFor: createQueryFor(query)
   };
 }
 
-module.exports = createAllGetter;
+module.exports = createQuerier;
 </code></pre>
         </article>
     </section>
@@ -116,7 +146,7 @@ module.exports = createAllGetter;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

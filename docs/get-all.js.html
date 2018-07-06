@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>insert.js - Documentation</title>
+    <title>get-all.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">insert.js</h1>
+    <h1 class="page-title">get-all.js</h1>
     
 
     
@@ -39,99 +39,71 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 /**
- * Create new items, or replace old items with new ones.
- * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html
- * @module PutItem
+ * The `Scan` operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a FilterExpression operation.
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
+ * @module Scan
  */
-const { curry, bind, compose, apply } = require('ramda');
-const generateItem = require('./generate-item');
+const { curry, bind, pipeP, compose } = require('ramda');
+const { unwrapAll } = require('./wrapper');
 const addTableName = require('./table-name');
-const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 
 /**
  * @private
  */
-const createInsert = putItem =>
-  compose(
-    apply(putItem),
-    mapMergeFirstPairOfArgs(generateItem)
+const createGetAll = scan =>
+  pipeP(
+    scan,
+    unwrapAll('Items')
   );
 
 /**
  * @private
  */
-const createInsertFor = curry((putItem, table) =>
+const createGetAllFor = curry((scan, table) =>
   compose(
-    apply(putItem),
-    mapMergeFirstPairOfArgs(
-      compose(
-        addTableName(table),
-        generateItem
-      )
-    )
+    createGetAll(scan),
+    addTableName(table)
   )
 );
 
-function createInserter(dynamoWrapper) {
-  const putItem = bind(dynamoWrapper.putItem, dynamoWrapper);
+function createAllGetter(dynamoWrapper) {
+  const scan = bind(dynamoWrapper.scan, dynamoWrapper);
   return {
     /**
-     * Creates a new item, or replaces an old item with a new item.
-     * If an item that has the same primary key as the new item already exists in the specified table,
-     * the new item completely replaces the existing item. This function uses `PutItem` internally.
+     * Returns all items in a table or a secondary index. This uses `Scan` internally.
      *
      * @function
      * @example
      *
-     *  await insert({ id: 42, foo: 'bar' }, { TableName: 'SomeTable' });
-     *  // Upserts item of primary key `{id: 42}` of `SomTable`
+     *  await getAll({ TableName: 'SomeTable' });
+     *  // Will return all items in `SomeTable`
      *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax
-     * @param {Object} item The item to insert. Will be converted into a map of DynamoDB attributes.
-     * @param {Object} request Parameters as expected by DynamoDB `PutItem` operation. Must contain, at least, `TableName` attribute.
-     * @returns {Promise} Resolves to the response from DynamoDB client.
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax
+     * @param {Object} request Parameters as expected by DynamoDB `Scan` operation.
+     * @returns {Promise} A promise that resolves to an array of `Items` returned by the DynamoDB response
      */
-    insert: createInsert(putItem),
-
+    getAll: createGetAll(scan),
     /**
-     * Returns a function Creates a new item, or replaces an old item with a new item.
-     * If an item that has the same primary key as the new item already exists in the specified table,
-     * the new item completely replaces the existing item. This function uses `PutItem` internally.
-     * The last `request` argument is optional and is only required if any non mandatory attribute
-     * needs to be included in the request.
+     * Returns a function that returns all items in a table or a secondary index. This uses `Scan` internally.
      * You would typically use this function through {@link forTable}.
      *
      * @function
      * @example
      *
-     *  // Upserts item of primary key `{id: 42}` of `SomeTable`
-     *  await insertFor('SomeTable')({ id: 42, foo: 'bar' });
+     *  await getAllFor('SomeTable')({ Limit: 10 });
+     * // Will return first 10 items in `SomeTable`
      *
-     * @example
-     *
-     *  // Upserts item of primaty key `{id: 42}` as long as `name` is not 'Alice'
-     *  await insertFor('SomeTable')(
-     *    { id: 42, name: 'Bob' },
-     *    { ConditionExpression: 'name &lt;> :f', ExpressionAttributeValues: { ':f': { 'S': 'Alice' } } }
-     *  );
-     *
-     * @example
-     *
-     *  // Upserts item of primary key `{id: 42}` of `SomeTable`
-     *  const { insert } = forTable('SomeTable');
-     *  await insert({ id: 42, name: 'Bob' });
-     *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax
-     * @param {string} tableName The name of the DynamoDB table to run the query on
-     * @param {Object} item The item to insert. Will be converted into a map of DynamoDB attributes.
-     * @param {Object=} request Parameters as expected by DynamoDB `PutItem` operation. Must contain, at least, `TableName` attribute.
-     * @returns {Promise} Resolves to the response from DynamoDB client.
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax
+     * @param tableName The name of the table to perform the operation on. This will override any `TableName`
+     *  attribute set on `request`.
+     * @param {Object=} request Parameters as expected by DynamoDB `Scan` operation.
+     * @returns {Promise} A promise that resolves to an array of `Items` returned by the DynamoDB response
      */
-    insertFor: createInsertFor(putItem)
+    getAllFor: createGetAllFor(scan)
   };
 }
 
-module.exports = createInserter;
+module.exports = createAllGetter;
 </code></pre>
         </article>
     </section>
@@ -144,7 +116,7 @@ module.exports = createInserter;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

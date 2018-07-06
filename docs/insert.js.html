@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>query.js - Documentation</title>
+    <title>insert.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">query.js</h1>
+    <h1 class="page-title">insert.js</h1>
     
 
     
@@ -39,101 +39,99 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 /**
- * The `Query` operation finds items based on primary key values.
- * You can query any table or secondary index that has a composite primary key (a partition key and a sort key).
- * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
- * @module Query
+ * Create new items, or replace old items with new ones.
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html
+ * @module PutItem
  */
-const { bind, pipeP, curry, compose } = require('ramda');
-const { unwrapAll } = require('./wrapper');
+const { curry, bind, compose, apply } = require('ramda');
+const generateItem = require('./generate-item');
 const addTableName = require('./table-name');
+const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 
 /**
  * @private
  */
-const createQuery = query =>
-  pipeP(
-    query,
-    unwrapAll('Items')
+const createInsert = putItem =>
+  compose(
+    apply(putItem),
+    mapMergeFirstPairOfArgs(generateItem)
   );
 
 /**
  * @private
  */
-const createQueryFor = curry((query, table) =>
+const createInsertFor = curry((putItem, table) =>
   compose(
-    createQuery(query),
-    addTableName(table)
+    apply(putItem),
+    mapMergeFirstPairOfArgs(
+      compose(
+        addTableName(table),
+        generateItem
+      )
+    )
   )
 );
 
-function createQuerier(dynamoWrapper) {
-  const query = bind(dynamoWrapper.query, dynamoWrapper);
+function createInserter(dynamoWrapper) {
+  const putItem = bind(dynamoWrapper.putItem, dynamoWrapper);
   return {
     /**
-     * Finds items based on primary key values.
+     * Creates a new item, or replaces an old item with a new item.
+     * If an item that has the same primary key as the new item already exists in the specified table,
+     * the new item completely replaces the existing item. This function uses `PutItem` internally.
      *
      * @function
      * @example
      *
-     *  // Returns all items in `SomeTable` of `id` `42` and `birthDate` between 1985 and 2019
-     *  await query({
-     *    TableName: 'SomeTable',
-     *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
-     *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      d1: { S: '1985-01-01' },
-     *      d2: { S: '2019-01-01' }
-     *    }
-     *  });
+     *  await insert({ id: 42, foo: 'bar' }, { TableName: 'SomeTable' });
+     *  // Upserts item of primary key `{id: 42}` of `SomTable`
      *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
-     * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
-     * @returns {Promise} A promise that resolves to the response from DynamoDB.
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax
+     * @param {Object} item The item to insert. Will be converted into a map of DynamoDB attributes.
+     * @param {Object} request Parameters as expected by DynamoDB `PutItem` operation. Must contain, at least, `TableName` attribute.
+     * @returns {Promise} Resolves to the response from DynamoDB client.
      */
-    query: createQuery(query),
+    insert: createInsert(putItem),
 
     /**
-     * Creates a function that finds items based on primary key values.
+     * Returns a function Creates a new item, or replaces an old item with a new item.
+     * If an item that has the same primary key as the new item already exists in the specified table,
+     * the new item completely replaces the existing item. This function uses `PutItem` internally.
+     * The last `request` argument is optional and is only required if any non mandatory attribute
+     * needs to be included in the request.
      * You would typically use this function through {@link forTable}.
      *
      * @function
      * @example
      *
-     *  // Returns all items in `SomeTable` of `id` `42` and `birthDate` between 1985 and 2019
-     *  await queryFor('SomeTable')({
-     *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
-     *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      d1: { S: '1985-01-01' },
-     *      d2: { S: '2019-01-01' }
-     *    }
-     *  });
+     *  // Upserts item of primary key `{id: 42}` of `SomeTable`
+     *  await insertFor('SomeTable')({ id: 42, foo: 'bar' });
      *
      * @example
      *
-     *  // Exported from `forTable`
-     *  const { query } = forTable('SomeTable');
-     *  await query({
-     *    KeyConditionExpression: "id = :identifier AND postedBy BETWEEN :p1 AND :p2",
-     *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      p1: { S: 'Alice' },
-     *      p2: { S: 'Dave' }
-     *    }
-     *  });
+     *  // Upserts item of primaty key `{id: 42}` as long as `name` is not 'Alice'
+     *  await insertFor('SomeTable')(
+     *    { id: 42, name: 'Bob' },
+     *    { ConditionExpression: 'name &lt;> :f', ExpressionAttributeValues: { ':f': { 'S': 'Alice' } } }
+     *  );
      *
+     * @example
      *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
-     * @param {String} tableName The name of the table to perform the operation on
-     * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
-     * @returns {Promise} A promise that resolves to the response from DynamoDB.
+     *  // Upserts item of primary key `{id: 42}` of `SomeTable`
+     *  const { insert } = forTable('SomeTable');
+     *  await insert({ id: 42, name: 'Bob' });
+     *
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax
+     * @param {string} tableName The name of the DynamoDB table to run the query on
+     * @param {Object} item The item to insert. Will be converted into a map of DynamoDB attributes.
+     * @param {Object=} request Parameters as expected by DynamoDB `PutItem` operation. Must contain, at least, `TableName` attribute.
+     * @returns {Promise} Resolves to the response from DynamoDB client.
      */
-    queryFor: createQueryFor(query)
+    insertFor: createInsertFor(putItem)
   };
 }
 
-module.exports = createQuerier;
+module.exports = createInserter;
 </code></pre>
         </article>
     </section>
@@ -146,7 +144,7 @@ module.exports = createQuerier;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
