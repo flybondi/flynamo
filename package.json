@@ -138,8 +138,12 @@
       "preset": "angular"
     },
     "publish": [
-      { "path": "@semantic-release/npm" },
-      { "path": "@semantic-release/github" }
+      {
+        "path": "@semantic-release/npm"
+      },
+      {
+        "path": "@semantic-release/github"
+      }
     ]
   }
 }
