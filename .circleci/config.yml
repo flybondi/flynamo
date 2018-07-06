@@ -63,7 +63,7 @@ jobs:
           command: yarn install --pure-lockfile
       - deploy:
           name: Semantic release
-          command: npx -p semantic-release@next semantic-release
+          command: npx -p @semantic-release/git -p semantic-release@next semantic-release
 
 workflows:
   version: 2
