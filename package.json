@@ -113,7 +113,7 @@
     "printWidth": 100
   },
   "release": {
-    "branch": "develop",
+    "branch": "master",
     "prepare": [
       "@semantic-release/npm",
       {
