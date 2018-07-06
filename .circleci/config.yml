@@ -1,0 +1,91 @@
+# Configuration file
+
+# Note: YAML anchors allow an object to be re-used, reducing duplication.
+# The ampersand declares an alias for an object, then later the `<<: *name`
+# syntax dereferences it.
+# See http://blog.daemonl.com/2016/02/yaml.html
+# To validate changes, use an online parser, eg.
+# http://yaml-online-parser.appspot.com/
+
+job_defaults: &job_defaults
+  docker:
+    - image: flybondi/docker-nodejs-awscli:8.10
+
+npm_config: &npm_config
+  name: Configure NPM user
+  command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+
+version: 2
+jobs:
+  health-check:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-cache-{{ .Branch }}-{{ checksum "package.json" }}
+      - run: *npm_config
+      - run:
+          name: Install deps
+          command: yarn install
+      - save_cache:
+          key: yarn-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Running tests
+          command: yarn test
+
+  release-creation:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - run:
+          name: Merge to master
+          command: |
+            git config --global user.email $GIT_EMAIL
+            git config --global user.name $GIT_USERNAME
+            git checkout master
+            git merge develop -m "chore(release): cut new release" --no-ff
+            git push origin master
+
+  release:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - run:
+          # NOTE: this is a workaround for a weird bug in circleci (with the checkout) or semantic (checking upstream)
+          # sometimes it works fine, sometimes it doesn't
+          name: Set git upstream
+          command: git branch --set-upstream-to=origin/$CIRCLE_BRANCH
+      - run: *npm_config
+      - run:
+          name: Install deps
+          command: yarn install --pure-lockfile
+      - deploy:
+          name: Semantic release
+          command: npx -p semantic-release@next semantic-release
+
+workflows:
+  version: 2
+  packages-flow:
+    jobs:
+      - health-check:
+          filters:
+            branches:
+              ignore:
+                - master
+          context: flybondi-ci
+      - release-approval:
+          type: approval
+          filters:
+            branches:
+              only: develop
+      - release-creation:
+          requires:
+            - release-approval
+          context: flybondi-ci
+      - release:
+          filters:
+            branches:
+              only: master
+          context: flybondi-ci

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>PutItem - Documentation</title>
+    <title>UpdateItem - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">PutItem</h1>
+    <h1 class="page-title">UpdateItem</h1>
     
 
     
@@ -49,7 +49,8 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Create new items, or replace old items with new ones.</p></div>
+            <div class="description"><p>Edit an existing item's attributes, or add a new item to a table if it does not already exist.
+You can put or add attribute values.</p></div>
         
 
         
@@ -63,7 +64,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="insert.js.html">insert.js</a>, <a href="insert.js.html#line2">line 2</a>
+        <a href="update.js.html">update.js</a>, <a href="update.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -97,7 +98,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html</a></li>
         </ul>
     </dd>
     
@@ -157,7 +158,7 @@
 
     
 
-    <h4 class="name" id="~insert"><span class="type-signature">(inner) </span>insert<span class="signature">(item, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~update"><span class="type-signature">(inner) </span>update<span class="signature">(key, payload, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -169,7 +170,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="insert.js.html">insert.js</a>, <a href="insert.js.html#line55">line 55</a>
+        <a href="update.js.html">update.js</a>, <a href="update.js.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -203,7 +204,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html#API_UpdateItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html#API_UpdateItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -216,9 +217,11 @@
 
 
 <div class="description">
-    <p>Creates a new item, or replaces an old item with a new item.
-If an item that has the same primary key as the new item already exists in the specified table,
-the new item completely replaces the existing item. This function uses <code>PutItem</code> internally.</p>
+    <p>Edits an existing item's attributes, or adds a new item to the table if it does not
+already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
+Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
+so it returns all of the attributes of the item, as they appear after the update operation. This function
+uses the <code>UpdateItem</code> operation internally.</p>
 </div>
 
 
@@ -229,10 +232,16 @@ the new item completely replaces the existing item. This function uses <code>Put
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>await insert({ id: 42, foo: 'bar' }, { TableName: 'SomeTable' });
- // Upserts item of primary key `{id: 42}` of `SomTable`</code></pre>
+    <pre class="prettyprint"><code>// Updates item with primary key `{id: 42}` in `SomeTable`.
+ await update(42, { foo: 'bar' }, { TableName: 'SomeTable' });</code></pre>
+
+    <pre class="prettyprint"><code>// Updates item with primary key `{ customId: 42}` in `SomeTable`.
+ await update({ customId: 42 }, { foo: 'bar' }, { TableName: 'SomeTable' });</code></pre>
+
+    <pre class="prettyprint"><code>// Updates item and returns the previous attributes
+ await update(42, { foo: 'bar' }, { TableName: 'SomeTable', ReturnValues: 'ALL_OLD' });</code></pre>
 
 
 
@@ -262,7 +271,30 @@ the new item completely replaces the existing item. This function uses <code>Put
 
         <tr>
             
-                <td class="name"><code>item</code></td>
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The primary key value.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>payload</code></td>
             
 
             <td class="type">
@@ -278,7 +310,9 @@ the new item completely replaces the existing item. This function uses <code>Put
 
             
 
-            <td class="description last"><p>The item to insert. Will be converted into a map of DynamoDB attributes.</p></td>
+            <td class="description last"><p>The update payload that will be merged with the item present in DynamoDB. An appropriate
+ <code>UpdateExpression</code> will be automatically created from this argument. While you can <code>null</code> them or replace them,
+ removing attributes from an item is only supported through manually defining an <code>UpdateExpression</code> on <code>request</code>.</p></td>
         </tr>
 
     
@@ -301,7 +335,7 @@ the new item completely replaces the existing item. This function uses <code>Put
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>PutItem</code> operation. Must contain, at least, <code>TableName</code> attribute.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>UpdateItem</code> operation. Must include, at least, a <code>TableName</code> attribute.</p></td>
         </tr>
 
     
@@ -325,7 +359,7 @@ the new item completely replaces the existing item. This function uses <code>Put
 
         
 <div class="param-desc">
-    <p>Resolves to the response from DynamoDB client.</p>
+    <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response.</p>
 </div>
 
 
@@ -350,7 +384,7 @@ the new item completely replaces the existing item. This function uses <code>Put
 
     
 
-    <h4 class="name" id="~insertFor"><span class="type-signature">(inner) </span>insertFor<span class="signature">(tableName, item, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~updateFor"><span class="type-signature">(inner) </span>updateFor<span class="signature">(key, payload, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -362,7 +396,7 @@ the new item completely replaces the existing item. This function uses <code>Put
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="insert.js.html">insert.js</a>, <a href="insert.js.html#line91">line 91</a>
+        <a href="update.js.html">update.js</a>, <a href="update.js.html#line140">line 140</a>
     </li></ul></dd>
     
 
@@ -396,7 +430,7 @@ the new item completely replaces the existing item. This function uses <code>Put
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html#API_PutItem_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html#API_UpdateItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html#API_UpdateItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -409,11 +443,11 @@ the new item completely replaces the existing item. This function uses <code>Put
 
 
 <div class="description">
-    <p>Returns a function Creates a new item, or replaces an old item with a new item.
-If an item that has the same primary key as the new item already exists in the specified table,
-the new item completely replaces the existing item. This function uses <code>PutItem</code> internally.
-The last <code>request</code> argument is optional and is only required if any non mandatory attribute
-needs to be included in the request.
+    <p>Returns a function that edits an existing item's attributes, or adds a new item to the table if it does not
+already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
+Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
+so it returns all of the attributes of the item, as they appear after the update operation. This function
+uses the <code>UpdateItem</code> operation internally.
 You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
 </div>
 
@@ -427,18 +461,12 @@ You would typically use this function through <a href="global.html#forTable">for
 
     <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>// Upserts item of primary key `{id: 42}` of `SomeTable`
- await insertFor('SomeTable')({ id: 42, foo: 'bar' });</code></pre>
+    <pre class="prettyprint"><code>// Updates item with primary key `{id: 42}` in `SomeTable`.
+ await updateFor('SomeTable')(42, { foo: 'bar' });</code></pre>
 
-    <pre class="prettyprint"><code>// Upserts item of primaty key `{id: 42}` as long as `name` is not 'Alice'
- await insertFor('SomeTable')(
-   { id: 42, name: 'Bob' },
-   { ConditionExpression: 'name &lt;> :f', ExpressionAttributeValues: { ':f': { 'S': 'Alice' } } }
- );</code></pre>
-
-    <pre class="prettyprint"><code>// Upserts item of primary key `{id: 42}` of `SomeTable`
- const { insert } = forTable('SomeTable');
- await insert({ id: 42, name: 'Bob' });</code></pre>
+    <pre class="prettyprint"><code>// Exported from `forTable`
+ const { update } = forTable('SomeTable');
+ await update(42, { foo: 'bar' });</code></pre>
 
 
 
@@ -470,13 +498,13 @@ You would typically use this function through <a href="global.html#forTable">for
 
         <tr>
             
-                <td class="name"><code>tableName</code></td>
+                <td class="name"><code>key</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">*</span>
 
 
             
@@ -494,14 +522,14 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>The name of the DynamoDB table to run the query on</p></td>
+            <td class="description last"><p>The primary key value.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>item</code></td>
+                <td class="name"><code>payload</code></td>
             
 
             <td class="type">
@@ -525,7 +553,9 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>The item to insert. Will be converted into a map of DynamoDB attributes.</p></td>
+            <td class="description last"><p>The update payload that will be merged with the item present in DynamoDB. An appropriate
+ <code>UpdateExpression</code> will be automatically created from this argument. While you can <code>null</code> them or replace them,
+ removing attributes from an item is only supported through manually defining an <code>UpdateExpression</code> on <code>request</code>.</p></td>
         </tr>
 
     
@@ -558,7 +588,7 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>PutItem</code> operation. Must contain, at least, <code>TableName</code> attribute.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>UpdateItem</code> operation.</p></td>
         </tr>
 
     
@@ -582,7 +612,7 @@ You would typically use this function through <a href="global.html#forTable">for
 
         
 <div class="param-desc">
-    <p>Resolves to the response from DynamoDB client.</p>
+    <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response.</p>
 </div>
 
 
@@ -620,7 +650,7 @@ You would typically use this function through <a href="global.html#forTable">for
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

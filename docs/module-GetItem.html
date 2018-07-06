@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Scan - Documentation</title>
+    <title>GetItem - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Scan</h1>
+    <h1 class="page-title">GetItem</h1>
     
 
     
@@ -49,7 +49,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>The <code>Scan</code> operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a FilterExpression operation.</p></div>
+            <div class="description"><p>The <code>GetItem</code> operation returns a set of attributes for the item with the given primary key.</p></div>
         
 
         
@@ -63,7 +63,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-all.js.html">get-all.js</a>, <a href="get-all.js.html#line2">line 2</a>
+        <a href="get.js.html">get.js</a>, <a href="get.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -97,7 +97,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html</a></li>
         </ul>
     </dd>
     
@@ -157,7 +157,7 @@
 
     
 
-    <h4 class="name" id="~getAll"><span class="type-signature">(inner) </span>getAll<span class="signature">(request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~get"><span class="type-signature">(inner) </span>get<span class="signature">(key, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -169,7 +169,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-all.js.html">get-all.js</a>, <a href="get-all.js.html#line46">line 46</a>
+        <a href="get.js.html">get.js</a>, <a href="get.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -203,7 +203,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -216,7 +216,10 @@
 
 
 <div class="description">
-    <p>Returns all items in a table or a secondary index. This uses <code>Scan</code> internally.</p>
+    <p>Returns a set of attributes for the item with the given primary key.
+If there is no matching item, it returns <code>undefined</code>. The name of the <code>key</code> defaults
+to <code>id</code> if it's not specified. The <code>Key</code> attribute (as expected by DynamoDB request)
+can be omitted.</p>
 </div>
 
 
@@ -227,10 +230,16 @@
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>await getAll({ TableName: 'SomeTable' });
- // Will return all items in `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>await get(42, { TableName: 'SomeTable' });
+ // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
+
+    <pre class="prettyprint"><code>await get({ customId: 'foo' }, { TableName: 'SomeTable' });
+ // Will return the item with an primary key of `{customId: 'foo'}` from `SomeTable`</code></pre>
+
+    <pre class="prettyprint"><code>await get({ Key: { id: 42 } }, { TableName: 'SomeTable' });
+ // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
 
 
 
@@ -260,6 +269,29 @@
 
         <tr>
             
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The primary key value.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>request</code></td>
             
 
@@ -276,7 +308,8 @@
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>Scan</code> operation.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>GetItem</code> operation. Any <code>Key</code> attribute
+ specified here will override primary key value in <code>key</code>.</p></td>
         </tr>
 
     
@@ -300,7 +333,8 @@
 
         
 <div class="param-desc">
-    <p>A promise that resolves to an array of <code>Items</code> returned by the DynamoDB response</p>
+    <p>A promise that resolves to the item returned by DynamoDB response or <code>undefined</code> if it
+ does not exist.</p>
 </div>
 
 
@@ -325,7 +359,7 @@
 
     
 
-    <h4 class="name" id="~getAllFor"><span class="type-signature">(inner) </span>getAllFor<span class="signature">(tableName, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~getFor"><span class="type-signature">(inner) </span>getFor<span class="signature">(tableName, key, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -337,7 +371,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-all.js.html">get-all.js</a>, <a href="get-all.js.html#line63">line 63</a>
+        <a href="get.js.html">get.js</a>, <a href="get.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -371,7 +405,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -384,7 +418,11 @@
 
 
 <div class="description">
-    <p>Returns a function that returns all items in a table or a secondary index. This uses <code>Scan</code> internally.
+    <p>Returns a function that returns a set of attributes for the item with the given primary key.
+If there is no matching item, it returns <code>undefined</code>. The name of the <code>key</code> defaults
+to <code>id</code> if it's not specified. The <code>Key</code> attribute (as expected by DynamoDB request)
+can be omitted. The last <code>request</code> argument is optional and is only required if any non
+mandatory attribute needs to be included in the request.
 You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
 </div>
 
@@ -396,10 +434,16 @@ You would typically use this function through <a href="global.html#forTable">for
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>await getAllFor('SomeTable')({ Limit: 10 });
-// Will return first 10 items in `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>await getFor('TableName')(42);
+ // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
+
+    <pre class="prettyprint"><code>await getFor('SomeTable')({ customId: 'foo' });
+ // Will return the item with an primary key of `{customId: 'foo'}` from `SomeTable`</code></pre>
+
+    <pre class="prettyprint"><code>await getFor('SomeTable')({ Key: { id: 42 } });
+ // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
 
 
 
@@ -436,6 +480,11 @@ You would typically use this function through <a href="global.html#forTable">for
 
             <td class="type">
             
+                
+<span class="param-type">String</span>
+
+
+            
             </td>
 
             
@@ -450,8 +499,38 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>The name of the table to perform the operation on. This will override any <code>TableName</code>
- attribute set on <code>request</code>.</p></td>
+            <td class="description last"><p>The name of the table to perform the operation on</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The primary key value.</p></td>
         </tr>
 
     
@@ -484,7 +563,8 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>Scan</code> operation.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>GetItem</code> operation (optional).
+ Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
         </tr>
 
     
@@ -508,7 +588,8 @@ You would typically use this function through <a href="global.html#forTable">for
 
         
 <div class="param-desc">
-    <p>A promise that resolves to an array of <code>Items</code> returned by the DynamoDB response</p>
+    <p>A promise that resolves to the item returned by DynamoDB response or <code>undefined</code> if it
+ does not exist.</p>
 </div>
 
 
@@ -546,7 +627,7 @@ You would typically use this function through <a href="global.html#forTable">for
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
