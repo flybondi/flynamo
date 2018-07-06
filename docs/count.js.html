@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>client.js - Documentation</title>
+    <title>count.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">client.js</h1>
+    <h1 class="page-title">count.js</h1>
     
 
     
@@ -38,94 +38,82 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
-const createGetter = require('./get');
-const createAllGetter = require('./get-all');
-const createInserter = require('./insert');
-const createQuerier = require('./query');
-const createRemover = require('./remove');
-const createUpdater = require('./update');
-const createCounter = require('./count');
-const createBatcher = require('./batch-item');
-const DynamoDBWrapper = require('dynamodb-wrapper');
+/**
+ * Return the number of elements in a table or a secondary index.
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
+ * @module Count
+ */
+const { curry, compose, pipeP, bind, prop } = require('ramda');
+const addTableName = require('./table-name');
 
 /**
- * Wraps an AWS DynamoDB `client` and returns Flynamo's API to access
- * its methods. Optionally, a `config` object for `dynamodb-wrapper` may be provided.
- *
- * @see https://github.com/Shadowblazen/dynamodb-wrapper#setup
- * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
- * @param {Object} client A DynamoDB client
- * @param {Object=} config  `DynamoDBWrapper` configuration (optional).
+ * @private
  */
-function createFlynamo(client, config = {}) {
-  const clientWrapper = new DynamoDBWrapper(client, config);
+const createCount = scan =>
+  pipeP(
+    scan,
+    prop('Count')
+  );
 
-  const { get, getFor } = createGetter(clientWrapper);
-  const { getAll, getAllFor } = createAllGetter(clientWrapper);
-  const { insert, insertFor } = createInserter(clientWrapper);
-  const { query, queryFor } = createQuerier(clientWrapper);
-  const { remove, removeFor } = createRemover(clientWrapper);
-  const { update, updateFor } = createUpdater(clientWrapper);
-  const { count, countFor } = createCounter(clientWrapper);
-  const { batchWriteFor, batchRemoveFor, batchInsertFor } = createBatcher(clientWrapper);
+/**
+ * @private
+ */
+const createCountFor = curry((scan, table) =>
+  compose(
+    createCount(scan),
+    addTableName(table)
+  )
+);
 
-  function forTable(table) {
-    return {
-      get: getFor(table),
-      getAll: getAllFor(table),
-      insert: insertFor(table),
-      query: queryFor(table),
-      remove: removeFor(table),
-      update: updateFor(table),
-      count: countFor(table),
-      batchWrite: batchWriteFor(table),
-      batchInsert: batchInsertFor(table),
-      batchRemove: batchRemoveFor(table)
-    };
-  }
-
+function createCounter(dynamoWrapper) {
+  const scan = bind(dynamoWrapper.scan, dynamoWrapper);
   return {
-    get,
-    getFor,
-    getAll,
-    getAllFor,
-    insert,
-    insertFor,
-    query,
-    queryFor,
-    remove,
-    removeFor,
-    update,
-    updateFor,
-    count,
-    countFor,
-    batchWriteFor,
-    batchRemoveFor,
-    batchInsertFor,
-
     /**
-     * Returns a Flynamo API that automatically adds a `TableName` prop
-     * to all its requests. This serves as a shorthand for manually adding
-     * `TableName` to DynamoDB `request` arguments or using regular `*for` functions in the API
-     * (such as `countFor`, `getFor`, etc.). This is how you would typically use those `*for` functions.
+     * Return the number of elements in a table or a secondary index. This function
+     * uses `Scan` internally and retrieves the returned `Count` attribute from its response.
      *
      * @function
      * @example
      *
-     *  const { get, count } = forTable('SomeTable');
-     *  await get(42); // Fetch item of primary key `{id: 42}` from `SomeTable`
-     *  await count(); // Count total number of elements in `SomeTable`
+     * // Returns the total count of items in `SomeTable`
+     * await count({ TableName: 'SomeTable' });
      *
-     * @param {String} tableName The value of `TableName`
-     * @returns {Object} The entire Flynamo's API scoped to a single table. The exported
-     *  members contain `get`, `getAll`, `insert`, `query`, `update`, `remove`, `count`, `batchWrite`,
-     *  `batchInsert`, `batchRemove`.
+     *
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax
+     * @param {Object} request Parameters as expected by DynamoDB `Scan` operation.
+     * @returns {Promise} A promise that resolves to the total number of elements
      */
-    forTable
+    count: createCount(scan),
+
+    /**
+     * Creates a function that returns the number of elements in a table or a secondary index.
+     * This function uses `Scan` internally and retrieves the returned `Count` attribute from its response.
+     * The last `request` argument is optional and is only required if any non mandatory attribute
+     * needs to be included in the request.
+     * You would typically use this function through {@link forTable}.
+     *
+     * @function
+     * @example
+     *
+     *  // Returns the total count of items in `SomeTable`
+     *  await countFor('SomeTable')();
+     *
+     * @example
+     *
+     *  // Exported from `forTable`
+     *  const { count } = forTable('SomeTable');
+     *  await count();
+     *
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
+     * @param {String} tableName The name of the table to perform the operation on
+     * @param {Object=} request Parameters as expected by DynamoDB `Scan` operation.
+     * @returns {Promise} A promise that resolves to the total number of elements on `tableName`.
+     */
+    countFor: createCountFor(scan)
   };
 }
 
-module.exports = createFlynamo;
+module.exports = createCounter;
 </code></pre>
         </article>
     </section>
@@ -138,7 +126,7 @@ module.exports = createFlynamo;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

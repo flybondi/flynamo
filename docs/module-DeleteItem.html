@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>GetItem - Documentation</title>
+    <title>DeleteItem - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">GetItem</h1>
+    <h1 class="page-title">DeleteItem</h1>
     
 
     
@@ -49,7 +49,9 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>The <code>GetItem</code> operation returns a set of attributes for the item with the given primary key.</p></div>
+            <div class="description"><p>Deletes a single item in a table by primary key.
+You can perform a conditional delete operation that deletes the item if it exists,
+or if it has an expected attribute value.</p></div>
         
 
         
@@ -63,7 +65,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get.js.html">get.js</a>, <a href="get.js.html#line2">line 2</a>
+        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -97,7 +99,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html</a></li>
         </ul>
     </dd>
     
@@ -157,7 +159,7 @@
 
     
 
-    <h4 class="name" id="~get"><span class="type-signature">(inner) </span>get<span class="signature">(key, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~remove"><span class="type-signature">(inner) </span>remove<span class="signature">(key, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -169,7 +171,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get.js.html">get.js</a>, <a href="get.js.html#line78">line 78</a>
+        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -203,7 +205,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -216,10 +218,9 @@
 
 
 <div class="description">
-    <p>Returns a set of attributes for the item with the given primary key.
-If there is no matching item, it returns <code>undefined</code>. The name of the <code>key</code> defaults
-to <code>id</code> if it's not specified. The <code>Key</code> attribute (as expected by DynamoDB request)
-can be omitted.</p>
+    <p>Deletes a single item in a table by primary key. Returns the <code>Attributes</code> present in the
+DynamoDB response, which, by default, will contain the attributes returned by setting <code>ReturnValues</code> to <code>ALL_OLD</code>.
+This function uses <code>DeleteItem</code> operation internally.</p>
 </div>
 
 
@@ -230,16 +231,10 @@ can be omitted.</p>
 
 
 
-    <h5>Examples</h5>
+    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>await get(42, { TableName: 'SomeTable' });
- // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
-
-    <pre class="prettyprint"><code>await get({ customId: 'foo' }, { TableName: 'SomeTable' });
- // Will return the item with an primary key of `{customId: 'foo'}` from `SomeTable`</code></pre>
-
-    <pre class="prettyprint"><code>await get({ Key: { id: 42 } }, { TableName: 'SomeTable' });
- // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>// Deletes an item of primary key `{id: 2}` in `SomeTable`
+ await remove(42, { TableName: 'SomeTable' });</code></pre>
 
 
 
@@ -285,7 +280,7 @@ can be omitted.</p>
 
             
 
-            <td class="description last"><p>The primary key value.</p></td>
+            <td class="description last"><p>The primary key value of the item to delete.</p></td>
         </tr>
 
     
@@ -308,8 +303,7 @@ can be omitted.</p>
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>GetItem</code> operation. Any <code>Key</code> attribute
- specified here will override primary key value in <code>key</code>.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>DeleteItem</code> operation. Must include, at least, a <code>TableName</code> attribute.</p></td>
         </tr>
 
     
@@ -333,8 +327,8 @@ can be omitted.</p>
 
         
 <div class="param-desc">
-    <p>A promise that resolves to the item returned by DynamoDB response or <code>undefined</code> if it
- does not exist.</p>
+    <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response. Unless, <code>ReturnValues</code> has
+ been explicitly set, this will match all attributes of the recently deleted element.</p>
 </div>
 
 
@@ -359,7 +353,7 @@ can be omitted.</p>
 
     
 
-    <h4 class="name" id="~getFor"><span class="type-signature">(inner) </span>getFor<span class="signature">(tableName, key, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~removeFor"><span class="type-signature">(inner) </span>removeFor<span class="signature">(tableName, key, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -371,7 +365,7 @@ can be omitted.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get.js.html">get.js</a>, <a href="get.js.html#line112">line 112</a>
+        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -405,7 +399,7 @@ can be omitted.</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html#API_DeleteItem_RequestSyntax</a></li>
         </ul>
     </dd>
     
@@ -418,12 +412,9 @@ can be omitted.</p>
 
 
 <div class="description">
-    <p>Returns a function that returns a set of attributes for the item with the given primary key.
-If there is no matching item, it returns <code>undefined</code>. The name of the <code>key</code> defaults
-to <code>id</code> if it's not specified. The <code>Key</code> attribute (as expected by DynamoDB request)
-can be omitted. The last <code>request</code> argument is optional and is only required if any non
-mandatory attribute needs to be included in the request.
-You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
+    <p>Returns a function that deletes a single item in a table by primary key. Returns the <code>Attributes</code> present in the
+DynamoDB response, which, by default, will contain the attributes returned by setting <code>ReturnValues</code> to <code>ALL_OLD</code>.
+This function uses <code>DeleteItem</code> operation internally. You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
 </div>
 
 
@@ -436,14 +427,12 @@ You would typically use this function through <a href="global.html#forTable">for
 
     <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>await getFor('TableName')(42);
- // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>// Deletes an item of primary key `{id: 2}` in `SomeTable`
+ await removeFor('SomeTable')(42, { TableName: 'SomeTable' });</code></pre>
 
-    <pre class="prettyprint"><code>await getFor('SomeTable')({ customId: 'foo' });
- // Will return the item with an primary key of `{customId: 'foo'}` from `SomeTable`</code></pre>
-
-    <pre class="prettyprint"><code>await getFor('SomeTable')({ Key: { id: 42 } });
- // Will return the item with an primary key of `{id: 42}` from `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>// Exported from `forTable`
+ const { remove } = forTable('SomeTable');
+ await remove(42);</code></pre>
 
 
 
@@ -530,7 +519,7 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>The primary key value.</p></td>
+            <td class="description last"><p>The primary key value of the item to delete.</p></td>
         </tr>
 
     
@@ -563,7 +552,7 @@ You would typically use this function through <a href="global.html#forTable">for
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>GetItem</code> operation (optional).
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>DeleteItem</code> operation (optional).
  Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
         </tr>
 
@@ -588,8 +577,8 @@ You would typically use this function through <a href="global.html#forTable">for
 
         
 <div class="param-desc">
-    <p>A promise that resolves to the item returned by DynamoDB response or <code>undefined</code> if it
- does not exist.</p>
+    <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response. Unless, <code>ReturnValues</code> has
+ been explicitly set, this will match all attributes of the recently deleted element.</p>
 </div>
 
 
@@ -627,7 +616,7 @@ You would typically use this function through <a href="global.html#forTable">for
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
