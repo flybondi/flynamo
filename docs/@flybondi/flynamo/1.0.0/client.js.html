@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>client.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">client.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+const createGetter = require('./get');
+const createAllGetter = require('./get-all');
+const createInserter = require('./insert');
+const createQuerier = require('./query');
+const createRemover = require('./remove');
+const createUpdater = require('./update');
+const createCounter = require('./count');
+const createBatcher = require('./batch-item');
+const DynamoDBWrapper = require('dynamodb-wrapper');
+
+/**
+ * Wraps an AWS DynamoDB `client` and returns Flynamo's API to access
+ * its methods. Optionally, a `config` object for `dynamodb-wrapper` may be provided.
+ *
+ * @see https://github.com/Shadowblazen/dynamodb-wrapper#setup
+ * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
+ * @param {Object} client A DynamoDB client
+ * @param {Object=} config  `DynamoDBWrapper` configuration (optional).
+ */
+function createFlynamo(client, config = {}) {
+  const clientWrapper = new DynamoDBWrapper(client, config);
+
+  const { get, getFor } = createGetter(clientWrapper);
+  const { getAll, getAllFor } = createAllGetter(clientWrapper);
+  const { insert, insertFor } = createInserter(clientWrapper);
+  const { query, queryFor } = createQuerier(clientWrapper);
+  const { remove, removeFor } = createRemover(clientWrapper);
+  const { update, updateFor } = createUpdater(clientWrapper);
+  const { count, countFor } = createCounter(clientWrapper);
+  const { batchWriteFor, batchRemoveFor, batchInsertFor } = createBatcher(clientWrapper);
+
+  function forTable(table) {
+    return {
+      get: getFor(table),
+      getAll: getAllFor(table),
+      insert: insertFor(table),
+      query: queryFor(table),
+      remove: removeFor(table),
+      update: updateFor(table),
+      count: countFor(table),
+      batchWrite: batchWriteFor(table),
+      batchInsert: batchInsertFor(table),
+      batchRemove: batchRemoveFor(table)
+    };
+  }
+
+  return {
+    get,
+    getFor,
+    getAll,
+    getAllFor,
+    insert,
+    insertFor,
+    query,
+    queryFor,
+    remove,
+    removeFor,
+    update,
+    updateFor,
+    count,
+    countFor,
+    batchWriteFor,
+    batchRemoveFor,
+    batchInsertFor,
+
+    /**
+     * Returns a Flynamo API that automatically adds a `TableName` prop
+     * to all its requests. This serves as a shorthand for manually adding
+     * `TableName` to DynamoDB `request` arguments or using regular `*for` functions in the API
+     * (such as `countFor`, `getFor`, etc.). This is how you would typically use those `*for` functions.
+     *
+     * @function
+     * @example
+     *
+     *  const { get, count } = forTable('SomeTable');
+     *  await get(42); // Fetch item of primary key `{id: 42}` from `SomeTable`
+     *  await count(); // Count total number of elements in `SomeTable`
+     *
+     * @param {String} tableName The value of `TableName`
+     * @returns {Object} The entire Flynamo's API scoped to a single table. The exported
+     *  members contain `get`, `getAll`, `insert`, `query`, `update`, `remove`, `count`, `batchWrite`,
+     *  `batchInsert`, `batchRemove`.
+     */
+    forTable
+  };
+}
+
+module.exports = createFlynamo;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

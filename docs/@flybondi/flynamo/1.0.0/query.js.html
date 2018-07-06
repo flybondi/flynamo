@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>query.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">query.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+/**
+ * The `Query` operation finds items based on primary key values.
+ * You can query any table or secondary index that has a composite primary key (a partition key and a sort key).
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
+ * @module Query
+ */
+const { bind, pipeP, curry, compose } = require('ramda');
+const { unwrapAll } = require('./wrapper');
+const addTableName = require('./table-name');
+
+/**
+ * @private
+ */
+const createQuery = query =>
+  pipeP(
+    query,
+    unwrapAll('Items')
+  );
+
+/**
+ * @private
+ */
+const createQueryFor = curry((query, table) =>
+  compose(
+    createQuery(query),
+    addTableName(table)
+  )
+);
+
+function createQuerier(dynamoWrapper) {
+  const query = bind(dynamoWrapper.query, dynamoWrapper);
+  return {
+    /**
+     * Finds items based on primary key values.
+     *
+     * @function
+     * @example
+     *
+     *  // Returns all items in `SomeTable` of `id` `42` and `birthDate` between 1985 and 2019
+     *  await query({
+     *    TableName: 'SomeTable',
+     *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
+     *    ExpressionAttributeValues: {
+     *      identifier: { N: 42 },
+     *      d1: { S: '1985-01-01' },
+     *      d2: { S: '2019-01-01' }
+     *    }
+     *  });
+     *
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
+     * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
+     * @returns {Promise} A promise that resolves to the response from DynamoDB.
+     */
+    query: createQuery(query),
+
+    /**
+     * Creates a function that finds items based on primary key values.
+     * You would typically use this function through {@link forTable}.
+     *
+     * @function
+     * @example
+     *
+     *  // Returns all items in `SomeTable` of `id` `42` and `birthDate` between 1985 and 2019
+     *  await queryFor('SomeTable')({
+     *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
+     *    ExpressionAttributeValues: {
+     *      identifier: { N: 42 },
+     *      d1: { S: '1985-01-01' },
+     *      d2: { S: '2019-01-01' }
+     *    }
+     *  });
+     *
+     * @example
+     *
+     *  // Exported from `forTable`
+     *  const { query } = forTable('SomeTable');
+     *  await query({
+     *    KeyConditionExpression: "id = :identifier AND postedBy BETWEEN :p1 AND :p2",
+     *    ExpressionAttributeValues: {
+     *      identifier: { N: 42 },
+     *      p1: { S: 'Alice' },
+     *      p2: { S: 'Dave' }
+     *    }
+     *  });
+     *
+     *
+     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
+     * @param {String} tableName The name of the table to perform the operation on
+     * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
+     * @returns {Promise} A promise that resolves to the response from DynamoDB.
+     */
+    queryFor: createQueryFor(query)
+  };
+}
+
+module.exports = createQuerier;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 17:19:31 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
