@@ -1,13 +1,17 @@
 {
   "name": "@flybondi/flynamo",
   "version": "1.0.0",
-  "description": "A DynamoDB client wrapper",
+  "description": "An AWS DynamoDB client wrapper",
   "author": "Flybondi <dev@flybondi.com> (https://www.flybondi.com)",
-  "main": "index.js",
+  "homepage": "https://flybondi.github.io/flynamo",
+  "bugs": {
+    "url": "https://github.com/flybondi/flynamo/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/flybondi/flynamo"
   },
+  "main": "index.js",
   "files": [
     "index.js",
     "src/"
@@ -29,6 +33,7 @@
     "wrapper"
   ],
   "license": "MIT",
+  "engines" : { "node" : ">=7" },
   "dependencies": {
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
