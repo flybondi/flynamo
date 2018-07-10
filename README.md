@@ -51,7 +51,7 @@ Dig into the [documentation][flynamo-jsdoc] to learn about the available functio
 
 ---
 
-Made with ❤️ by [Flybondi][flybondi].
+Made with 💛 by [Flybondi][flybondi].
 
 [aws]: https://aws.amazon.com/
 [dynamodb]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html
