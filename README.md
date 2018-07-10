@@ -52,4 +52,4 @@ Dig into the [documentation][jsdoc] to learn about the available functions.
 [dynamodb]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html
 [ramda]: http://ramdajs.com/
 [lodashfp]: https://github.com/lodash/lodash/wiki/FP-Guide
-[jsdoc]: https://www.google.com
+[jsdoc]: https://flybondi.github.io/flynamo/
