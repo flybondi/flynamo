@@ -126,7 +126,7 @@
       "@semantic-release/npm",
       {
         "path": "@semantic-release/exec",
-        "cmd": "yarn generate-docs"
+        "cmd": "npx run-s generate-docs"
       },
       {
         "path": "@semantic-release/git",
