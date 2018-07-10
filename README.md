@@ -1,5 +1,6 @@
 # @flybondi/flynamo
 
+[![CircleCI](https://circleci.com/gh/flybondi/flynamo/tree/develop.svg?style=svg)](https://circleci.com/gh/flybondi/flynamo/tree/develop)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
