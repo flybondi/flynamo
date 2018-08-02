@@ -35,7 +35,9 @@
     "aws"
   ],
   "license": "MIT",
-  "engines" : { "node" : ">=7" },
+  "engines": {
+    "node": ">=7"
+  },
   "dependencies": {
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
@@ -45,6 +47,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^7.0.1",
     "@types/jest": "^23.1.5",
+    "codacy-coverage": "^3.0.0",
     "commitlint": "^7.0.0",
     "docdash": "^0.4.0",
     "eslint": "^5.1.0",
