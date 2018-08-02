@@ -1,0 +1,37 @@
+{
+  "extends": [
+    "standard",
+    "plugin:ramda/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "ramda"
+  ],
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "semi": [
+      2,
+      "always"
+    ],
+    "no-extra-semi": 2,
+    "strict": [
+      "error",
+      "global"
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ]
+  }
+}

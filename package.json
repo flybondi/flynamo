@@ -17,12 +17,13 @@
     "src/"
   ],
   "scripts": {
+    "coverage": "cat .coverage/lcov.info | codacy-coverage --username nelson-flybondi --projectName flynamo",
+    "generate-docs": "jsdoc -c jsdoc.json",
+    "prettier": "prettier --write src/**/*.js index.js",
+    "report": "run-s test.coverage coverage",
     "test": "jest src/",
-    "test:coverage": "jest src/ --coverage",
-    "test:watch": "jest src/ --watchAll",
-    "format": "prettier --write \"src/**/*.js\" index.js",
-    "lint": "eslint src/ index.js",
-    "generate-docs": "jsdoc -c jsdoc.json"
+    "test.watch": "jest src/ --watchAll",
+    "test.coverage": "yarn test src/ --coverage --coverageDirectory .coverage"
   },
   "keywords": [
     "flybondi",
@@ -30,10 +31,13 @@
     "flynamo",
     "amazon",
     "client",
-    "wrapper"
+    "wrapper",
+    "aws"
   ],
   "license": "MIT",
-  "engines" : { "node" : ">=7" },
+  "engines": {
+    "node": ">=7"
+  },
   "dependencies": {
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
@@ -43,6 +47,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^7.0.1",
     "@types/jest": "^23.1.5",
+    "codacy-coverage": "^3.0.0",
     "commitlint": "^7.0.0",
     "docdash": "^0.4.0",
     "eslint": "^5.1.0",
@@ -83,47 +88,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "plugin:ramda/recommended",
-      "plugin:prettier/recommended"
-    ],
-    "plugins": [
-      "ramda"
-    ],
-    "parserOptions": {
-      "sourceType": "script"
-    },
-    "env": {
-      "node": true,
-      "jest": true
-    },
-    "rules": {
-      "semi": [
-        2,
-        "always"
-      ],
-      "no-extra-semi": 2,
-      "strict": [
-        "error",
-        "global"
-      ],
-      "no-console": [
-        "error",
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ]
-    }
-  },
-  "prettier": {
-    "singleQuote": true,
-    "printWidth": 100
   },
   "release": {
     "branch": "master",
