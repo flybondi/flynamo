@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
 </nav>
 
 <div id="main">
@@ -46,16 +46,18 @@
 
 
     <section class="readme">
-        <article><h1>@flybondi/flynamo</h1><p><a href="https://github.com/Flet/semistandard"><img src="https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square" alt="js-semistandard-style"></a>
+        <article><h1>@flybondi/flynamo</h1><p><a href="https://circleci.com/gh/flybondi/flynamo/tree/develop"><img src="https://circleci.com/gh/flybondi/flynamo/tree/develop.svg?style=svg" alt="CircleCI"></a>
+<a href="https://github.com/Flet/semistandard"><img src="https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square" alt="js-semistandard-style"></a>
 <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a></p>
-<p>Let your <a href="https://aws.amazon.com/">AWS</a> <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html">DynamoDB</a> client take off :airplane:!</p>
+<p>Let your <a href="https://aws.amazon.com/">AWS</a> <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html">DynamoDB</a> client take off ✈️! </p>
+<p>See <a href="https://flybondi.github.io/flynamo/">the docs</a>.</p>
 <ul>
-<li>:wrench: <strong>Simplifies</strong> creating requests and parsing responses.</li>
-<li>:sparkles: Automatic generation of DynamoDB attribute maps.</li>
-<li>:muscle: Supports all of <code>AWS.DynamoDB</code> API.</li>
-<li>:muscle: Import <strong>single composable functions</strong> for each DynamoDB API.</li>
-<li>:sparkles: <strong>Infers</strong> data types and conventional names.</li>
-<li>:raised_hands: Plays well with functional libraries like <a href="http://ramdajs.com/"><code>ramda</code></a> or <a href="https://github.com/lodash/lodash/wiki/FP-Guide"><code>lodash/fp</code></a>.</li>
+<li>🔧 <strong>Simplifies</strong> creating requests and parsing responses.</li>
+<li>✨ Automatic generation of DynamoDB attribute maps.</li>
+<li>💪 Supports all of <code>AWS.DynamoDB</code> API.</li>
+<li>✨ <strong>Infers</strong> data types and conventional names.</li>
+<li>💪 Import <strong>single composable functions</strong> for each DynamoDB API.</li>
+<li>🙌 Plays well with functional libraries like <a href="http://ramdajs.com/"><code>ramda</code></a> or <a href="https://github.com/lodash/lodash/wiki/FP-Guide"><code>lodash/fp</code></a>.</li>
 </ul>
 <pre class="prettyprint source lang-sh"><code># Install AWS SDK
 npm i aws-sdk
@@ -78,7 +80,9 @@ const { insert, update, remove } = forTable('SomeTable');
 
   // ...and delete it
   await remove(42);
-})();</code></pre><h2>API</h2><p>Dig into the <a href="https://www.google.com">documentation</a> to learn about the available functions.</p></article>
+})();</code></pre><h2>API</h2><p>Dig into the <a href="https://flybondi.github.io/flynamo/">documentation</a> to learn about the available functions.</p>
+<hr>
+<p>Made with 💛 by <a href="https://flybondi.com">Flybondi</a>.</p></article>
     </section>
 
 
@@ -91,7 +95,7 @@ const { insert, update, remove } = forTable('SomeTable');
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Aug 13 2018 13:38:04 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

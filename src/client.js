@@ -6,7 +6,8 @@ const createQuerier = require('./query');
 const createRemover = require('./remove');
 const createUpdater = require('./update');
 const createCounter = require('./count');
-const createBatcher = require('./batch-item');
+const createWriteBatcher = require('./batch-write-item');
+const createGetBatcher = require('./batch-get-item');
 const DynamoDBWrapper = require('dynamodb-wrapper');
 
 /**
@@ -28,7 +29,8 @@ function createFlynamo(client, config = {}) {
   const { remove, removeFor } = createRemover(clientWrapper);
   const { update, updateFor } = createUpdater(clientWrapper);
   const { count, countFor } = createCounter(clientWrapper);
-  const { batchWriteFor, batchRemoveFor, batchInsertFor } = createBatcher(clientWrapper);
+  const { batchWriteFor, batchRemoveFor, batchInsertFor } = createWriteBatcher(clientWrapper);
+  const { batchGetFor } = createGetBatcher(clientWrapper);
 
   function forTable(table) {
     return {
@@ -41,7 +43,8 @@ function createFlynamo(client, config = {}) {
       count: countFor(table),
       batchWrite: batchWriteFor(table),
       batchInsert: batchInsertFor(table),
-      batchRemove: batchRemoveFor(table)
+      batchRemove: batchRemoveFor(table),
+      batchGet: batchGetFor(table)
     };
   }
 
@@ -63,6 +66,7 @@ function createFlynamo(client, config = {}) {
     batchWriteFor,
     batchRemoveFor,
     batchInsertFor,
+    batchGetFor,
 
     /**
      * Returns a Flynamo API that automatically adds a `TableName` prop
@@ -80,7 +84,7 @@ function createFlynamo(client, config = {}) {
      * @param {String} tableName The value of `TableName`
      * @returns {Object} The entire Flynamo's API scoped to a single table. The exported
      *  members contain `get`, `getAll`, `insert`, `query`, `update`, `remove`, `count`, `batchWrite`,
-     *  `batchInsert`, `batchRemove`.
+     *  `batchInsert`, `batchRemove`, `batchGetFor`.
      */
     forTable
   };
