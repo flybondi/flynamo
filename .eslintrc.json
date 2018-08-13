@@ -1,6 +1,7 @@
 {
   "extends": [
     "standard",
+    "prettier/standard",
     "plugin:ramda/recommended",
     "plugin:prettier/recommended"
   ],
