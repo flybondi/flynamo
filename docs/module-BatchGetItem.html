@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Global - Documentation</title>
+    <title>BatchGetItem - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">BatchGetItem</h1>
     
 
     
@@ -39,9 +39,8 @@
 
 <header>
     
-        <h2>
         
-        </h2>
+            
         
     
 </header>
@@ -50,74 +49,11 @@
     <div class="container-overview">
     
         
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
+            <div class="description"><p>The <code>BatchGetItem</code> operation retrieves multiple items from a table in a single call.</p></div>
         
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
 
         
             
-
-    
-
-    <h4 class="name" id="createFlynamo"><span class="type-signature"></span>createFlynamo<span class="signature">(client, config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-
-    
 
 
 
@@ -127,7 +63,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="batch-get-item.js.html">batch-get-item.js</a>, <a href="batch-get-item.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -161,9 +97,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://github.com/Shadowblazen/dynamodb-wrapper#setup">https://github.com/Shadowblazen/dynamodb-wrapper#setup</a></li>
-        
-            <li><a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html">https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html</a></li>
         </ul>
     </dd>
     
@@ -175,10 +109,6 @@
 
 
 
-<div class="description">
-    <p>Wraps an AWS DynamoDB <code>client</code> and returns Flynamo's API to access
-its methods. Optionally, a <code>config</code> object for <code>dynamodb-wrapper</code> may be provided.</p>
-</div>
 
 
 
@@ -190,118 +120,44 @@ its methods. Optionally, a <code>config</code> object for <code>dynamodb-wrapper
 
 
 
-    <h5>Parameters:</h5>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>client</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>A DynamoDB client</p></td>
-        </tr>
+    </div>
 
     
 
-        <tr>
-            
-                <td class="name"><code>config</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p><code>DynamoDBWrapper</code> configuration (optional).</p></td>
-        </tr>
+    
 
     
-    </tbody>
-</table>
 
+     
 
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
             
 
     
 
-    <h4 class="name" id="forTable"><span class="type-signature"></span>forTable<span class="signature">(tableName)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="~batchGetFor"><span class="type-signature">(inner) </span>batchGetFor<span class="signature">(tableName, keys)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -313,7 +169,7 @@ its methods. Optionally, a <code>config</code> object for <code>dynamodb-wrapper
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line89">line 89</a>
+        <a href="batch-get-item.js.html">batch-get-item.js</a>, <a href="batch-get-item.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -353,10 +209,9 @@ its methods. Optionally, a <code>config</code> object for <code>dynamodb-wrapper
 
 
 <div class="description">
-    <p>Returns a Flynamo API that automatically adds a <code>TableName</code> prop
-to all its requests. This serves as a shorthand for manually adding
-<code>TableName</code> to DynamoDB <code>request</code> arguments or using regular <code>*for</code> functions in the API
-(such as <code>countFor</code>, <code>getFor</code>, etc.). This is how you would typically use those <code>*for</code> functions.</p>
+    <p>Returns the attributes of one or more items from a table. Requested items are identified by primary key.
+A key represented by a <code>Number</code> or a <code>String</code> will be assumed to be named <code>id</code>.
+Items will be fetched from <code>tableName</code>. You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
 </div>
 
 
@@ -367,11 +222,20 @@ to all its requests. This serves as a shorthand for manually adding
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>const { get, count } = forTable('SomeTable');
- await get(42); // Fetch item of primary key `{id: 42}` from `SomeTable`
- await count(); // Count total number of elements in `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>// Fetch documents of `id` 42, 33 and 7
+ await batchGetFor('SomeTable')([42, 33, 7]);</code></pre>
+
+    <pre class="prettyprint"><code>// Fetch documents of keys `{ foo: 42 }` and `{ foo: 33 }`
+ await batchGetFor('SomeTable')([{ foo: 42 }, { foo: 33 }]);</code></pre>
+
+    <pre class="prettyprint"><code>// Retrieve only `name` and `age` fields
+ await batchGetFor('SomeTable')([42, 33], { ProjectionExpression: 'name, age' });</code></pre>
+
+    <pre class="prettyprint"><code>// Exported from `forTable`
+ const { batchGet } = forTable('SomeTable');
+ await batchGet([42, 33, 7]);</code></pre>
 
 
 
@@ -407,7 +271,7 @@ to all its requests. This serves as a shorthand for manually adding
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
             
@@ -417,7 +281,33 @@ to all its requests. This serves as a shorthand for manually adding
 
             
 
-            <td class="description last"><p>The value of <code>TableName</code></p></td>
+            <td class="description last"><p>The name of the DynamoDB table to run the query on</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keys</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;*></span>
+|
+
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Identifiers of elements to get from <code>tableName</code></p></td>
         </tr>
 
     
@@ -441,9 +331,7 @@ to all its requests. This serves as a shorthand for manually adding
 
         
 <div class="param-desc">
-    <p>The entire Flynamo's API scoped to a single table. The exported
- members contain <code>get</code>, <code>getAll</code>, <code>insert</code>, <code>query</code>, <code>update</code>, <code>remove</code>, <code>count</code>, <code>batchWrite</code>,
- <code>batchInsert</code>, <code>batchRemove</code>, <code>batchGetFor</code>.</p>
+    <p>Resolves to the <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html#API_BatchGetItem_ResponseSyntax">response from DynamoDB client</a>.</p>
 </div>
 
 
@@ -454,7 +342,7 @@ to all its requests. This serves as a shorthand for manually adding
     </dt>
     <dd>
         
-<span class="param-type">Object</span>
+<span class="param-type">Promise</span>
 
 
     </dd>
