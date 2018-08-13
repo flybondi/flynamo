@@ -22,7 +22,6 @@ const castArray = require('./cast-array');
 
 /**
  * Returns deeply merged object by merging all objects in a passed list. Merging is applied from the left.
- * See mergeDeepLeft from Ramda.
  *
  * @private
  * @see https://ramdajs.com/docs/#mergeDeepLeft
@@ -45,7 +44,7 @@ const castArray = require('./cast-array');
 const mergeDeepAll = reduce(mergeDeepLeft, {});
 
 /**
- * Takes the first N elements of an array and shallow merge them
+ * Takes the first N elements of an array and deep merge them
  * together, while leaving the rest untouched.
  *
  * @private

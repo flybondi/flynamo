@@ -117,16 +117,17 @@ const createBatchRequestFor = curry((batchWriteItem, requestType, table) =>
  * @param {Object} dynamoWrapper The AWS DynamoDB client
  * @returns {Object}
  */
-function createBatcher(dynamoWrapper) {
+function createWriteBatcher(dynamoWrapper) {
   const batchWriteItem = bind(dynamoWrapper.batchWriteItem, dynamoWrapper);
   return {
     /**
      * Returns a function that puts or deletes multiple items in a table. It expects a single
-     * object argument containing `insert` and/or `remove` array properties. Each described
+     * object argument containing `insert` and/or `remove` array properties. Each describe
      * items that will be inserted or deleted from `tableName`. Each element in these arrays
      * can be thought of as inputs to corresponding `insert` or `remove` Flynamo functions.
      * You would typically use this function through {@link forTable}.
      *
+     * @public
      * @function
      * @example
      *
@@ -181,6 +182,7 @@ function createBatcher(dynamoWrapper) {
      * a name of `id` will be assumed.
      * You would typically use this function through {@link forTable}.
      *
+     * @public
      * @function
      * @example
      *
@@ -196,7 +198,7 @@ function createBatcher(dynamoWrapper) {
      *
      *  // Exported from `forTable`
      *  const { batchRemove } = forTable('SomeTable');
-     *  batchRemove([33, 42, 7]);
+     *  await batchRemove([33, 42, 7]);
      *
      *
      * @param {string} tableName The name of the DynamoDB table to run the query on
@@ -207,4 +209,4 @@ function createBatcher(dynamoWrapper) {
   };
 }
 
-module.exports = createBatcher;
+module.exports = createWriteBatcher;
