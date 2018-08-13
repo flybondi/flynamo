@@ -4,7 +4,9 @@
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Let your [AWS][aws] [DynamoDB][dynamodb] client take off ✈️!
+Let your [AWS][aws] [DynamoDB][dynamodb] client take off ✈️! 
+
+See [the docs][flynamo-jsdoc].
 
 - 🔧 **Simplifies** creating requests and parsing responses.
 - ✨ Automatic generation of DynamoDB attribute maps.
