@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>get.js - Documentation</title>
+    <title>batch-get-item.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">get.js</h1>
+    <h1 class="page-title">batch-get-item.js</h1>
     
 
     
@@ -39,120 +39,100 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 /**
- * The `GetItem` operation returns a set of attributes for the item with the given primary key.
- * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html
- * @module GetItem
+ * The `BatchGetItem` operation retrieves multiple items from a table in a single call.
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html
+ * @module BatchGetItem
  */
-const { curry, bind, pipeP, compose, apply } = require('ramda');
-const { unwrapProp } = require('./wrapper');
-const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
+const { compose, map, curry, prop, objOf, apply, bind } = require('ramda');
+const { mapMergeFirstPairOfArgs, overFirst } = require('./map-merge-args');
 const generateKey = require('./generate-key');
-const addTableName = require('./table-name');
+const castArray = require('./cast-array');
 
 /**
+ * Generate an object containing a `Keys` property pointing to an array of
+ * DynamoDB wrapped document keys, such as `{ Keys: [{ "name":{"S":"Flynamo"} }] }`.
+ *
  * @private
+ * @function
+ * @param {Array|Object} keys The unwrapped keys to generate the `Keys` from
+ * @returns {Object} An object containing a `Keys` property
  */
-const getUnwrappedItem = getItem =>
-  pipeP(
-    apply(getItem),
-    unwrapProp('Item')
-  );
-
-/**
- * @private
- */
-const createGet = getItem =>
-  compose(
-    getUnwrappedItem(getItem),
-    mapMergeFirstPairOfArgs(generateKey)
-  );
-
-/**
- * @private
- */
-const createGetFor = curry((getItem, table) =>
-  compose(
-    getUnwrappedItem(getItem),
-    mapMergeFirstPairOfArgs(
-      compose(
-        addTableName(table),
-        generateKey
-      )
+const generateKeys = compose(
+  objOf('Keys'),
+  map(
+    compose(
+      // The `BatchGetItem` expects a `Keys` array where each item
+      // represents a document key without a wrapping `Key` property.
+      // `generateKey` below returns an object such as `{ Key: { id: 42 } }`,
+      // so we strip the `Key` field
+      prop('Key'),
+      generateKey
     )
+  ),
+  // Support fetching only one document, without passing in an array
+  castArray
+);
+
+const createBatchGetFor = curry((batchGetItem, table) =>
+  compose(
+    apply(batchGetItem),
+    overFirst(
+      compose(
+        objOf('RequestItems'),
+        objOf(table)
+      )
+    ),
+    mapMergeFirstPairOfArgs(generateKeys)
   )
 );
 
-function createGetter(dynamoWrapper) {
-  const getItem = bind(dynamoWrapper.getItem, dynamoWrapper);
+/**
+ * Creates a function to allow retrieval of several documents in a single batch.
+ *
+ * @private
+ * @param {Object} dynamoWrapper The AWS DynamoDB client
+ * @returns {Object}
+ */
+function createGetBatcher(dynamoWrapper) {
+  const batchGetItem = bind(dynamoWrapper.batchGetItem, dynamoWrapper);
   return {
     /**
-     * Returns a set of attributes for the item with the given primary key.
-     * If there is no matching item, it returns `undefined`. The name of the `key` defaults
-     * to `id` if it's not specified. The `Key` attribute (as expected by DynamoDB request)
-     * can be omitted.
+     * Returns the attributes of one or more items from a table. Requested items are identified by primary key.
+     * A key represented by a `Number` or a `String` will be assumed to be named `id`.
+     * Items will be fetched from `tableName`. You would typically use this function through {@link forTable}.
      *
+     * @public
      * @function
      * @example
      *
-     *  await get(42, { TableName: 'SomeTable' });
-     *  // Will return the item with an primary key of `{id: 42}` from `SomeTable`
+     *  // Fetch documents of `id` 42, 33 and 7
+     *  await batchGetFor('SomeTable')([42, 33, 7]);
      *
      * @example
      *
-     *  await get({ customId: 'foo' }, { TableName: 'SomeTable' });
-     *  // Will return the item with an primary key of `{customId: 'foo'}` from `SomeTable`
+     *  // Fetch documents of keys `{ foo: 42 }` and `{ foo: 33 }`
+     *  await batchGetFor('SomeTable')([{ foo: 42 }, { foo: 33 }]);
      *
      * @example
      *
-     *  await get({ Key: { id: 42 } }, { TableName: 'SomeTable' });
-     *  // Will return the item with an primary key of `{id: 42}` from `SomeTable`
+     *  // Retrieve only `name` and `age` fields
+     *  await batchGetFor('SomeTable')([42, 33], { ProjectionExpression: 'name, age' });
      *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax
-     * @param {*} key The primary key value.
-     * @param {Object} request Parameters as expected by DynamoDB `GetItem` operation. Any `Key` attribute
-     *  specified here will override primary key value in `key`.
-     * @returns {Promise} A promise that resolves to the item returned by DynamoDB response or `undefined` if it
-     *  does not exist.
+     * @example
+     *
+     *  // Exported from `forTable`
+     *  const { batchGet } = forTable('SomeTable');
+     *  await batchGet([42, 33, 7]);
+     *
+     * @param {string} tableName The name of the DynamoDB table to run the query on
+     * @param {Array&lt;*> | *} keys Identifiers of elements to get from `tableName`
+     * @returns {Promise} Resolves to the {@link https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html#API_BatchGetItem_ResponseSyntax response from DynamoDB client}.
      */
-    get: createGet(getItem),
-
-    /**
-     * Returns a function that returns a set of attributes for the item with the given primary key.
-     * If there is no matching item, it returns `undefined`. The name of the `key` defaults
-     * to `id` if it's not specified. The `Key` attribute (as expected by DynamoDB request)
-     * can be omitted. The last `request` argument is optional and is only required if any non
-     * mandatory attribute needs to be included in the request.
-     * You would typically use this function through {@link forTable}.
-     *
-     * @function
-     * @example
-     *
-     *  await getFor('TableName')(42);
-     *  // Will return the item with an primary key of `{id: 42}` from `SomeTable`
-     *
-     * @example
-     *
-     *  await getFor('SomeTable')({ customId: 'foo' });
-     *  // Will return the item with an primary key of `{customId: 'foo'}` from `SomeTable`
-     *
-     * @example
-     *
-     *  await getFor('SomeTable')({ Key: { id: 42 } });
-     *  // Will return the item with an primary key of `{id: 42}` from `SomeTable`
-     *
-     * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html#API_GetItem_RequestSyntax
-     * @param {String} tableName The name of the table to perform the operation on
-     * @param {*} key The primary key value.
-     * @param {Object=} request Parameters as expected by DynamoDB `GetItem` operation (optional).
-     *  Any `Key` or `TableName` attributes specified here will override primary key value in `key` or `tableName` arguments.
-     * @returns {Promise} A promise that resolves to the item returned by DynamoDB response or `undefined` if it
-     *  does not exist.
-     */
-    getFor: createGetFor(getItem)
+    batchGetFor: createBatchGetFor(batchGetItem)
   };
 }
 
-module.exports = createGetter;
+module.exports = createGetBatcher;
 </code></pre>
         </article>
     </section>

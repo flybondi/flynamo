@@ -1,16 +1,19 @@
 # @flybondi/flynamo
 
+[![CircleCI](https://circleci.com/gh/flybondi/flynamo/tree/develop.svg?style=svg)](https://circleci.com/gh/flybondi/flynamo/tree/develop)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Let your [AWS][aws] [DynamoDB][dynamodb] client take off :airplane:!
+Let your [AWS][aws] [DynamoDB][dynamodb] client take off ✈️! 
 
-- :wrench: **Simplifies** creating requests and parsing responses.
-- :sparkles: Automatic generation of DynamoDB attribute maps.
-- :muscle: Supports all of `AWS.DynamoDB` API.
-- :muscle: Import **single composable functions** for each DynamoDB API.
-- :sparkles: **Infers** data types and conventional names.
-- :raised_hands: Plays well with functional libraries like [`ramda`][ramda] or [`lodash/fp`][lodashfp].
+See [the docs][flynamo-jsdoc].
+
+- 🔧 **Simplifies** creating requests and parsing responses.
+- ✨ Automatic generation of DynamoDB attribute maps.
+- 💪 Supports all of `AWS.DynamoDB` API.
+- ✨ **Infers** data types and conventional names.
+- 💪 Import **single composable functions** for each DynamoDB API.
+- 🙌 Plays well with functional libraries like [`ramda`][ramda] or [`lodash/fp`][lodashfp].
 
 ```sh
 # Install AWS SDK
@@ -46,10 +49,15 @@ const { insert, update, remove } = forTable('SomeTable');
 
 ## API
 
-Dig into the [documentation][jsdoc] to learn about the available functions.
+Dig into the [documentation][flynamo-jsdoc] to learn about the available functions.
+
+---
+
+Made with 💛 by [Flybondi][flybondi].
 
 [aws]: https://aws.amazon.com/
 [dynamodb]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html
 [ramda]: http://ramdajs.com/
 [lodashfp]: https://github.com/lodash/lodash/wiki/FP-Guide
-[jsdoc]: https://www.google.com
+[flynamo-jsdoc]: https://flybondi.github.io/flynamo/
+[flybondi]: https://flybondi.com

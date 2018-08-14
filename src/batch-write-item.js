@@ -1,43 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>batch-item.js - Documentation</title>
-
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
-</head>
-<body>
-
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
-
-<label for="nav-trigger" class="overlay"></label>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
-</nav>
-
-<div id="main">
-    
-    <h1 class="page-title">batch-item.js</h1>
-    
-
-    
-
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict';
+'use strict';
 /**
  * The `BatchWriteItem` operation puts or deletes multiple items in one table.
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html
@@ -156,16 +117,17 @@ const createBatchRequestFor = curry((batchWriteItem, requestType, table) =>
  * @param {Object} dynamoWrapper The AWS DynamoDB client
  * @returns {Object}
  */
-function createBatcher(dynamoWrapper) {
+function createWriteBatcher(dynamoWrapper) {
   const batchWriteItem = bind(dynamoWrapper.batchWriteItem, dynamoWrapper);
   return {
     /**
      * Returns a function that puts or deletes multiple items in a table. It expects a single
-     * object argument containing `insert` and/or `remove` array properties. Each described
+     * object argument containing `insert` and/or `remove` array properties. Each describe
      * items that will be inserted or deleted from `tableName`. Each element in these arrays
      * can be thought of as inputs to corresponding `insert` or `remove` Flynamo functions.
      * You would typically use this function through {@link forTable}.
      *
+     * @public
      * @function
      * @example
      *
@@ -209,7 +171,7 @@ function createBatcher(dynamoWrapper) {
      *  batchInsert([{ foo: 'bar' }, { foo: 'baz' }]);
      *
      * @param {string} tableName The name of the DynamoDB table to run the query on
-     * @param {Array.&lt;Object> | Object} items Items to insert into `tableName`
+     * @param {Array.<Object> | Object} items Items to insert into `tableName`
      * @returns {Promise} Resolves to the response from DynamoDB client.
      */
     batchInsertFor: createBatchRequestFor(batchWriteItem, 'insert'),
@@ -220,6 +182,7 @@ function createBatcher(dynamoWrapper) {
      * a name of `id` will be assumed.
      * You would typically use this function through {@link forTable}.
      *
+     * @public
      * @function
      * @example
      *
@@ -235,34 +198,15 @@ function createBatcher(dynamoWrapper) {
      *
      *  // Exported from `forTable`
      *  const { batchRemove } = forTable('SomeTable');
-     *  batchRemove([33, 42, 7]);
+     *  await batchRemove([33, 42, 7]);
      *
      *
      * @param {string} tableName The name of the DynamoDB table to run the query on
-     * @param {Array&lt;*> | *} keys Identifiers of elements to delete from `tableName`
+     * @param {Array<*> | *} keys Identifiers of elements to delete from `tableName`
      * @returns {Promise} Resolves to the response from DynamoDB client.
      */
     batchRemoveFor: createBatchRequestFor(batchWriteItem, 'remove')
   };
 }
 
-module.exports = createBatcher;
-</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jul 06 2018 16:44:49 GMT-0300 (-03) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
-</footer>
-
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
-</body>
-</html>
+module.exports = createWriteBatcher;
