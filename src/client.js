@@ -9,6 +9,7 @@ const createCounter = require('./count');
 const createWriteBatcher = require('./batch-write-item');
 const createGetBatcher = require('./batch-get-item');
 const DynamoDBWrapper = require('dynamodb-wrapper');
+const updateExpressionHelpers = require('./update-expression');
 
 /**
  * Wraps an AWS DynamoDB `client` and returns Flynamo's API to access
@@ -44,7 +45,8 @@ function createFlynamo(client, config = {}) {
       batchWrite: batchWriteFor(table),
       batchInsert: batchInsertFor(table),
       batchRemove: batchRemoveFor(table),
-      batchGet: batchGetFor(table)
+      batchGet: batchGetFor(table),
+      updateExpressionHelpers
     };
   }
 
@@ -67,6 +69,7 @@ function createFlynamo(client, config = {}) {
     batchRemoveFor,
     batchInsertFor,
     batchGetFor,
+    updateExpressionHelpers,
 
     /**
      * Returns a Flynamo API that automatically adds a `TableName` prop
