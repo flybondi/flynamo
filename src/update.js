@@ -5,7 +5,19 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html
  * @module UpdateItem
  */
-const { apply, bind, compose, curry, pipeP, unless, has, partial } = require('ramda');
+const {
+  apply,
+  applyTo,
+  bind,
+  compose,
+  curry,
+  ifElse,
+  is,
+  pipeP,
+  unless,
+  has,
+  partial
+} = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
 const addTableName = require('./table-name');
@@ -41,6 +53,19 @@ const generateUpdateExpression = unless(
 /**
  * @private
  */
+const runHelperOrGenerateUpdateExpression = ifElse(
+  is(Function),
+  applyTo({
+    UpdateExpression: '',
+    ExpressionAttributeNames: {},
+    ExpressionAttributeValues: {}
+  }),
+  generateUpdateExpression
+);
+
+/**
+ * @private
+ */
 const createUpdate = updateItem =>
   compose(
     updateAndUnwrapAttributes(updateItem),
@@ -52,7 +77,7 @@ const createUpdate = updateItem =>
         generateKey
       ),
       // Second argument is actual update payload -> generate `"UpdateExpression"` from it
-      generateUpdateExpression
+      runHelperOrGenerateUpdateExpression
     ])
   );
 
@@ -68,7 +93,7 @@ const createUpdateFor = curry((updateItem, table) =>
         generateKey
       ),
       // Second argument is actual update payload -> generate `"UpdateExpression"` from it
-      generateUpdateExpression
+      runHelperOrGenerateUpdateExpression
     ])
   )
 );
