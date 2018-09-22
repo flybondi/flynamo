@@ -53,13 +53,21 @@ const generateUpdateExpression = unless(
 /**
  * @private
  */
-const runHelperOrGenerateUpdateExpression = ifElse(
-  is(Function),
+const runHelper = compose(
+  wrapOver('ExpressionAttributeValues'),
   applyTo({
     UpdateExpression: '',
     ExpressionAttributeNames: {},
     ExpressionAttributeValues: {}
-  }),
+  })
+);
+
+/**
+ * @private
+ */
+const runHelperOrGenerateUpdateExpression = ifElse(
+  is(Function),
+  runHelper,
   generateUpdateExpression
 );
 

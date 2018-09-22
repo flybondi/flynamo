@@ -1,7 +1,16 @@
 'use strict';
+/**
+ * Edit an existing item's attributes, or add a new item to a table if it does not already exist.
+ * You can put or add attribute values.
+ * @module Helpers
+ */
 
-const { compose, evolve, concat, dropLast, merge, flip } = require('ramda');
-// because original concat sucks
+const { ifElse, endsWith, compose, evolve, concat, dropLast, merge, flip } = require('ramda');
+
+/**
+ * @private
+ * because original concat sucks
+ */
 const catcon = flip(concat);
 
 /**
@@ -16,14 +25,23 @@ const catcon = flip(concat);
 const updateExpression = (action, operations) =>
   compose(
     evolve({
-      Update: dropLast(2)
+      UpdateExpression: ifElse(endsWith(` ${action} `), dropLast(` ${action} `.length), dropLast(2))
     }),
     operations,
     evolve({
-      Update: catcon(` ${action} `)
+      UpdateExpression: catcon(` ${action} `)
     })
   );
 
+/**
+ * Returns a function that creates the mandatory `UpdateExpression`, `AttributeNames` and `AttributeValues` needed to build
+ * a `put` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
+ * and `AttributeValues` keys
+ *
+ * @function
+ * @param {String} attribute
+ * @param {String} value
+ */
 const put = (attribute, value) =>
   evolve({
     UpdateExpression: catcon(`#${attribute} = :${attribute}, `),
@@ -35,6 +53,15 @@ const put = (attribute, value) =>
     })
   });
 
+/**
+ * Returns a function that creates the mandatory `UpdateExpression`, `AttributeNames` and `AttributeValues` needed to build
+ * an `append` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
+ * and `AttributeValues` keys
+ *
+ * @function
+ * @param {String} attribute
+ * @param {Array} value
+ */
 const append = (attribute, value) =>
   evolve({
     UpdateExpression: catcon(`#${attribute} = list_append(#${attribute}, :${attribute}), `),
@@ -46,38 +73,26 @@ const append = (attribute, value) =>
     })
   });
 
-// const result = compose(
-//   updExp('SET', compose(
-//     put('air', 'val'),
-//     put('air2', 'val')
-//   )),
-//   updExp('DELETE', compose(
-//     put('air', 'val'),
-//     //put('air2', 'val')
-//   ))
-//  );
-
-// result({ Update: '', Names: {}, Values: {} })
-
-// const result = compose(
-//   updExp('SET', compose(
-//     put('air', 'val'),
-//     put('air2', 'val')
-//   )),
-//   updExp('DELETE', compose(
-//     put('air', 'val'),
-//     put('air2', 'val')
-//   ))
-//  );
-
-// result({
-//   UpdateExpression: '',
-//   ExpressionAttributeNames: {},
-//   ExpressionAttributeValues: {}
-// })
+/**
+ * Returns a function that creates the mandatory `UpdateExpression`, `AttributeNames` and `AttributeValues` needed to build
+ * a `remove` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
+ * and `AttributeValues` keys
+ *
+ * @function
+ * @param {String} attribute
+ */
+const remove = attribute =>
+  evolve({
+    UpdateExpression: catcon(`#${attribute}, `),
+    ExpressionAttributeNames: merge({
+      [`#${attribute}`]: attribute
+    }),
+    ExpressionAttributeValues: merge({})
+  });
 
 module.exports = {
   append,
   updateExpression,
-  put
+  put,
+  remove
 };
