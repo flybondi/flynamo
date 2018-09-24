@@ -115,8 +115,7 @@
       "path": "@semantic-release/commit-analyzer",
       "preset": "angular"
     },
-    "publish": [
-      {
+    "publish": [{
         "path": "@semantic-release/npm"
       },
       {

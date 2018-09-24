@@ -2,14 +2,14 @@
 /**
  * Edit an existing item's attributes, or add a new item to a table if it does not already exist.
  * You can put or add attribute values.
- * @module Helpers
+ * @module Builders
  */
 
 const { ifElse, endsWith, compose, evolve, concat, dropLast, merge, flip } = require('ramda');
 
 /**
- * @private
  * because original concat sucks
+ * @private
  */
 const catcon = flip(concat);
 
