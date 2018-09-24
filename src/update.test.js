@@ -59,6 +59,21 @@ describe('the update function', () => {
     );
   });
 
+  test('should run the helper to generate `UpdateExpression` if the second argument it is a function', async () => {
+    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const { update } = createUpdater({ updateItem: mockUpdateItem });
+    const expressionBuilder = () => ({
+      UpdateExpression: 'SET #bar = :bar'
+    });
+    await update(5, expressionBuilder);
+    expect(mockUpdateItem).toHaveBeenCalledWith(
+      expect.objectContaining({
+        Key: { id: { N: '5' } },
+        UpdateExpression: 'SET #bar = :bar'
+      })
+    );
+  });
+
   test('should merge the first three arguments and pass the rest as is', async () => {
     const mockUpdateItem = jest.fn().mockResolvedValue(true);
     const { update } = createUpdater({ updateItem: mockUpdateItem });

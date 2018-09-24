@@ -3,7 +3,7 @@
 const { append, updateExpression, put, remove } = require('./update-expression');
 
 describe('the `append` function', () => {
-  test('should translate the given paramaters to a dynamo expression with parameters placeholders', () => {
+  test('should generate the update expression to append a list', () => {
     const operation = append('myAttribute', 'myValue');
     expect(
       operation({
@@ -24,7 +24,7 @@ describe('the `append` function', () => {
 });
 
 describe('the `put` function', () => {
-  test('should translate the given paramaters to a dynamo expression with parameters placeholders', () => {
+  test('should generate the update expression to update a value', () => {
     const operation = put('myAttribute', 'myValue');
     expect(
       operation({
