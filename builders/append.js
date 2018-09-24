@@ -11,6 +11,7 @@ const catcon = require('./utils');
  * an `append` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
  * and `AttributeValues` keys.
  *
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.UpdatingListElements
  * @param {String} attribute array that you want to extend
  * @param {Array} value to add at the end of the array
  */

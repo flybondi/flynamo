@@ -11,6 +11,7 @@ const catcon = require('./utils');
  * a `put` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
  * and `AttributeValues` keys.
  *
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.ModifyingAttributes
  * @param {String} attribute name that you want to set
  * @param {Array} value of the attribute
  */

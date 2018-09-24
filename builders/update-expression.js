@@ -11,7 +11,7 @@ const catcon = require('./utils');
  * it creates the mandatory UpdateExpression, AttributeNames and AttributeValues needed to build
  * the `action` operations created by the given `operation` function.
  *
- * @function
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html
  * @param {String} action to execute in dynamodb, it can be SET, ADD, DELETE or REMOVE
  * @param {Function} operations that returns an object with the operations to execute and their parameters
  */

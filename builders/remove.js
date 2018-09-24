@@ -11,6 +11,7 @@ const catcon = require('./utils');
  * a `remove` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
  * and `AttributeValues` keys.
  *
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.REMOVE
  * @param {String} attribute that you want to remove
  */
 function remove(attribute) {
