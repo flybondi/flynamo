@@ -22,9 +22,9 @@
     "prettier": "prettier --write src/**/*.js index.js",
     "lint": "eslint src index.js",
     "report": "run-s test.coverage coverage",
-    "test": "jest src/",
-    "test.watch": "jest src/ --watchAll",
-    "test.coverage": "yarn test src/ --coverage --coverageDirectory .coverage"
+    "test": "jest src/ builders/",
+    "test.watch": "yarn test --watchAll",
+    "test.coverage": "yarn test --coverage --coverageDirectory .coverage"
   },
   "keywords": [
     "flybondi",
