@@ -59,7 +59,7 @@ describe('the update function', () => {
     );
   });
 
-  test('should run the helper to generate `UpdateExpression` if the second argument it is a function', async () => {
+  test('should run the helper to generate `UpdateExpression` if the second argument is a function', async () => {
     const mockUpdateItem = jest.fn().mockResolvedValue(true);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     const expressionBuilder = () => ({

@@ -42,4 +42,64 @@ describe('the `updateExpression` function', () => {
       ExpressionAttributeValues: {}
     });
   });
+
+  test('should accept a `null` value as action and convert it to a string', () => {
+    const emptyExpression = updateExpression(null, ({ UpdateExpression }) => ({
+      UpdateExpression: `${UpdateExpression} #myCustomOp = :myCustomOp, `,
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
+    }));
+
+    expect(
+      emptyExpression({
+        UpdateExpression: '',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {}
+      })
+    ).toEqual({
+      UpdateExpression: ' null  #myCustomOp = :myCustomOp',
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
+    });
+  });
+
+  test('should accept an `undefined` value as action and convert it to a string', () => {
+    const emptyExpression = updateExpression(undefined, ({ UpdateExpression }) => ({
+      UpdateExpression: `${UpdateExpression} #myCustomOp = :myCustomOp, `,
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
+    }));
+
+    expect(
+      emptyExpression({
+        UpdateExpression: '',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {}
+      })
+    ).toEqual({
+      UpdateExpression: ' undefined  #myCustomOp = :myCustomOp',
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
+    });
+  });
+
+  test('should accept an empty value as action and convert it to a string', () => {
+    const emptyExpression = updateExpression('', ({ UpdateExpression }) => ({
+      UpdateExpression: `${UpdateExpression} #myCustomOp = :myCustomOp, `,
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
+    }));
+
+    expect(
+      emptyExpression({
+        UpdateExpression: '',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {}
+      })
+    ).toEqual({
+      UpdateExpression: '   #myCustomOp = :myCustomOp',
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
+    });
+  });
 });

@@ -19,4 +19,55 @@ describe('the `remove` function', () => {
       ExpressionAttributeValues: {}
     });
   });
+
+  test('should accept a `null` value as `attribute` and convert it to a string', () => {
+    const operation = remove(null);
+    expect(
+      operation({
+        UpdateExpression: '',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {}
+      })
+    ).toEqual({
+      UpdateExpression: '#null, ',
+      ExpressionAttributeNames: {
+        '#null': null
+      },
+      ExpressionAttributeValues: {}
+    });
+  });
+
+  test('should accept an `undefined` value as `attribute` and convert it to a string', () => {
+    const operation = remove(undefined);
+    expect(
+      operation({
+        UpdateExpression: '',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {}
+      })
+    ).toEqual({
+      UpdateExpression: '#undefined, ',
+      ExpressionAttributeNames: {
+        '#undefined': undefined
+      },
+      ExpressionAttributeValues: {}
+    });
+  });
+
+  test('should accept an empty value as `attribute` and convert it to a string', () => {
+    const operation = remove('');
+    expect(
+      operation({
+        UpdateExpression: '',
+        ExpressionAttributeNames: {},
+        ExpressionAttributeValues: {}
+      })
+    ).toEqual({
+      UpdateExpression: '#, ',
+      ExpressionAttributeNames: {
+        '#': ''
+      },
+      ExpressionAttributeValues: {}
+    });
+  });
 });

@@ -3,7 +3,7 @@
  * @module Builders
  */
 
-const { evolve, merge } = require('ramda');
+const { evolve, merge, curry } = require('ramda');
 const catcon = require('./utils');
 
 /**
@@ -14,6 +14,8 @@ const catcon = require('./utils');
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.UpdatingListElements
  * @param {String} attribute array that you want to extend
  * @param {Array} value to add at the end of the array
+ * @returns {Function} that expects an Object to merge the new `UpdateExpression`,
+ *  `AttributeNames` and `AttributeValues` generated.
  */
 function append(attribute, value) {
   return evolve({
@@ -27,4 +29,4 @@ function append(attribute, value) {
   });
 }
 
-module.exports = append;
+module.exports = curry(append);

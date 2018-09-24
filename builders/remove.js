@@ -3,7 +3,7 @@
  * @module Builders
  */
 
-const { evolve, merge } = require('ramda');
+const { evolve, merge, curry } = require('ramda');
 const catcon = require('./utils');
 
 /**
@@ -13,6 +13,8 @@ const catcon = require('./utils');
  *
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.REMOVE
  * @param {String} attribute that you want to remove
+ * @returns {Function} that expects an Object to merge the new `UpdateExpression`,
+ *  `AttributeNames` and `AttributeValues` generated.
  */
 function remove(attribute) {
   return evolve({
@@ -24,4 +26,4 @@ function remove(attribute) {
   });
 }
 
-module.exports = remove;
+module.exports = curry(remove);
