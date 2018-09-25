@@ -4,9 +4,9 @@
     "dictionaries": ["jsdoc", "closure"]
   },
   "source": {
-    "include": ["README.md", "./src", "./builders"],
+    "include": ["README.md", "./src"],
     "includePattern": ".js$",
-    "excludePattern": "(node_modules/|docs|.test.js$|(^|\\/|\\\\)_)"
+    "excludePattern": "(node_modules/|docs|\\.test\\.js$|(^|\\/|\\\\)_)"
   },
   "plugins": ["plugins/markdown"],
   "opts": {
@@ -18,7 +18,17 @@
   },
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": false
+    "monospaceLinks": true
+  },
+  "docdash": {
+    "sort": true,
+    "search": true,
+    "openGraph": {
+      "title": "Flynamo - Let your AWS DynamoDB client take off!",
+      "type": "website",
+      "site_name": "Flynamo",
+      "url": "https://flybondi.github.io/flynamo/"
+    }
   },
   "sourceType": "module"
 }
