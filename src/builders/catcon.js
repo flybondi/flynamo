@@ -1,14 +1,11 @@
 'use strict';
-/**
- * Ramda shortcuts for the builders
- * @module Builders
- */
-
 const { concat, flip } = require('ramda');
 
 /**
- * because original concat sucks
+ * Because original `concat` sucks.
+ *
  * @private
+ * @see https://ramdajs.com/docs/#concat
  */
 const catcon = flip(concat);
 

@@ -1,19 +1,16 @@
 'use strict';
-/**
- * @module Builders
- */
-
 const { evolve, merge, curry } = require('ramda');
-const catcon = require('./utils');
+const catcon = require('./catcon');
 
 /**
  * Returns a function that creates the mandatory `UpdateExpression`, `AttributeNames` and `AttributeValues` needed to build
- * a `remove` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
+ * a `REMOVE` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
  * and `AttributeValues` keys.
  *
+ * @memberof module:Builders
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.REMOVE
- * @param {String} attribute that you want to remove
- * @returns {Function} that expects an Object to merge the new `UpdateExpression`,
+ * @param {String} attribute Attribute to be removed.
+ * @returns {Function} Expects an `Object` to merge with the new `UpdateExpression`,
  *  `AttributeNames` and `AttributeValues` generated.
  */
 function remove(attribute) {
