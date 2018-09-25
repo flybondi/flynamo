@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>batch-get-item.js - Documentation</title>
+    <title>builders/append.js - Documentation</title>
     
     
     <meta property="og:title" content="Flynamo - Let your AWS DynamoDB client take off!"/>
@@ -39,7 +39,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">batch-get-item.js</h1>
+    <h1 class="page-title">builders/append.js</h1>
     
 
     
@@ -50,101 +50,34 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
-/**
- * The `BatchGetItem` operation retrieves multiple items from a table in a single call.
- * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html
- * @module BatchGetItem
- */
-const { compose, map, curry, prop, objOf, apply, bind } = require('ramda');
-const { mapMergeFirstPairOfArgs, overFirst } = require('./map-merge-args');
-const generateKey = require('./generate-key');
-const castArray = require('./cast-array');
+const { evolve, merge, curry } = require('ramda');
+const catcon = require('./catcon');
 
 /**
- * Generate an object containing a `Keys` property pointing to an array of
- * DynamoDB wrapped document keys, such as `{ Keys: [{ "name":{"S":"Flynamo"} }] }`.
+ * Returns a function that creates the mandatory `UpdateExpression`, `AttributeNames` and `AttributeValues` needed to build
+ * an `append` operation and merges everything with the given object containing `UpdateExpression`, `AttributeNames`
+ * and `AttributeValues` keys.
  *
- * @private
- * @function
- * @param {Array|Object} keys The unwrapped keys to generate the `Keys` from
- * @returns {Object} An object containing a `Keys` property
+ * @memberof module:Builders
+ * @see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.UpdatingListElements
+ * @param {String} Attribute array that you want to extend
+ * @param {Array} Value to add at the end of the array
+ * @returns {Function} Expects an Object to merge the new `UpdateExpression`,
+ *  `AttributeNames` and `AttributeValues` generated.
  */
-const generateKeys = compose(
-  objOf('Keys'),
-  map(
-    compose(
-      // The `BatchGetItem` expects a `Keys` array where each item
-      // represents a document key without a wrapping `Key` property.
-      // `generateKey` below returns an object such as `{ Key: { id: 42 } }`,
-      // so we strip the `Key` field
-      prop('Key'),
-      generateKey
-    )
-  ),
-  // Support fetching only one document, without passing in an array
-  castArray
-);
-
-const createBatchGetFor = curry((batchGetItem, table) =>
-  compose(
-    apply(batchGetItem),
-    overFirst(
-      compose(
-        objOf('RequestItems'),
-        objOf(table)
-      )
-    ),
-    mapMergeFirstPairOfArgs(generateKeys)
-  )
-);
-
-/**
- * Creates a function to allow retrieval of several documents in a single batch.
- *
- * @private
- * @param {Object} dynamoWrapper The AWS DynamoDB client
- * @returns {Object}
- */
-function createGetBatcher(dynamoWrapper) {
-  const batchGetItem = bind(dynamoWrapper.batchGetItem, dynamoWrapper);
-  return {
-    /**
-     * Returns the attributes of one or more items from a table. Requested items are identified by primary key.
-     * A key represented by a `Number` or a `String` will be assumed to be named `id`.
-     * Items will be fetched from `tableName`. You would typically use this function through {@link forTable}.
-     *
-     * @public
-     * @function
-     * @example
-     *
-     *  // Fetch documents of `id` 42, 33 and 7
-     *  await batchGetFor('SomeTable')([42, 33, 7]);
-     *
-     * @example
-     *
-     *  // Fetch documents of keys `{ foo: 42 }` and `{ foo: 33 }`
-     *  await batchGetFor('SomeTable')([{ foo: 42 }, { foo: 33 }]);
-     *
-     * @example
-     *
-     *  // Retrieve only `name` and `age` fields
-     *  await batchGetFor('SomeTable')([42, 33], { ProjectionExpression: 'name, age' });
-     *
-     * @example
-     *
-     *  // Exported from `forTable`
-     *  const { batchGet } = forTable('SomeTable');
-     *  await batchGet([42, 33, 7]);
-     *
-     * @param {string} tableName The name of the DynamoDB table to run the query on
-     * @param {Array&lt;*> | *} keys Identifiers of elements to get from `tableName`
-     * @returns {Promise} Resolves to the {@link https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html#API_BatchGetItem_ResponseSyntax response from DynamoDB client}.
-     */
-    batchGetFor: createBatchGetFor(batchGetItem)
-  };
+function append(attribute, value) {
+  return evolve({
+    UpdateExpression: catcon(`#${attribute} = list_append(#${attribute}, :${attribute}), `),
+    ExpressionAttributeNames: merge({
+      [`#${attribute}`]: attribute
+    }),
+    ExpressionAttributeValues: merge({
+      [`:${attribute}`]: value
+    })
+  });
 }
 
-module.exports = createGetBatcher;
+module.exports = curry(append);
 </code></pre>
         </article>
     </section>

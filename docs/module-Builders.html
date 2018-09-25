@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>BatchWriteItem - Documentation</title>
+    <title>Builders - Documentation</title>
     
     
     <meta property="og:title" content="Flynamo - Let your AWS DynamoDB client take off!"/>
@@ -39,7 +39,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">BatchWriteItem</h1>
+    <h1 class="page-title">Builders</h1>
     
 
     
@@ -62,7 +62,10 @@
         <div class="container-overview">
         
             
-                <div class="description"><p>The <code>BatchWriteItem</code> operation puts or deletes multiple items in one table.</p></div>
+                <div class="description"><p>A DynamoDB expression builder that simplifies generating update items requests
+by composing small functions. Functions from this module can be imported from the
+<code>@flybondi/flynamo/builders</code> namespace. You can feed the result of <code>updateExpression</code>
+to the <code>payload</code> argument of <a href="module-UpdateItem.html#~update"><code>update</code></a> or <a href="module-UpdateItem.html#~updateFor"><code>updateFor</code></a>.</p></div>
             
 
             
@@ -76,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="batch-write-item.js.html">batch-write-item.js</a>, <a href="batch-write-item.js.html#line2">line 2</a>
+        <a href="builders_index.js.html">builders/index.js</a>, <a href="builders_index.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -110,7 +113,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html</a></li>
+            <li><a href="https://flybondi.github.io/flynamo/">https://flybondi.github.io/flynamo/</a></li>
         </ul>
     </dd>
     
@@ -128,6 +131,20 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const { updateExpression, put } = require('@flybondi/flynamo/builders');
+
+ const expression = updateExpression('SET',
+   compose(
+     put('availableSeats', 42),
+     put('pnr', '2LWJRW'),
+   )
+ );
+
+ await update(42, expression, { TableName: 'SomeTable' });</code></pre>
 
 
 
@@ -171,7 +188,7 @@
 
     
 
-    <h4 class="name" id="~batchInsertFor"><span class="type-signature">(inner) </span>batchInsertFor<span class="signature">(tableName, items)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id=".append"><span class="type-signature">(static) </span>append<span class="signature">(Attribute, Value)</span><span class="type-signature"> &rarr; {function}</span></h4>
 
     
 
@@ -183,7 +200,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="batch-write-item.js.html">batch-write-item.js</a>, <a href="batch-write-item.js.html#line177">line 177</a>
+        <a href="builders_append.js.html">builders/append.js</a>, <a href="builders_append.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -214,6 +231,13 @@
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.UpdatingListElements">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.UpdatingListElements</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -223,10 +247,9 @@
 
 
 <div class="description">
-    <p>Returns a function that puts items in a table in a single batch.
-It expects an array of arbitrary items to insert in <code>tableName</code>. It also supports
-inserting a single element (i.e.: not passing in an array).
-You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
+    <p>Returns a function that creates the mandatory <code>UpdateExpression</code>, <code>AttributeNames</code> and <code>AttributeValues</code> needed to build
+an <code>append</code> operation and merges everything with the given object containing <code>UpdateExpression</code>, <code>AttributeNames</code>
+and <code>AttributeValues</code> keys.</p>
 </div>
 
 
@@ -235,16 +258,6 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 
-
-
-    <h5>Examples</h5>
-    
-    <pre class="prettyprint"><code>// Inserts two items in `SomeTable`
- await batchInsertFor('SomeTable')([{ foo: 'bar' }, { foo: 'baz' }]);</code></pre>
-
-    <pre class="prettyprint"><code>// Exported from `forTable`
- const { batchInsert } = forTable('SomeTable');
- batchInsert([{ foo: 'bar' }, { foo: 'baz' }]);</code></pre>
 
 
 
@@ -274,13 +287,13 @@ You would typically use this function through <a href="global.html#forTable"><co
 
         <tr>
             
-                <td class="name"><code>tableName</code></td>
+                <td class="name"><code>Attribute</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -290,23 +303,20 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             
 
-            <td class="description last"><p>The name of the DynamoDB table to run the query on</p></td>
+            <td class="description last"><p>array that you want to extend</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>items</code></td>
+                <td class="name"><code>Value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Object></span>
-|
-
-<span class="param-type">Object</span>
+<span class="param-type">Array</span>
 
 
             
@@ -316,7 +326,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             
 
-            <td class="description last"><p>Items to insert into <code>tableName</code></p></td>
+            <td class="description last"><p>to add at the end of the array</p></td>
         </tr>
 
     
@@ -340,7 +350,8 @@ You would typically use this function through <a href="global.html#forTable"><co
 
         
 <div class="param-desc">
-    <p>Resolves to the response from DynamoDB client.</p>
+    <p>Expects an Object to merge the new <code>UpdateExpression</code>,
+ <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -351,7 +362,7 @@ You would typically use this function through <a href="global.html#forTable"><co
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type">function</span>
 
 
     </dd>
@@ -365,7 +376,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
     
 
-    <h4 class="name" id="~batchRemoveFor"><span class="type-signature">(inner) </span>batchRemoveFor<span class="signature">(tableName, keys)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id=".put"><span class="type-signature">(static) </span>put<span class="signature">(attribute, value)</span><span class="type-signature"> &rarr; {function}</span></h4>
 
     
 
@@ -377,7 +388,7 @@ You would typically use this function through <a href="global.html#forTable"><co
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="batch-write-item.js.html">batch-write-item.js</a>, <a href="batch-write-item.js.html#line208">line 208</a>
+        <a href="builders_put.js.html">builders/put.js</a>, <a href="builders_put.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -408,6 +419,13 @@ You would typically use this function through <a href="global.html#forTable"><co
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.ModifyingAttributes">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.SET.ModifyingAttributes</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -417,10 +435,9 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 <div class="description">
-    <p>Returns a functin that deletes multitple items from a table in a single batch.
-It expects an array of <code>Key</code> values to delete. If no name is specified for the <code>Key</code>,
-a name of <code>id</code> will be assumed.
-You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
+    <p>Returns a function that creates the mandatory <code>UpdateExpression</code>, <code>AttributeNames</code> and <code>AttributeValues</code> needed to build
+a <code>put</code> operation and merges everything with the given object containing <code>UpdateExpression</code>, <code>AttributeNames</code>
+and <code>AttributeValues</code> keys.</p>
 </div>
 
 
@@ -429,19 +446,6 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 
-
-
-    <h5>Examples</h5>
-    
-    <pre class="prettyprint"><code>// Removes a document with Key `{ foo: 'bar' }`
- await batchRemoveFor('SomeTable')([{ Key: { foo: 'bar' } }]);</code></pre>
-
-    <pre class="prettyprint"><code>// Removes three documents with Keys `{id: 33}`, `{id: 42}` and `{id: 7}`
- await batchRemoveFor('SomeTable')([33, 42, 7]);</code></pre>
-
-    <pre class="prettyprint"><code>// Exported from `forTable`
- const { batchRemove } = forTable('SomeTable');
- await batchRemove([33, 42, 7]);</code></pre>
 
 
 
@@ -471,13 +475,13 @@ You would typically use this function through <a href="global.html#forTable"><co
 
         <tr>
             
-                <td class="name"><code>tableName</code></td>
+                <td class="name"><code>attribute</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -487,23 +491,20 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             
 
-            <td class="description last"><p>The name of the DynamoDB table to run the query on</p></td>
+            <td class="description last"><p>name that you want to set</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>keys</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;*></span>
-|
-
-<span class="param-type">*</span>
+<span class="param-type">Array</span>
 
 
             
@@ -513,7 +514,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             
 
-            <td class="description last"><p>Identifiers of elements to delete from <code>tableName</code></p></td>
+            <td class="description last"><p>of the attribute</p></td>
         </tr>
 
     
@@ -537,7 +538,8 @@ You would typically use this function through <a href="global.html#forTable"><co
 
         
 <div class="param-desc">
-    <p>Resolves to the response from DynamoDB client.</p>
+    <p>that expects an Object to merge the new <code>UpdateExpression</code>,
+ <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -548,7 +550,7 @@ You would typically use this function through <a href="global.html#forTable"><co
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type">function</span>
 
 
     </dd>
@@ -562,7 +564,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
     
 
-    <h4 class="name" id="~batchWriteFor"><span class="type-signature">(inner) </span>batchWriteFor<span class="signature">(tableName, items)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id=".remove"><span class="type-signature">(static) </span>remove<span class="signature">(attribute)</span><span class="type-signature"> &rarr; {function}</span></h4>
 
     
 
@@ -574,7 +576,7 @@ You would typically use this function through <a href="global.html#forTable"><co
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="batch-write-item.js.html">batch-write-item.js</a>, <a href="batch-write-item.js.html#line152">line 152</a>
+        <a href="builders_remove.js.html">builders/remove.js</a>, <a href="builders_remove.js.html#line16">line 16</a>
     </li></ul></dd>
     
 
@@ -605,6 +607,13 @@ You would typically use this function through <a href="global.html#forTable"><co
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.REMOVE">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html#Expressions.UpdateExpressions.REMOVE</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -614,11 +623,9 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 <div class="description">
-    <p>Returns a function that puts or deletes multiple items in a table. It expects a single
-object argument containing <code>insert</code> and/or <code>remove</code> array properties. Each describe
-items that will be inserted or deleted from <code>tableName</code>. Each element in these arrays
-can be thought of as inputs to corresponding <code>insert</code> or <code>remove</code> Flynamo functions.
-You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
+    <p>Returns a function that creates the mandatory <code>UpdateExpression</code>, <code>AttributeNames</code> and <code>AttributeValues</code> needed to build
+a <code>REMOVE</code> operation and merges everything with the given object containing <code>UpdateExpression</code>, <code>AttributeNames</code>
+and <code>AttributeValues</code> keys.</p>
 </div>
 
 
@@ -627,19 +634,6 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 
-
-
-    <h5>Examples</h5>
-    
-    <pre class="prettyprint"><code>// Inserts two items in `SomeTable`
- await batchWriteFor('SomeTable')({ insert: [{ foo: 'bar' }, { foo: 'baz' }] });</code></pre>
-
-    <pre class="prettyprint"><code>// Inserts one item and remove item with Key 42 is `SomeTable`
- await batchWriteFor('SomeTable')({ insert: [{ foo: 'bar' }], remove: [42] });</code></pre>
-
-    <pre class="prettyprint"><code>// Exported from `forTable`
- const { batchWrite } = forTable('SomeTable');
- await batchWrite({ insert: [{ foo: 'bar' }], remove: [42] });</code></pre>
 
 
 
@@ -669,13 +663,13 @@ You would typically use this function through <a href="global.html#forTable"><co
 
         <tr>
             
-                <td class="name"><code>tableName</code></td>
+                <td class="name"><code>attribute</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -685,30 +679,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             
 
-            <td class="description last"><p>The name of the DynamoDB table to run the query on</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>items</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>An object containing <code>insert</code> and/or <code>remove</code> properties.</p></td>
+            <td class="description last"><p>Attribute to be removed.</p></td>
         </tr>
 
     
@@ -732,7 +703,8 @@ You would typically use this function through <a href="global.html#forTable"><co
 
         
 <div class="param-desc">
-    <p>Resolves to the response from DynamoDB client.</p>
+    <p>Expects an <code>Object</code> to merge with the new <code>UpdateExpression</code>,
+ <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -743,7 +715,195 @@ You would typically use this function through <a href="global.html#forTable"><co
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".updateExpression"><span class="type-signature">(static) </span>updateExpression<span class="signature">(Action, Operations)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="builders_update-expression.js.html">builders/update-expression.js</a>, <a href="builders_update-expression.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Returns a function that, when invoked with a set of default values for a dynamo expression,
+it creates the mandatory UpdateExpression, AttributeNames and AttributeValues needed to build
+the <code>action</code> operations created by the given <code>operation</code> function.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>to execute in DynamoDB, it can be <code>SET</code>, <code>ADD</code>, <code>DELETE</code> or <code>REMOVE</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Operations</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>that returns an object with the operations to execute and their parameters.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Expects an Object to merge the new <code>UpdateExpression</code>,
+ <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
 
 
     </dd>
