@@ -1,6 +1,6 @@
 {
   "name": "@flybondi/flynamo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An AWS DynamoDB client wrapper",
   "author": "Flybondi <dev@flybondi.com> (https://www.flybondi.com)",
   "homepage": "https://flybondi.github.io/flynamo",
@@ -116,7 +116,8 @@
       "path": "@semantic-release/commit-analyzer",
       "preset": "angular"
     },
-    "publish": [{
+    "publish": [
+      {
         "path": "@semantic-release/npm"
       },
       {
