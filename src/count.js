@@ -10,21 +10,12 @@ const addTableName = require('./table-name');
 /**
  * @private
  */
-const createCount = scan =>
-  pipeP(
-    scan,
-    prop('Count')
-  );
+const createCount = scan => pipeP(scan, prop('Count'));
 
 /**
  * @private
  */
-const createCountFor = curry((scan, table) =>
-  compose(
-    createCount(scan),
-    addTableName(table)
-  )
-);
+const createCountFor = curry((scan, table) => compose(createCount(scan), addTableName(table)));
 
 function createCounter(dynamoWrapper) {
   const scan = bind(dynamoWrapper.scan, dynamoWrapper);

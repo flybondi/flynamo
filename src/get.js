@@ -13,20 +13,13 @@ const addTableName = require('./table-name');
 /**
  * @private
  */
-const getUnwrappedItem = getItem =>
-  pipeP(
-    apply(getItem),
-    unwrapProp('Item')
-  );
+const getUnwrappedItem = getItem => pipeP(apply(getItem), unwrapProp('Item'));
 
 /**
  * @private
  */
 const createGet = getItem =>
-  compose(
-    getUnwrappedItem(getItem),
-    mapMergeFirstPairOfArgs(generateKey)
-  );
+  compose(getUnwrappedItem(getItem), mapMergeFirstPairOfArgs(generateKey));
 
 /**
  * @private
@@ -34,12 +27,7 @@ const createGet = getItem =>
 const createGetFor = curry((getItem, table) =>
   compose(
     getUnwrappedItem(getItem),
-    mapMergeFirstPairOfArgs(
-      compose(
-        addTableName(table),
-        generateKey
-      )
-    )
+    mapMergeFirstPairOfArgs(compose(addTableName(table), generateKey))
   )
 );
 

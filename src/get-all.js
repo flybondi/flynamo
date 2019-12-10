@@ -11,21 +11,12 @@ const addTableName = require('./table-name');
 /**
  * @private
  */
-const createGetAll = scan =>
-  pipeP(
-    scan,
-    unwrapAll('Items')
-  );
+const createGetAll = scan => pipeP(scan, unwrapAll('Items'));
 
 /**
  * @private
  */
-const createGetAllFor = curry((scan, table) =>
-  compose(
-    createGetAll(scan),
-    addTableName(table)
-  )
-);
+const createGetAllFor = curry((scan, table) => compose(createGetAll(scan), addTableName(table)));
 
 function createAllGetter(dynamoWrapper) {
   const scan = bind(dynamoWrapper.scan, dynamoWrapper);
