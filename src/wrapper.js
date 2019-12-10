@@ -10,10 +10,7 @@ const { AttributeValue, AttributeValueUpdate } = require('dynamodb-data-types');
  * @param {Object} obj The object to clone
  * @returns {Object} A deep clone of the given object
  */
-const deepClone = compose(
-  JSON.parse,
-  JSON.stringify
-);
+const deepClone = compose(JSON.parse, JSON.stringify);
 
 /**
  * Deep clones an object (using `JSON.stringify` + `JSON.parse`) only if its prototype
@@ -25,13 +22,7 @@ const deepClone = compose(
  * @returns {Object} A deep clone of the given object or the same object as was given, if
  *  it's prototype is not `null`.
  */
-const deepCloneIfNilPrototype = when(
-  compose(
-    isNil,
-    Object.getPrototypeOf
-  ),
-  deepClone
-);
+const deepCloneIfNilPrototype = when(compose(isNil, Object.getPrototypeOf), deepClone);
 
 /**
  * Wraps attribute values and converts them into DynamoDB representations.
@@ -90,11 +81,7 @@ const safelyWrap = unless(
  * @private
  * @see https://www.npmjs.com/package/dynamodb-data-types#quick-example
  */
-const unwrapAll = key =>
-  compose(
-    unless(isNil, map(safelyUnwrap)),
-    prop(key)
-  );
+const unwrapAll = key => compose(unless(isNil, map(safelyUnwrap)), prop(key));
 
 /**
  * Returns a function that updates an object under a `key` property with
@@ -113,11 +100,7 @@ const wrapOver = key => over(lensProp(key), safelyWrap);
  * @param {String} key The name of the prop to wrap
  * @returns {Function}
  */
-const wrapProp = key =>
-  compose(
-    safelyWrap,
-    prop(key)
-  );
+const wrapProp = key => compose(safelyWrap, prop(key));
 
 /**
  * Returns a function that unwraps an object under a `key` property.
@@ -129,11 +112,7 @@ const wrapProp = key =>
  */
 const unwrapOver = key => over(lensProp(key), safelyUnwrap);
 
-const unwrapProp = key =>
-  compose(
-    safelyUnwrap,
-    prop(key)
-  );
+const unwrapProp = key => compose(safelyUnwrap, prop(key));
 
 module.exports = {
   wrap: safelyWrap,

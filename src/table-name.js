@@ -10,9 +10,6 @@ const { assoc, compose, unless, has, defaultTo } = require('ramda');
  * @param {String} table The table name
  */
 const addTableName = table =>
-  compose(
-    unless(has('TableName'), assoc('TableName', table)),
-    defaultTo({})
-  );
+  compose(unless(has('TableName'), assoc('TableName', table)), defaultTo({}));
 
 module.exports = addTableName;

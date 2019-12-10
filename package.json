@@ -18,7 +18,6 @@
     "src/"
   ],
   "scripts": {
-    "coverage": "cat .coverage/lcov.info | codacy-coverage --username nelson-flybondi --projectName flynamo",
     "generate-docs": "jsdoc -c jsdoc.json",
     "prettier": "prettier --write src/**/*.js index.js",
     "lint": "eslint src index.js",
@@ -41,6 +40,7 @@
     "node": ">=7"
   },
   "dependencies": {
+    "aws-sdk": "^2.586.0",
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
     "dynamodb-wrapper": "^1.4.1",
@@ -48,8 +48,6 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^7.1.2",
-    "@types/jest": "^23.3.2",
-    "codacy-coverage": "^3.1.0",
     "commitlint": "^7.1.2",
     "docdash": "^1.0.0",
     "eslint": "^5.6.0",

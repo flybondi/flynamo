@@ -28,11 +28,7 @@ const generateKey = require('./generate-key');
 /**
  * @private
  */
-const updateAndUnwrapAttributes = updateItem =>
-  pipeP(
-    apply(updateItem),
-    unwrapProp('Attributes')
-  );
+const updateAndUnwrapAttributes = updateItem => pipeP(apply(updateItem), unwrapProp('Attributes'));
 
 /**
  * @private
@@ -44,10 +40,7 @@ const generateUpdateExpression = unless(
   // The `original` argument is asumed to be an empty object so only `SET`
   // expressions are supported by default
   // @see https://github.com/4ossiblellc/dynamodb-update-expression/blob/master/README.md#usage
-  compose(
-    wrapOver('ExpressionAttributeValues'),
-    partial(getUpdateExpression, [{}])
-  )
+  compose(wrapOver('ExpressionAttributeValues'), partial(getUpdateExpression, [{}]))
 );
 
 /**
@@ -80,10 +73,7 @@ const createUpdate = updateItem =>
     mapMergeNArgs(3, [
       // First argument is `id` -> generate `"Key"` from it and extend it with
       // a `"ReturnValues"` attribute valued `'ALL_NEW'`
-      compose(
-        addReturnValues('ALL_NEW'),
-        generateKey
-      ),
+      compose(addReturnValues('ALL_NEW'), generateKey),
       // Second argument is actual update payload -> generate `"UpdateExpression"` from it
       runHelperOrGenerateUpdateExpression
     ])
@@ -95,11 +85,7 @@ const createUpdateFor = curry((updateItem, table) =>
     mapMergeNArgs(3, [
       // First argument is `id` -> generate `"Key"` from it and add both `"TableName"`
       // and`"ReturnValues"`
-      compose(
-        addReturnValues('ALL_NEW'),
-        addTableName(table),
-        generateKey
-      ),
+      compose(addReturnValues('ALL_NEW'), addTableName(table), generateKey),
       // Second argument is actual update payload -> generate `"UpdateExpression"` from it
       runHelperOrGenerateUpdateExpression
     ])

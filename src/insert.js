@@ -12,25 +12,13 @@ const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 /**
  * @private
  */
-const createInsert = putItem =>
-  compose(
-    apply(putItem),
-    mapMergeFirstPairOfArgs(generateItem)
-  );
+const createInsert = putItem => compose(apply(putItem), mapMergeFirstPairOfArgs(generateItem));
 
 /**
  * @private
  */
 const createInsertFor = curry((putItem, table) =>
-  compose(
-    apply(putItem),
-    mapMergeFirstPairOfArgs(
-      compose(
-        addTableName(table),
-        generateItem
-      )
-    )
-  )
+  compose(apply(putItem), mapMergeFirstPairOfArgs(compose(addTableName(table), generateItem)))
 );
 
 function createInserter(dynamoWrapper) {

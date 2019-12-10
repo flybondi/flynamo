@@ -37,12 +37,7 @@ const generateKeys = compose(
 const createBatchGetFor = curry((batchGetItem, table) =>
   compose(
     apply(batchGetItem),
-    overFirst(
-      compose(
-        objOf('RequestItems'),
-        objOf(table)
-      )
-    ),
+    overFirst(compose(objOf('RequestItems'), objOf(table))),
     mapMergeFirstPairOfArgs(generateKeys)
   )
 );

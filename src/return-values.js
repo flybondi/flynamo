@@ -9,9 +9,6 @@ const { unless, has, assoc, defaultTo, compose } = require('ramda');
  * @returns {Function}
  */
 const addReturnValues = value =>
-  compose(
-    unless(has('ReturnValues'), assoc('ReturnValues', value)),
-    defaultTo({})
-  );
+  compose(unless(has('ReturnValues'), assoc('ReturnValues', value)), defaultTo({}));
 
 module.exports = addReturnValues;
