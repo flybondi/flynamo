@@ -25,11 +25,7 @@ const { wrap } = require('./wrapper');
  */
 const generateKey = unless(
   anyPass([isNil, is(Function), has('Key')]),
-  compose(
-    objOf('Key'),
-    wrap,
-    unless(is(Object), objOf('id'))
-  )
+  compose(objOf('Key'), wrap, unless(is(Object), objOf('id')))
 );
 
 module.exports = generateKey;

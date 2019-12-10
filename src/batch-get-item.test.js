@@ -33,11 +33,17 @@ test('should support retrieving documents with composite keys', async () => {
   const mockBatchGetItem = jest.fn().mockResolvedValue({});
   const { batchGetFor } = createGetBatcher({ batchGetItem: mockBatchGetItem });
   const batchGet = batchGetFor('some_table');
-  await batchGet([{ foo: 'life', bar: 42 }, { foo: 'meh', bar: 33 }]);
+  await batchGet([
+    { foo: 'life', bar: 42 },
+    { foo: 'meh', bar: 33 }
+  ]);
   expect(mockBatchGetItem).toHaveBeenCalledWith({
     RequestItems: {
       some_table: {
-        Keys: [{ foo: { S: 'life' }, bar: { N: '42' } }, { foo: { S: 'meh' }, bar: { N: '33' } }]
+        Keys: [
+          { foo: { S: 'life' }, bar: { N: '42' } },
+          { foo: { S: 'meh' }, bar: { N: '33' } }
+        ]
       }
     }
   });

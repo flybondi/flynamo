@@ -12,21 +12,12 @@ const addTableName = require('./table-name');
 /**
  * @private
  */
-const createQuery = query =>
-  pipeP(
-    query,
-    unwrapAll('Items')
-  );
+const createQuery = query => pipeP(query, unwrapAll('Items'));
 
 /**
  * @private
  */
-const createQueryFor = curry((query, table) =>
-  compose(
-    createQuery(query),
-    addTableName(table)
-  )
-);
+const createQueryFor = curry((query, table) => compose(createQuery(query), addTableName(table)));
 
 function createQuerier(dynamoWrapper) {
   const query = bind(dynamoWrapper.query, dynamoWrapper);

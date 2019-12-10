@@ -42,7 +42,10 @@ describe('the `batchRemoveFor` function', () => {
     const mockBatchWriteItem = jest.fn().mockResolvedValue({});
     const { batchRemoveFor } = createWriteBatcher({ batchWriteItem: mockBatchWriteItem });
     const batchRemove = batchRemoveFor('some_table');
-    await batchRemove([{ foo: 'life', bar: 42 }, { foo: 'meh', bar: 33 }]);
+    await batchRemove([
+      { foo: 'life', bar: 42 },
+      { foo: 'meh', bar: 33 }
+    ]);
     expect(mockBatchWriteItem).toHaveBeenCalledWith({
       RequestItems: {
         some_table: [

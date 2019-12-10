@@ -17,11 +17,7 @@ const addReturnValues = require('./return-values');
 /**
  * @private
  */
-const removeAndUnwrapAttributes = deleteItem =>
-  pipeP(
-    apply(deleteItem),
-    unwrapProp('Attributes')
-  );
+const removeAndUnwrapAttributes = deleteItem => pipeP(apply(deleteItem), unwrapProp('Attributes'));
 
 /**
  * @private
@@ -29,12 +25,7 @@ const removeAndUnwrapAttributes = deleteItem =>
 const createRemove = deleteItem =>
   compose(
     removeAndUnwrapAttributes(deleteItem),
-    mapMergeFirstPairOfArgs(
-      compose(
-        addReturnValues('ALL_OLD'),
-        generateKey
-      )
-    )
+    mapMergeFirstPairOfArgs(compose(addReturnValues('ALL_OLD'), generateKey))
   );
 
 /**
@@ -43,13 +34,7 @@ const createRemove = deleteItem =>
 const createRemoveFor = curry((deleteItem, table) =>
   compose(
     removeAndUnwrapAttributes(deleteItem),
-    mapMergeFirstPairOfArgs(
-      compose(
-        addReturnValues('ALL_OLD'),
-        addTableName(table),
-        generateKey
-      )
-    )
+    mapMergeFirstPairOfArgs(compose(addReturnValues('ALL_OLD'), addTableName(table), generateKey))
   )
 );
 

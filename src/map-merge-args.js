@@ -54,15 +54,7 @@ const mergeDeepAll = reduce(mergeDeepLeft, {});
  *  // -> [{ foo: 'bar', baz: 'db' }, 42]
  *
  */
-const mergeN = n =>
-  converge(concat, [
-    compose(
-      of,
-      mergeDeepAll,
-      take(n)
-    ),
-    drop(n)
-  ]);
+const mergeN = n => converge(concat, [compose(of, mergeDeepAll, take(n)), drop(n)]);
 
 /**
  * Updates the first element of the input array and returns a new array
@@ -94,11 +86,7 @@ const overFirst = fn => over(lensIndex(0), fn);
  */
 const overAll = fns =>
   converge(concat, [
-    compose(
-      map(converge(call, [head, last])),
-      zip(fns),
-      take(fns.length)
-    ),
+    compose(map(converge(call, [head, last])), zip(fns), take(fns.length)),
     drop(fns.length)
   ]);
 
@@ -118,13 +106,7 @@ const overAll = fns =>
  * @param {Number} n The number elements to merge
  * @param {Function} fns A list of mapping function to apply to input.
  */
-const mapMergeNArgs = (n, fns) =>
-  unapply(
-    compose(
-      mergeN(n),
-      overAll(castArray(fns))
-    )
-  );
+const mapMergeNArgs = (n, fns) => unapply(compose(mergeN(n), overAll(castArray(fns))));
 
 /**
  * Returns a function that passes its first argument to `fn`. The result of `fn`
