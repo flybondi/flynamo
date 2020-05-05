@@ -4,7 +4,7 @@
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Let your [AWS][aws] [DynamoDB][dynamodb] client take off ✈️! 
+Let your [AWS][aws] [DynamoDB][dynamodb] client take off ✈️!
 
 See [the docs][flynamo-jsdoc].
 
@@ -28,10 +28,10 @@ npm i @flybondi/flynamo
 Wrap an instance of `AWS.DynamoDB` client with `createFlynamo` and you're good to go. The result will be an object exposing all of Flynamo's own API.
 
 ```js
-const DynamoDB = require('aws-sdk/clients/dynamodb');
+const AWS = require('aws-sdk');
 const createFlynamo = require('@flybondi/flynamo');
 
-const { forTable } = createFlynamo(new DynamoDB());
+const { forTable } = createFlynamo(new aws.DynamoDB());
 
 const { insert, update, remove } = forTable('SomeTable');
 
@@ -41,7 +41,7 @@ const { insert, update, remove } = forTable('SomeTable');
 
   // Update its contents
   await update(42, { name: 'Alice' });
-  
+
   // ...and delete it
   await remove(42);
 })();
