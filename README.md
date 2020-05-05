@@ -31,7 +31,7 @@ Wrap an instance of `AWS.DynamoDB` client with `createFlynamo` and you're good t
 const AWS = require('aws-sdk');
 const createFlynamo = require('@flybondi/flynamo');
 
-const { forTable } = createFlynamo(new aws.DynamoDB());
+const { forTable } = createFlynamo(new AWS.DynamoDB());
 
 const { insert, update, remove } = forTable('SomeTable');
 
