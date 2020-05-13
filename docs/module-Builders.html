@@ -19,6 +19,7 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -30,7 +31,7 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
+<nav >
     
     <input type="text" id="nav-search" placeholder="Search" />
     
@@ -62,7 +63,7 @@
         <div class="container-overview">
         
             
-                <div class="description"><p>A DynamoDB expression builder that simplifies generating update items requests
+                <div class="description usertext"><p>A DynamoDB expression builder that simplifies generating update items requests
 by composing small functions. Functions from this module can be imported from the
 <code>@flybondi/flynamo/builders</code> namespace. You can feed the result of <code>updateExpression</code>
 to the <code>payload</code> argument of <a href="module-UpdateItem.html#~update"><code>update</code></a> or <a href="module-UpdateItem.html#~updateFor"><code>updateFor</code></a>.</p></div>
@@ -163,6 +164,9 @@ to the <code>payload</code> argument of <a href="module-UpdateItem.html#~update"
 
 
 
+
+
+
             
         
         </div>
@@ -172,6 +176,8 @@ to the <code>payload</code> argument of <a href="module-UpdateItem.html#~update"
 
     
 
+    
+    
     
 
      
@@ -246,7 +252,7 @@ to the <code>payload</code> argument of <a href="module-UpdateItem.html#~update"
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that creates the mandatory <code>UpdateExpression</code>, <code>AttributeNames</code> and <code>AttributeValues</code> needed to build
 an <code>append</code> operation and merges everything with the given object containing <code>UpdateExpression</code>, <code>AttributeNames</code>
 and <code>AttributeValues</code> keys.</p>
@@ -346,12 +352,14 @@ and <code>AttributeValues</code> keys.</p>
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>Expects an Object to merge the new <code>UpdateExpression</code>,
- <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
+<code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -369,6 +377,7 @@ and <code>AttributeValues</code> keys.</p>
 </dl>
 
     
+
 
 
         
@@ -434,7 +443,7 @@ and <code>AttributeValues</code> keys.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that creates the mandatory <code>UpdateExpression</code>, <code>AttributeNames</code> and <code>AttributeValues</code> needed to build
 a <code>put</code> operation and merges everything with the given object containing <code>UpdateExpression</code>, <code>AttributeNames</code>
 and <code>AttributeValues</code> keys.</p>
@@ -534,12 +543,14 @@ and <code>AttributeValues</code> keys.</p>
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>that expects an Object to merge the new <code>UpdateExpression</code>,
- <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
+<code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -557,6 +568,7 @@ and <code>AttributeValues</code> keys.</p>
 </dl>
 
     
+
 
 
         
@@ -622,7 +634,7 @@ and <code>AttributeValues</code> keys.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that creates the mandatory <code>UpdateExpression</code>, <code>AttributeNames</code> and <code>AttributeValues</code> needed to build
 a <code>REMOVE</code> operation and merges everything with the given object containing <code>UpdateExpression</code>, <code>AttributeNames</code>
 and <code>AttributeValues</code> keys.</p>
@@ -699,12 +711,14 @@ and <code>AttributeValues</code> keys.</p>
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>Expects an <code>Object</code> to merge with the new <code>UpdateExpression</code>,
- <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
+<code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -722,6 +736,7 @@ and <code>AttributeValues</code> keys.</p>
 </dl>
 
     
+
 
 
         
@@ -787,7 +802,7 @@ and <code>AttributeValues</code> keys.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that, when invoked with a set of default values for a dynamo expression,
 it creates the mandatory UpdateExpression, AttributeNames and AttributeValues needed to build
 the <code>action</code> operations created by the given <code>operation</code> function.</p>
@@ -887,12 +902,14 @@ the <code>action</code> operations created by the given <code>operation</code> f
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>Expects an Object to merge the new <code>UpdateExpression</code>,
- <code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
+<code>AttributeNames</code> and <code>AttributeValues</code> generated.</p>
 </div>
 
 
@@ -910,6 +927,7 @@ the <code>action</code> operations created by the given <code>operation</code> f
 </dl>
 
     
+
 
 
         
@@ -932,16 +950,14 @@ the <code>action</code> operations created by the given <code>operation</code> f
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 26 2018 12:46:51 GMT+0000 (UTC) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 13 2020 18:32:40 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
 
-<script src="scripts/jquery-3.1.1.min.js"></script>
-
-<script src="scripts/search.js"></script>
-
+<script src="scripts/search.js" defer></script>
 
 
 

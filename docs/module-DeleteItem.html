@@ -19,6 +19,7 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -30,7 +31,7 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
+<nav >
     
     <input type="text" id="nav-search" placeholder="Search" />
     
@@ -62,7 +63,7 @@
         <div class="container-overview">
         
             
-                <div class="description"><p>Deletes a single item in a table by primary key.
+                <div class="description usertext"><p>Deletes a single item in a table by primary key.
 You can perform a conditional delete operation that deletes the item if it exists,
 or if it has an expected attribute value.</p></div>
             
@@ -148,6 +149,9 @@ or if it has an expected attribute value.</p></div>
 
 
 
+
+
+
             
         
         </div>
@@ -157,6 +161,8 @@ or if it has an expected attribute value.</p></div>
 
     
 
+    
+    
     
 
      
@@ -185,7 +191,7 @@ or if it has an expected attribute value.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line76">line 76</a>
+        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -231,7 +237,7 @@ or if it has an expected attribute value.</p></div>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Deletes a single item in a table by primary key. Returns the <code>Attributes</code> present in the
 DynamoDB response, which, by default, will contain the attributes returned by setting <code>ReturnValues</code> to <code>ALL_OLD</code>.
 This function uses <code>DeleteItem</code> operation internally.</p>
@@ -337,12 +343,14 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response. Unless, <code>ReturnValues</code> has
- been explicitly set, this will match all attributes of the recently deleted element.</p>
+been explicitly set, this will match all attributes of the recently deleted element.</p>
 </div>
 
 
@@ -362,6 +370,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
     
 
 
+
         
             
 
@@ -379,7 +388,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line103">line 103</a>
+        <a href="remove.js.html">remove.js</a>, <a href="remove.js.html#line88">line 88</a>
     </li></ul></dd>
     
 
@@ -425,7 +434,7 @@ This function uses <code>DeleteItem</code> operation internally.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that deletes a single item in a table by primary key. Returns the <code>Attributes</code> present in the
 DynamoDB response, which, by default, will contain the attributes returned by setting <code>ReturnValues</code> to <code>ALL_OLD</code>.
 This function uses <code>DeleteItem</code> operation internally. You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
@@ -567,7 +576,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
             
 
             <td class="description last"><p>Parameters as expected by DynamoDB <code>DeleteItem</code> operation (optional).
- Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
+Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
         </tr>
 
     
@@ -587,12 +596,14 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>A promise that resolves to the <code>Attributes</code> property of the DynamoDB response. Unless, <code>ReturnValues</code> has
- been explicitly set, this will match all attributes of the recently deleted element.</p>
+been explicitly set, this will match all attributes of the recently deleted element.</p>
 </div>
 
 
@@ -610,6 +621,7 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 </dl>
 
     
+
 
 
         
@@ -632,16 +644,14 @@ This function uses <code>DeleteItem</code> operation internally. You would typic
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 26 2018 12:46:51 GMT+0000 (UTC) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 13 2020 18:32:40 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
 
-<script src="scripts/jquery-3.1.1.min.js"></script>
-
-<script src="scripts/search.js"></script>
-
+<script src="scripts/search.js" defer></script>
 
 
 

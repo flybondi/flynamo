@@ -19,6 +19,7 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -30,7 +31,7 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
+<nav >
     
     <input type="text" id="nav-search" placeholder="Search" />
     
@@ -62,7 +63,7 @@
         <div class="container-overview">
         
             
-                <div class="description"><p>Edit an existing item's attributes, or add a new item to a table if it does not already exist.
+                <div class="description usertext"><p>Edit an existing item's attributes, or add a new item to a table if it does not already exist.
 You can put or add attribute values.</p></div>
             
 
@@ -147,6 +148,9 @@ You can put or add attribute values.</p></div>
 
 
 
+
+
+
             
         
         </div>
@@ -156,6 +160,8 @@ You can put or add attribute values.</p></div>
 
     
 
+    
+    
     
 
      
@@ -184,7 +190,7 @@ You can put or add attribute values.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="update.js.html">update.js</a>, <a href="update.js.html#line143">line 143</a>
+        <a href="update.js.html">update.js</a>, <a href="update.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -230,7 +236,7 @@ You can put or add attribute values.</p></div>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Edits an existing item's attributes, or adds a new item to the table if it does not
 already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
 Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
@@ -325,8 +331,8 @@ uses the <code>UpdateItem</code> operation internally.</p>
             
 
             <td class="description last"><p>The update payload that will be merged with the item present in DynamoDB. An appropriate
- <code>UpdateExpression</code> will be automatically created from this argument. While you can <code>null</code> them or replace them,
- removing attributes from an item is only supported through manually defining an <code>UpdateExpression</code> on <code>request</code>.</p></td>
+<code>UpdateExpression</code> will be automatically created from this argument. While you can <code>null</code> them or replace them,
+removing attributes from an item is only supported through manually defining an <code>UpdateExpression</code> on <code>request</code>.</p></td>
         </tr>
 
     
@@ -369,6 +375,8 @@ uses the <code>UpdateItem</code> operation internally.</p>
 
 
 
+
+
 <h5>Returns:</h5>
 
         
@@ -393,6 +401,7 @@ uses the <code>UpdateItem</code> operation internally.</p>
     
 
 
+
         
             
 
@@ -410,7 +419,7 @@ uses the <code>UpdateItem</code> operation internally.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="update.js.html">update.js</a>, <a href="update.js.html#line173">line 173</a>
+        <a href="update.js.html">update.js</a>, <a href="update.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -456,7 +465,7 @@ uses the <code>UpdateItem</code> operation internally.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that edits an existing item's attributes, or adds a new item to the table if it does not
 already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
 Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
@@ -568,8 +577,8 @@ You would typically use this function through <a href="global.html#forTable"><co
             
 
             <td class="description last"><p>The update payload that will be merged with the item present in DynamoDB. An appropriate
- <code>UpdateExpression</code> will be automatically created from this argument. While you can <code>null</code> them or replace them,
- removing attributes from an item is only supported through manually defining an <code>UpdateExpression</code> on <code>request</code>.</p></td>
+<code>UpdateExpression</code> will be automatically created from this argument. While you can <code>null</code> them or replace them,
+removing attributes from an item is only supported through manually defining an <code>UpdateExpression</code> on <code>request</code>.</p></td>
         </tr>
 
     
@@ -622,6 +631,8 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 
+
+
 <h5>Returns:</h5>
 
         
@@ -646,6 +657,7 @@ You would typically use this function through <a href="global.html#forTable"><co
     
 
 
+
         
     
 
@@ -666,16 +678,14 @@ You would typically use this function through <a href="global.html#forTable"><co
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 26 2018 12:46:51 GMT+0000 (UTC) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 13 2020 18:32:40 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
 
-<script src="scripts/jquery-3.1.1.min.js"></script>
-
-<script src="scripts/search.js"></script>
-
+<script src="scripts/search.js" defer></script>
 
 
 
