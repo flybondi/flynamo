@@ -95,8 +95,7 @@
       [
         "@semantic-release/exec",
         {
-          "prepareCmd": "npx run-s generate-docs",
-          "successCmd": "npm dist-tag add $(jq .name package.json -r)@${nextRelease.version} next"
+          "prepareCmd": "npx run-s generate-docs"
         }
       ],
       [
