@@ -4,5 +4,5 @@
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence
 # review when someone opens a pull request.
-*                 @nfantone
-.circleci/*       @crash7
+*               @nfantone @flybondi/code-owners
+.github/*       @crash7
