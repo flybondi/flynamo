@@ -90,37 +90,48 @@
     ]
   },
   "release": {
-    "branch": "master",
-    "prepare": [
-      "@semantic-release/npm",
-      {
-        "path": "@semantic-release/exec",
-        "cmd": "npx run-s generate-docs"
-      },
-      {
-        "path": "@semantic-release/git",
-        "assets": [
-          "package.json",
-          "docs/"
-        ],
-        "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
-      }
+    "branches": [
+      "master"
     ],
-    "verifyConditions": [
+    "plugins": [
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "npx run-s generate-docs",
+          "successCmd": "npm dist-tag add $(jq .name package.json -r)@${nextRelease.version} next"
+        }
+      ],
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "docs",
+              "release": "patch"
+            },
+            {
+              "type": "build",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
       "@semantic-release/npm",
-      "@semantic-release/github"
-    ],
-    "analyzeCommits": {
-      "path": "@semantic-release/commit-analyzer",
-      "preset": "angular"
-    },
-    "publish": [
-      {
-        "path": "@semantic-release/npm"
-      },
-      {
-        "path": "@semantic-release/github"
-      }
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md",
+            "docs"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
     ]
   }
 }
