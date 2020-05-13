@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <title>Global - Documentation</title>
-
+    
+    
+    <meta property="og:title" content="Flynamo - Let your AWS DynamoDB client take off!"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:site_name" content="Flynamo"/>
+    <meta property="og:url" content="https://flybondi.github.io/flynamo/"/>
+    
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
@@ -11,6 +19,7 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -22,7 +31,10 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Builders.html">Builders</a><ul class='methods'><li data-type='method'><a href="module-Builders.html#.append">append</a></li><li data-type='method'><a href="module-Builders.html#.put">put</a></li><li data-type='method'><a href="module-Builders.html#.remove">remove</a></li><li data-type='method'><a href="module-Builders.html#.updateExpression">updateExpression</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
 </nav>
 
 <div id="main">
@@ -47,9 +59,10 @@
 </header>
 
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
+            
 
 <dl class="details">
 
@@ -89,11 +102,12 @@
 
 
 
-        
+            
 
+            
         
+        </div>
     
-    </div>
 
     
 
@@ -476,15 +490,25 @@ to all its requests. This serves as a shorthand for manually adding
 
 
 
+    
+    
 </div>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Aug 13 2018 13:38:04 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Sep 26 2018 12:46:51 GMT+0000 (UTC) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
+
+<script src="scripts/jquery-3.1.1.min.js"></script>
+
+<script src="scripts/search.js"></script>
+
+
+
+
 </body>
 </html>
