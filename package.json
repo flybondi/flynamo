@@ -40,13 +40,11 @@
     "node": ">=7"
   },
   "dependencies": {
+    "aws-sdk": "^2.669.0",
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
     "dynamodb-wrapper": "^1.4.1",
     "ramda": "^0.27.0"
-  },
-  "peerDependencies": {
-    "aws-sdk": "^2.669.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^9.1.1",
