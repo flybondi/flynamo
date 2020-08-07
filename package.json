@@ -45,6 +45,9 @@
     "dynamodb-wrapper": "^1.4.1",
     "ramda": "^0.27.0"
   },
+  "peerDependencies": {
+    "aws-sdk": "2.x"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^9.1.1",
     "commitlint": "^9.1.0",
