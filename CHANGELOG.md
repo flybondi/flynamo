@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/flybondi/flynamo/compare/v1.3.0...v1.4.0) (2020-08-07)
+
+
+### Features
+
+* add option to return the full dynamo response on query ([#27](https://github.com/flybondi/flynamo/issues/27)) ([ab6fbf1](https://github.com/flybondi/flynamo/commit/ab6fbf117e4df1db12fe17af899c89387e46b9f8))
+
 # [1.3.0](https://github.com/flybondi/flynamo/compare/v1.2.2...v1.3.0) (2020-08-07)
 
 
