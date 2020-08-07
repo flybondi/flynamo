@@ -12,8 +12,8 @@ const addTableName = require('./table-name');
 /**
  * @private
  */
-const createQuery = query => (params, options = {}) =>
-  query(params, options).then(options.raw ? unwrapOverAll('Items') : unwrapAll('Items'));
+const createQuery = query => (params, options) =>
+  query(params, options).then(options && options.raw ? unwrapOverAll('Items') : unwrapAll('Items'));
 
 /**
  * @private
@@ -43,8 +43,8 @@ function createQuerier(dynamoWrapper) {
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
      * @param {Object=} options The configuration options parameters.
-     * @param {number} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean} options.raw Wether to return the full DynamoDB response object when `true` or the `response.Items` property.
+     * @param {number=} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
+     * @param {boolean=} options.raw Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
     query: createQuery(query),
@@ -84,8 +84,8 @@ function createQuerier(dynamoWrapper) {
      * @param {String} tableName The name of the table to perform the operation on
      * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
      * @param {Object=} options The configuration options parameters.
-     * @param {number} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean} options.raw Wether to return the full DynamoDB response object when `true` or the `response.Items` property
+     * @param {number=} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
+     * @param {boolean=} options.raw Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
     queryFor: createQueryFor(query)

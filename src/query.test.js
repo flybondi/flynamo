@@ -37,7 +37,7 @@ describe('the queryFor function', () => {
       expect.objectContaining({
         TableName: 'some_table'
       }),
-      {}
+      undefined
     );
   });
 });
