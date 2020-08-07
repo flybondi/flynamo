@@ -74,7 +74,7 @@ const safelyWrap = unless(
 );
 
 /**
- * Extracts an `Items` property containing an array or items aand unwraps all of them
+ * Extracts an `Items` property containing an array or items and unwraps all of them
  * by means of `AttributeValue.unwrap`.
  * If `Items` if either `null` or `undefined`, it returns the value as-is.
  *
@@ -112,6 +112,16 @@ const wrapProp = key => compose(safelyWrap, prop(key));
  */
 const unwrapOver = key => over(lensProp(key), safelyUnwrap);
 
+/**
+ * Returns a function that unwraps an object under a `key` property containing an array.
+ * It does not mutate the original object.
+ *
+ * @private
+ * @param {String} key The name of the prop to update
+ * @returns {Function}
+ */
+const unwrapOverAll = key => over(lensProp(key), map(safelyUnwrap));
+
 const unwrapProp = key => compose(safelyUnwrap, prop(key));
 
 module.exports = {
@@ -122,5 +132,6 @@ module.exports = {
   unwrapAll,
   wrapOver,
   wrapUpdatePut: safelyWrapUpdatePut,
-  unwrapOver
+  unwrapOver,
+  unwrapOverAll
 };

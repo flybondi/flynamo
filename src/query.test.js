@@ -20,6 +20,12 @@ describe('the query function', () => {
     const { query } = createQuerier({ query: mockQuery });
     expect(await query()).toEqual([{ foo: 'bar' }]);
   });
+
+  test('should return a full response object with the items unwrapped', async () => {
+    const mockQuery = jest.fn().mockResolvedValue({ Items: [{ foo: { S: 'bar' } }], Count: 1 });
+    const { query } = createQuerier({ query: mockQuery });
+    expect(await query({}, { raw: true })).toEqual({ Items: [{ foo: 'bar' }], Count: 1 });
+  });
 });
 
 describe('the queryFor function', () => {
@@ -30,7 +36,8 @@ describe('the queryFor function', () => {
     expect(mockQuery).toHaveBeenCalledWith(
       expect.objectContaining({
         TableName: 'some_table'
-      })
+      }),
+      {}
     );
   });
 });
