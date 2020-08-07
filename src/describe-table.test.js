@@ -1,7 +1,7 @@
 'use strict';
 const createDescribers = require('./describe-table');
 
-describe('the query function', () => {
+describe('the describeTable function', () => {
   test('should call `describeTable` internally', async () => {
     const mockDescribeTable = jest.fn().mockResolvedValue({});
     const { describeTable } = createDescribers({ describeTable: mockDescribeTable });
