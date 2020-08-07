@@ -18,7 +18,7 @@ function createDescribers(dynamoWrapper) {
   const describeTable = bind(dynamoWrapper.describeTable, dynamoWrapper);
   return {
     /**
-     * Finds items based on primary key values.
+     * Retrieves information about the table.
      *
      * @function
      * @example
