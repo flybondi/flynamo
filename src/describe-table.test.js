@@ -17,7 +17,7 @@ describe('the describeTableFor function', () => {
     await describeTableFor('some_table')();
     expect(mockDescribeTable).toHaveBeenCalledWith(
       expect.objectContaining({
-        TableName: 'some_table',
+        TableName: 'some_table'
       })
     );
   });

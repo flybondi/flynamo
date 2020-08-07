@@ -56,7 +56,7 @@ function createDescribers(dynamoWrapper) {
      * @param {Object=} request Parameters as expected by DynamoDB `DescribeTable` operation. A `TableName` attributes specified here will override `tableName` argument.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
-    describeTableFor: createDescribeTableFor(describeTable),
+    describeTableFor: createDescribeTableFor(describeTable)
   };
 }
 
