@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <title>Home - Documentation</title>
-
+    
+    
+    <meta property="og:title" content="Flynamo - Let your AWS DynamoDB client take off!"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:site_name" content="Flynamo"/>
+    <meta property="og:url" content="https://flybondi.github.io/flynamo/"/>
+    
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
@@ -11,6 +19,8 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -21,8 +31,11 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Builders.html">Builders</a><ul class='methods'><li data-type='method'><a href="module-Builders.html#.append">append</a></li><li data-type='method'><a href="module-Builders.html#.put">put</a></li><li data-type='method'><a href="module-Builders.html#.remove">remove</a></li><li data-type='method'><a href="module-Builders.html#.updateExpression">updateExpression</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
 </nav>
 
 <div id="main">
@@ -35,6 +48,11 @@
     
 
 
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
 
 
 
@@ -45,11 +63,13 @@
     
 
 
-    <section class="readme">
-        <article><h1>@flybondi/flynamo</h1><p><a href="https://circleci.com/gh/flybondi/flynamo/tree/develop"><img src="https://circleci.com/gh/flybondi/flynamo/tree/develop.svg?style=svg" alt="CircleCI"></a>
+
+    <section class="readme usertext">
+        <article><h1>@flybondi/flynamo</h1>
+<p><a href="https://circleci.com/gh/flybondi/flynamo/tree/develop"><img src="https://circleci.com/gh/flybondi/flynamo/tree/develop.svg?style=svg" alt="CircleCI"></a>
 <a href="https://github.com/Flet/semistandard"><img src="https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square" alt="js-semistandard-style"></a>
 <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a></p>
-<p>Let your <a href="https://aws.amazon.com/">AWS</a> <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html">DynamoDB</a> client take off ✈️! </p>
+<p>Let your <a href="https://aws.amazon.com/">AWS</a> <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html">DynamoDB</a> client take off ✈️!</p>
 <p>See <a href="https://flybondi.github.io/flynamo/">the docs</a>.</p>
 <ul>
 <li>🔧 <strong>Simplifies</strong> creating requests and parsing responses.</li>
@@ -63,11 +83,14 @@
 npm i aws-sdk
 
 # Install Flynamo
-npm i @flybondi/flynamo</code></pre><h2>Basic usage</h2><p>Wrap an instance of <code>AWS.DynamoDB</code> client with <code>createFlynamo</code> and you're good to go. The result will be an object exposing all of Flynamo's own API.</p>
-<pre class="prettyprint source lang-js"><code>const DynamoDB = require('aws-sdk/clients/dynamodb');
+npm i @flybondi/flynamo
+</code></pre>
+<h2>Basic usage</h2>
+<p>Wrap an instance of <code>AWS.DynamoDB</code> client with <code>createFlynamo</code> and you're good to go. The result will be an object exposing all of Flynamo's own API.</p>
+<pre class="prettyprint source lang-js"><code>const AWS = require('aws-sdk');
 const createFlynamo = require('@flybondi/flynamo');
 
-const { forTable } = createFlynamo(new DynamoDB());
+const { forTable } = createFlynamo(new AWS.DynamoDB());
 
 const { insert, update, remove } = forTable('SomeTable');
 
@@ -80,7 +103,10 @@ const { insert, update, remove } = forTable('SomeTable');
 
   // ...and delete it
   await remove(42);
-})();</code></pre><h2>API</h2><p>Dig into the <a href="https://flybondi.github.io/flynamo/">documentation</a> to learn about the available functions.</p>
+})();
+</code></pre>
+<h2>API</h2>
+<p>Dig into the <a href="https://flybondi.github.io/flynamo/">documentation</a> to learn about the available functions.</p>
 <hr>
 <p>Made with 💛 by <a href="https://flybondi.com">Flybondi</a>.</p></article>
     </section>
@@ -90,15 +116,23 @@ const { insert, update, remove } = forTable('SomeTable');
 
 
 
+    
+    
 </div>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Aug 13 2018 13:38:04 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 13 2020 18:32:40 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
 </body>
 </html>

@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <title>GetItem - Documentation</title>
-
+    
+    
+    <meta property="og:title" content="Flynamo - Let your AWS DynamoDB client take off!"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:site_name" content="Flynamo"/>
+    <meta property="og:url" content="https://flybondi.github.io/flynamo/"/>
+    
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
@@ -11,6 +19,8 @@
     <![endif]-->
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -21,8 +31,11 @@
 
 <label for="nav-trigger" class="overlay"></label>
 
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Builders.html">Builders</a><ul class='methods'><li data-type='method'><a href="module-Builders.html#.append">append</a></li><li data-type='method'><a href="module-Builders.html#.put">put</a></li><li data-type='method'><a href="module-Builders.html#.remove">remove</a></li><li data-type='method'><a href="module-Builders.html#.updateExpression">updateExpression</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#createFlynamo">createFlynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
 </nav>
 
 <div id="main">
@@ -46,14 +59,15 @@
 </header>
 
 <article>
-    <div class="container-overview">
     
-        
-            <div class="description"><p>The <code>GetItem</code> operation returns a set of attributes for the item with the given primary key.</p></div>
-        
-
+        <div class="container-overview">
         
             
+                <div class="description usertext"><p>The <code>GetItem</code> operation returns a set of attributes for the item with the given primary key.</p></div>
+            
+
+            
+                
 
 
 
@@ -133,14 +147,20 @@
 
 
 
+
+
+
+            
         
-    
-    </div>
-
+        </div>
     
 
     
 
+    
+
+    
+    
     
 
      
@@ -169,7 +189,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get.js.html">get.js</a>, <a href="get.js.html#line78">line 78</a>
+        <a href="get.js.html">get.js</a>, <a href="get.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -215,7 +235,7 @@
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a set of attributes for the item with the given primary key.
 If there is no matching item, it returns <code>undefined</code>. The name of the <code>key</code> defaults
 to <code>id</code> if it's not specified. The <code>Key</code> attribute (as expected by DynamoDB request)
@@ -309,7 +329,7 @@ can be omitted.</p>
             
 
             <td class="description last"><p>Parameters as expected by DynamoDB <code>GetItem</code> operation. Any <code>Key</code> attribute
- specified here will override primary key value in <code>key</code>.</p></td>
+specified here will override primary key value in <code>key</code>.</p></td>
         </tr>
 
     
@@ -329,12 +349,14 @@ can be omitted.</p>
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>A promise that resolves to the item returned by DynamoDB response or <code>undefined</code> if it
- does not exist.</p>
+does not exist.</p>
 </div>
 
 
@@ -354,6 +376,7 @@ can be omitted.</p>
     
 
 
+
         
             
 
@@ -371,7 +394,7 @@ can be omitted.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get.js.html">get.js</a>, <a href="get.js.html#line112">line 112</a>
+        <a href="get.js.html">get.js</a>, <a href="get.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -417,13 +440,13 @@ can be omitted.</p>
 
 
 
-<div class="description">
+<div class="description usertext">
     <p>Returns a function that returns a set of attributes for the item with the given primary key.
 If there is no matching item, it returns <code>undefined</code>. The name of the <code>key</code> defaults
 to <code>id</code> if it's not specified. The <code>Key</code> attribute (as expected by DynamoDB request)
 can be omitted. The last <code>request</code> argument is optional and is only required if any non
 mandatory attribute needs to be included in the request.
-You would typically use this function through <a href="global.html#forTable">forTable</a>.</p>
+You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
 </div>
 
 
@@ -564,7 +587,7 @@ You would typically use this function through <a href="global.html#forTable">for
             
 
             <td class="description last"><p>Parameters as expected by DynamoDB <code>GetItem</code> operation (optional).
- Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
+Any <code>Key</code> or <code>TableName</code> attributes specified here will override primary key value in <code>key</code> or <code>tableName</code> arguments.</p></td>
         </tr>
 
     
@@ -584,12 +607,14 @@ You would typically use this function through <a href="global.html#forTable">for
 
 
 
+
+
 <h5>Returns:</h5>
 
         
 <div class="param-desc">
     <p>A promise that resolves to the item returned by DynamoDB response or <code>undefined</code> if it
- does not exist.</p>
+does not exist.</p>
 </div>
 
 
@@ -609,6 +634,7 @@ You would typically use this function through <a href="global.html#forTable">for
     
 
 
+
         
     
 
@@ -622,15 +648,23 @@ You would typically use this function through <a href="global.html#forTable">for
 
 
 
+    
+    
 </div>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Aug 13 2018 13:38:04 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 13 2020 18:32:40 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
 <script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
 </body>
 </html>
