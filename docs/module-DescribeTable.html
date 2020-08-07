@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Scan - Documentation</title>
+    <title>DescribeTable - Documentation</title>
     
     
     <meta property="og:title" content="Flynamo - Let your AWS DynamoDB client take off!"/>
@@ -40,7 +40,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Scan</h1>
+    <h1 class="page-title">DescribeTable</h1>
     
 
     
@@ -63,7 +63,7 @@
         <div class="container-overview">
         
             
-                <div class="description usertext"><p>The <code>Scan</code> operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a FilterExpression operation.</p></div>
+                <div class="description usertext"><p>The <code>DescribeTable</code> operation returns information about the table.</p></div>
             
 
             
@@ -77,7 +77,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-all.js.html">get-all.js</a>, <a href="get-all.js.html#line2">line 2</a>
+        <a href="describe-table.js.html">describe-table.js</a>, <a href="describe-table.js.html#line2">line 2</a>
     </li></ul></dd>
     
 
@@ -111,7 +111,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html</a></li>
         </ul>
     </dd>
     
@@ -177,7 +177,7 @@
 
     
 
-    <h4 class="name" id="~getAll"><span class="type-signature">(inner) </span>getAll<span class="signature">(request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~describeTable"><span class="type-signature">(inner) </span>describeTable<span class="signature">(request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -189,7 +189,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-all.js.html">get-all.js</a>, <a href="get-all.js.html#line37">line 37</a>
+        <a href="describe-table.js.html">describe-table.js</a>, <a href="describe-table.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -223,7 +223,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html#API_DescribeTable_RequestParameters">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html#API_DescribeTable_RequestParameters</a></li>
         </ul>
     </dd>
     
@@ -236,7 +236,7 @@
 
 
 <div class="description usertext">
-    <p>Returns all items in a table or a secondary index. This uses <code>Scan</code> internally.</p>
+    <p>Retrieves information about the table.</p>
 </div>
 
 
@@ -249,8 +249,10 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>await getAll({ TableName: 'SomeTable' });
- // Will return all items in `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>// Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.
+ await describeTable({
+   TableName: 'SomeTable'
+ });</code></pre>
 
 
 
@@ -296,7 +298,7 @@
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>Scan</code> operation.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>DescribeTable</code> operation. Must contain, at least, <code>TableName</code> attribute.</p></td>
         </tr>
 
     
@@ -322,7 +324,7 @@
 
         
 <div class="param-desc">
-    <p>A promise that resolves to an array of <code>Items</code> returned by the DynamoDB response</p>
+    <p>A promise that resolves to the response from DynamoDB.</p>
 </div>
 
 
@@ -348,7 +350,7 @@
 
     
 
-    <h4 class="name" id="~getAllFor"><span class="type-signature">(inner) </span>getAllFor<span class="signature">(tableName, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~describeTableFor"><span class="type-signature">(inner) </span>describeTableFor<span class="signature">(tableName, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -360,7 +362,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-all.js.html">get-all.js</a>, <a href="get-all.js.html#line54">line 54</a>
+        <a href="describe-table.js.html">describe-table.js</a>, <a href="describe-table.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -394,7 +396,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax</a></li>
+            <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html#API_DescribeTable_RequestParameters">https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html#API_DescribeTable_RequestParameters</a></li>
         </ul>
     </dd>
     
@@ -407,7 +409,7 @@
 
 
 <div class="description usertext">
-    <p>Returns a function that returns all items in a table or a secondary index. This uses <code>Scan</code> internally.
+    <p>Creates a function that describe given table.
 You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
 </div>
 
@@ -419,10 +421,14 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
-    <pre class="prettyprint"><code>await getAllFor('SomeTable')({ Limit: 10 });
-// Will return first 10 items in `SomeTable`</code></pre>
+    <pre class="prettyprint"><code>// Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.
+ await describeTableFor('SomeTable')</code></pre>
+
+    <pre class="prettyprint"><code>// Exported from `forTable`
+ const { describeTable } = forTable('SomeTable');
+ await describeTable();</code></pre>
 
 
 
@@ -459,6 +465,11 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             <td class="type">
             
+                
+<span class="param-type">String</span>
+
+
+            
             </td>
 
             
@@ -473,8 +484,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
             
 
-            <td class="description last"><p>The name of the table to perform the operation on. This will override any <code>TableName</code>
-attribute set on <code>request</code>.</p></td>
+            <td class="description last"><p>The name of the table to perform the operation on</p></td>
         </tr>
 
     
@@ -507,7 +517,7 @@ attribute set on <code>request</code>.</p></td>
 
             
 
-            <td class="description last"><p>Parameters as expected by DynamoDB <code>Scan</code> operation.</p></td>
+            <td class="description last"><p>Parameters as expected by DynamoDB <code>DescribeTable</code> operation. A <code>TableName</code> attributes specified here will override <code>tableName</code> argument.</p></td>
         </tr>
 
     
@@ -533,7 +543,7 @@ attribute set on <code>request</code>.</p></td>
 
         
 <div class="param-desc">
-    <p>A promise that resolves to an array of <code>Items</code> returned by the DynamoDB response</p>
+    <p>A promise that resolves to the response from DynamoDB.</p>
 </div>
 
 
