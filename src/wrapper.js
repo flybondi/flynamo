@@ -120,7 +120,8 @@ const unwrapOver = key => over(lensProp(key), safelyUnwrap);
  * @param {String} key The name of the prop to update
  * @returns {Function}
  */
-const unwrapOverAll = key => over(lensProp(key), map(safelyUnwrap));
+const unwrapOverAll = key =>
+  unless(compose(isNil, prop(key)), over(lensProp(key), map(safelyUnwrap)));
 
 const unwrapProp = key => compose(safelyUnwrap, prop(key));
 
