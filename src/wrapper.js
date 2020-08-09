@@ -1,5 +1,5 @@
 'use strict';
-const { compose, prop, map, unless, when, isNil, over, lensProp } = require('ramda');
+const { compose, prop, map, unless, when, isNil, over, lensProp, propSatisfies } = require('ramda');
 const { AttributeValue, AttributeValueUpdate } = require('dynamodb-data-types');
 
 /**
