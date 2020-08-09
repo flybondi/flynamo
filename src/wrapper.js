@@ -121,7 +121,7 @@ const unwrapOver = key => over(lensProp(key), safelyUnwrap);
  * @returns {Function}
  */
 const unwrapOverAll = key =>
-  unless(compose(isNil, prop(key)), over(lensProp(key), map(safelyUnwrap)));
+  unless(propSatisfies(isNil, key), over(lensProp(key), map(safelyUnwrap)));
 
 const unwrapProp = key => compose(safelyUnwrap, prop(key));
 
