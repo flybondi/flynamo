@@ -5,7 +5,7 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
  * @module Query
  */
-const { bind, curry, useWith } = require('ramda');
+const { bind, curry } = require('ramda');
 const { unwrapAll, unwrapOverAll } = require('./wrapper');
 const addTableName = require('./table-name');
 
@@ -18,7 +18,11 @@ const createQuery = query => (params, options) =>
 /**
  * @private
  */
-const createQueryFor = curry((query, table) => useWith(createQuery(query), [addTableName(table)]));
+const createQueryFor = curry((query, table) => {
+  const queryFn = createQuery(query);
+  const withTableName = addTableName(table);
+  return (params, options) => queryFn(withTableName(params), options);
+});
 
 function createQuerier(dynamoWrapper) {
   const query = bind(dynamoWrapper.query, dynamoWrapper);
