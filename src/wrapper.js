@@ -1,5 +1,5 @@
 'use strict';
-const { compose, prop, map, unless, when, isNil, over, lensProp } = require('ramda');
+const { compose, prop, map, unless, when, isNil, over, lensProp, propSatisfies } = require('ramda');
 const { AttributeValue, AttributeValueUpdate } = require('dynamodb-data-types');
 
 /**
@@ -120,7 +120,8 @@ const unwrapOver = key => over(lensProp(key), safelyUnwrap);
  * @param {String} key The name of the prop to update
  * @returns {Function}
  */
-const unwrapOverAll = key => over(lensProp(key), map(safelyUnwrap));
+const unwrapOverAll = key =>
+  unless(propSatisfies(isNil, key), over(lensProp(key), map(safelyUnwrap)));
 
 const unwrapProp = key => compose(safelyUnwrap, prop(key));
 

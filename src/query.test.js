@@ -40,4 +40,18 @@ describe('the queryFor function', () => {
       undefined
     );
   });
+
+  test('should create a query function with two arguments', async () => {
+    const mockQuery = jest.fn().mockResolvedValue({});
+    const { queryFor } = createQuerier({ query: mockQuery });
+    const query = queryFor('some_table');
+    await query({}, { raw: true });
+
+    expect(mockQuery).toHaveBeenCalledWith(
+      expect.objectContaining({
+        TableName: 'some_table'
+      }),
+      { raw: true }
+    );
+  });
 });
