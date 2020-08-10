@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/flybondi/flynamo/compare/v1.4.0...v1.4.1) (2020-08-10)
+
+
+### Bug Fixes
+
+* replace `compose` with `useWith` in order to use the options argument in the query function.  ([#28](https://github.com/flybondi/flynamo/issues/28)) ([185157d](https://github.com/flybondi/flynamo/commit/185157d8e3c60d9f3c1a1407202a5491b0a55e0d))
+
 # [1.4.0](https://github.com/flybondi/flynamo/compare/v1.3.0...v1.4.0) (2020-08-07)
 
 
