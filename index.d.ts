@@ -3,6 +3,11 @@ import { DynamoDB } from 'aws-sdk'
 type Key = {[key: string]: string | number | boolean };
 type Item = {[key: string]: any };
 
+type QueryOptions = {
+  groupDelayMs?: number,
+  raw?: boolean
+}
+
 export interface Flynamo {
   batchGet: (input: DynamoDB.Types.BatchGetItemInput) => Promise<DynamoDB.Types.BatchGetItemOutput>,
   batchInsert: (input: DynamoDB.Types.BatchWriteItemInput) => Promise<DynamoDB.Types.BatchWriteItemOutput>,
@@ -12,7 +17,7 @@ export interface Flynamo {
   get: (key: Key) => Promise<Item[]>,
   getAll: (input: DynamoDB.Types.ScanInput) => Promise<Item[]>,
   insert: (item: Item) => Promise<DynamoDB.Types.PutItemOutput[]>,
-  query: (input: DynamoDB.Types.QueryInput) => Promise<Item[]>,
+  query: (input: DynamoDB.Types.QueryInput, options?: QueryOptions) => Promise<Item[]>,
   remove: (key: Key) => Promise<DynamoDB.Types.DeleteItemOutput>,
   update: (key: Key, item: Item) => Promise<Item>
 }

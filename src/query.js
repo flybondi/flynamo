@@ -46,9 +46,9 @@ function createQuerier(dynamoWrapper) {
      *
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
-     * @param {Object=} options The configuration options parameters.
-     * @param {number=} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean=} options.raw Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
+     * @param {Object} [options] The configuration options parameters.
+     * @param {number} [options.groupDelayMs=100] The delay between individual requests. Defaults to 100 ms.
+     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
     query: createQuery(query),
@@ -87,9 +87,9 @@ function createQuerier(dynamoWrapper) {
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {String} tableName The name of the table to perform the operation on
      * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
-     * @param {Object=} options The configuration options parameters.
-     * @param {number=} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean=} options.raw Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
+     * @param {Object} [options] The configuration options parameters.
+     * @param {number} [options.groupDelayMs=100] The delay between individual requests. Defaults to 100 ms.
+     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
     queryFor: createQueryFor(query)
