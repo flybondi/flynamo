@@ -20,13 +20,13 @@
     "!src/**/*.test.js"
   ],
   "scripts": {
-    "generate-docs": "jsdoc -c jsdoc.json",
+    "docs": "jsdoc -c jsdoc.json",
     "prettier": "prettier --write \"src/**/*.js\" index.js",
     "lint": "eslint src index.js --ext js",
-    "report": "run-s test.coverage coverage",
+    "report": "yarn test:coverage coverage",
     "test": "jest --env=node src/",
-    "test.watch": "yarn test --watchAll",
-    "test.coverage": "yarn test --coverage --coverageDirectory .coverage"
+    "test:watch": "yarn test --watchAll",
+    "test:coverage": "yarn test --coverage --coverageDirectory .coverage"
   },
   "keywords": [
     "flybondi",
@@ -52,10 +52,10 @@
     "aws-sdk": "2.x"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "commitlint": "^11.0.0",
     "docdash": "^1.2.0",
-    "eslint": "^7.17.0",
+    "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -64,7 +64,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-ramda": "^2.5.1",
     "eslint-plugin-standard": "^4.1.0",
-    "husky": "^4.3.7",
+    "husky": "^4.3.8",
     "jest": "^26.6.3",
     "jsdoc": "^3.6.6",
     "lint-staged": "^10.5.3",
@@ -73,9 +73,9 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -e $GIT_PARAMS",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged",
-      "pre-push": "run-s test"
+      "pre-push": "yarn test"
     }
   },
   "lint-staged": {
@@ -100,7 +100,7 @@
       [
         "@semantic-release/exec",
         {
-          "prepareCmd": "npx run-s generate-docs"
+          "prepareCmd": "npx run-s docs"
         }
       ],
       [
