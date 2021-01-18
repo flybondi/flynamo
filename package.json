@@ -12,6 +12,13 @@
     "url": "https://github.com/flybondi/flynamo"
   },
   "main": "index.js",
+  "files": [
+    "index.js",
+    "builders.js",
+    "index.d.ts",
+    "src/",
+    "!src/**/*.test.js"
+  ],
   "scripts": {
     "generate-docs": "jsdoc -c jsdoc.json",
     "prettier": "prettier --write \"src/**/*.js\" index.js",
