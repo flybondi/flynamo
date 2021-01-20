@@ -64,9 +64,9 @@ function createQuerier(dynamoWrapper) {
      *  await queryFor('SomeTable')({
      *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
      *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      d1: { S: '1985-01-01' },
-     *      d2: { S: '2019-01-01' }
+     *      ':identifier': { N: 42 },
+     *      ':d1': { S: '1985-01-01' },
+     *      ':d2': { S: '2019-01-01' }
      *    }
      *  });
      *
@@ -77,9 +77,9 @@ function createQuerier(dynamoWrapper) {
      *  await query({
      *    KeyConditionExpression: "id = :identifier AND postedBy BETWEEN :p1 AND :p2",
      *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      p1: { S: 'Alice' },
-     *      p2: { S: 'Dave' }
+     *      ':identifier': { N: 42 },
+     *      ':p1': { S: 'Alice' },
+     *      ':p2': { S: 'Dave' }
      *    }
      *  });
      *

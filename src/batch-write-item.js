@@ -128,7 +128,7 @@ function createWriteBatcher(dynamoWrapper) {
      *
      * @example
      *
-     *  // Inserts one item and remove item with Key 42 is `SomeTable`
+     *  // Inserts one item and remove item with Key 42 in `SomeTable`
      *  await batchWriteFor('SomeTable')({ insert: [{ foo: 'bar' }], remove: [42] });
      *
      * @example
@@ -169,7 +169,7 @@ function createWriteBatcher(dynamoWrapper) {
     batchInsertFor: createBatchRequestFor(batchWriteItem, 'insert'),
 
     /**
-     * Returns a functin that deletes multitple items from a table in a single batch.
+     * Returns a function that deletes multiple items from a table in a single batch.
      * It expects an array of `Key` values to delete. If no name is specified for the `Key`,
      * a name of `id` will be assumed.
      * You would typically use this function through {@link forTable}.

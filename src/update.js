@@ -37,7 +37,7 @@ const generateUpdateExpression = unless(
   has('UpdateExpression'),
   // Generate an `UpdateExpression`, `ExpressionAttributeNames` and
   // `ExpressionAttributeValues` objects
-  // The `original` argument is asumed to be an empty object so only `SET`
+  // The `original` argument is assumed to be an empty object so only `SET`
   // expressions are supported by default
   // @see https://github.com/4ossiblellc/dynamodb-update-expression/blob/master/README.md#usage
   compose(wrapOver('ExpressionAttributeValues'), partial(getUpdateExpression, [{}]))
@@ -120,9 +120,9 @@ function createUpdater(dynamoWrapper) {
      *
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html#API_UpdateItem_RequestSyntax
      * @param {*} key The primary key value.
-     * @param {Object} payload The update payload that will be merged with the item present in DynamoDB. An appropriate
+     * @param {Object|Function} itemOrBuilder Either an update expression builder function or the partial item that will be merged with the existing item in `AWS.DynamoDB`. An appropriate
      *  `UpdateExpression` will be automatically created from this argument. While you can `null` them or replace them,
-     *  removing attributes from an item is only supported through manually defining an `UpdateExpression` on `request`.
+     *  removing attributes from an item is only supported through manually defining an `UpdateExpression` using the `request` argument.
      * @param {Object} request Parameters as expected by DynamoDB `UpdateItem` operation. Must include, at least, a `TableName` attribute.
      * @returns {Promise} A promise that resolves to the `Attributes` property of the DynamoDB response.
      */

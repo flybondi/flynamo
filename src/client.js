@@ -16,10 +16,10 @@ const DynamoDBWrapper = require('dynamodb-wrapper');
  *
  * @see https://github.com/Shadowblazen/dynamodb-wrapper#setup
  * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
- * @param {Object} client A DynamoDB client
- * @param {Object=} config  `DynamoDBWrapper` configuration (optional).
+ * @param {import('aws-sdk').DynamoDB} client A DynamoDB client
+ * @param {import('dynamodb-wrapper').IDynamoDBWrapperOptions} [config={}]  `DynamoDBWrapper` configuration (optional).
  */
-function createFlynamo(client, config = {}) {
+function flynamo(client, config = {}) {
   const clientWrapper = new DynamoDBWrapper(client, config);
 
   const { get, getFor } = createGetter(clientWrapper);
@@ -90,4 +90,4 @@ function createFlynamo(client, config = {}) {
   };
 }
 
-module.exports = createFlynamo;
+module.exports = flynamo;

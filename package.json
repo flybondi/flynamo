@@ -2,32 +2,6 @@
   "name": "@flybondi/flynamo",
   "version": "1.4.1",
   "description": "An AWS DynamoDB client wrapper",
-  "author": "Flybondi <dev@flybondi.com> (https://www.flybondi.com)",
-  "homepage": "https://flybondi.github.io/flynamo",
-  "bugs": {
-    "url": "https://github.com/flybondi/flynamo/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/flybondi/flynamo"
-  },
-  "main": "index.js",
-  "files": [
-    "index.js",
-    "builders.js",
-    "index.d.ts",
-    "src/",
-    "!src/**/*.test.js"
-  ],
-  "scripts": {
-    "docs": "jsdoc -c jsdoc.json",
-    "prettier": "prettier --write \"src/**/*.js\" index.js",
-    "lint": "eslint src index.js --ext js",
-    "report": "yarn test:coverage coverage",
-    "test": "jest --env=node src/",
-    "test:watch": "yarn test --watchAll",
-    "test:coverage": "yarn test --coverage --coverageDirectory .coverage"
-  },
   "keywords": [
     "flybondi",
     "dynamodb",
@@ -37,26 +11,69 @@
     "wrapper",
     "aws"
   ],
-  "license": "MIT",
-  "engines": {
-    "node": ">=7"
+  "homepage": "https://flybondi.github.io/flynamo",
+  "bugs": {
+    "url": "https://github.com/flybondi/flynamo/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flybondi/flynamo"
+  },
+  "license": "MIT",
+  "author": "Flybondi <dev@flybondi.com> (https://www.flybondi.com)",
+  "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "builders.js",
+    "index.d.ts",
+    "src/",
+    "!src/**/*.test.js"
+  ],
+  "scripts": {
+    "docs": "jsdoc -c jsdoc.json",
+    "lint": "eslint src index.js --ext js",
+    "prettier": "prettier --write \"src/**/*.js\" index.js",
+    "report": "yarn test:coverage coverage",
+    "test": "jest --env=node src/",
+    "test:coverage": "yarn test --coverage --coverageDirectory .coverage",
+    "test:watch": "yarn test --watchAll"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "yarn test"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "src/**/*.json": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
     "dynamodb-wrapper": "^1.4.1",
     "ramda": "^0.27.1"
   },
-  "peerDependencies": {
-    "aws-sdk": "2.x"
-  },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@types/aws-sdk": "^2.7.0",
+    "aws-sdk": "^2.829.0",
     "docdash": "^1.2.0",
     "eslint": "^7.18.0",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -71,26 +88,11 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test"
-    }
+  "peerDependencies": {
+    "aws-sdk": "2.x"
   },
-  "lint-staged": {
-    "src/**/*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "src/**/*.json": [
-      "prettier --write"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+  "engines": {
+    "node": ">=7"
   },
   "release": {
     "branches": [
