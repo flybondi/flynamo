@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/flybondi/flynamo/compare/v1.4.1...v1.5.0) (2021-01-20)
+
+
+### Bug Fixes
+
+* generate valid keys when Key attr is provided ([#31](https://github.com/flybondi/flynamo/issues/31)) ([7e5d116](https://github.com/flybondi/flynamo/commit/7e5d11612b3c47902199aa38a5cc74c78698adbe))
+
+
+### Features
+
+* add typescript types ([#30](https://github.com/flybondi/flynamo/issues/30)) ([a054164](https://github.com/flybondi/flynamo/commit/a05416413a3cd4b5c4fe6ab747581f18de54ecb7))
+
 ## [1.4.1](https://github.com/flybondi/flynamo/compare/v1.4.0...v1.4.1) (2020-08-10)
 
 
