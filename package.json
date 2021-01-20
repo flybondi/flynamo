@@ -70,6 +70,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@types/aws-sdk": "^2.7.0",
+    "@types/jest": "^26.0.20",
     "aws-sdk": "^2.829.0",
     "docdash": "^1.2.0",
     "eslint": "^7.18.0",
