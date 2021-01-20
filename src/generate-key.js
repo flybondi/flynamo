@@ -1,6 +1,6 @@
 'use strict';
-const { is, compose, unless, anyPass, isNil, has, objOf } = require('ramda');
-const { wrap } = require('./wrapper');
+const { is, compose, unless, isNil, has, objOf, either, propIs, prop, when } = require('ramda');
+const { wrapOver } = require('./wrapper');
 
 /**
  * Generates an object containing a `Key` property such as the one expected
@@ -14,13 +14,13 @@ const { wrap } = require('./wrapper');
  * @private
  * @example
  *  generateKey({ id: 'xYhd76' });
- *  // -> { Key: { id: 'xYhd76' } }
+ *  // -> { Key: { id: { S: 'xYhd76' } } }
  *
  *  generateKey(105);
- *  // -> { Key: { id: 105 } }
+ *  // -> { Key: { id: { N: '105' } } }
  *
  *  generateKey({ Key: { id: 'xYhd76' } });
- *  // -> { Key: { id: 'xYhd76' } }
+ *  // -> { Key: { id: { S: 'xYhd76' } } }
  *
  *  generateKey(undefined);
  *  // -> undefined
@@ -28,8 +28,14 @@ const { wrap } = require('./wrapper');
  * @returns {Object} An object containing a `Key` property.
  */
 const generateKey = unless(
-  anyPass([isNil, is(Function), has('Key')]),
-  compose(objOf('Key'), wrap, unless(is(Object), objOf('id')))
+  either(isNil, is(Function)),
+  compose(
+    wrapOver('Key'),
+    unless(
+      propIs(Object, 'Key'),
+      compose(objOf('Key'), unless(is(Object), objOf('id')), when(has('Key'), prop('Key')))
+    )
+  )
 );
 
 module.exports = generateKey;
