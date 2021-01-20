@@ -1,4 +1,0 @@
-# Avoid including unit test files on released package
-# See the documentation if you need usage examples (https://flybondi.github.io/flynamo/)
-# Or take a look at latest tests at https://github.com/flybondi/flynamo/tree/develop/src
-src/**/*.test.js

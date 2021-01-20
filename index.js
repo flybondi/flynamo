@@ -6,6 +6,6 @@
  * @see https://flybondi.github.io/flynamo/
  * @module flynamo
  */
-const createFlynamo = require('./src/client');
+const flynamo = require('./src/client');
 
-module.exports = createFlynamo;
+module.exports = flynamo;

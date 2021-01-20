@@ -6,13 +6,14 @@
 
 Let your [AWS][aws] [DynamoDB][dynamodb] client take off ✈️!
 
-See [the docs][flynamo-jsdoc].
+Read [the docs][flynamo-jsdoc].
 
 - 🔧 **Simplifies** creating requests and parsing responses.
-- ✨ Automatic generation of DynamoDB attribute maps.
+- ✨ Automatic generation of `AWS.DynamoDB` attribute maps.
 - 💪 Supports all of `AWS.DynamoDB` API.
-- ✨ **Infers** data types and conventional names.
-- 💪 Import **single composable functions** for each DynamoDB API.
+- ✏️ Fully **typed** via [`d.ts` typings][typings].
+- ✨ **Infers** data types and conventional names for keys.
+- 💪 Import **single composable functions** for each `AWS.DynamoDB` operation.
 - 🙌 Plays well with functional libraries like [`ramda`][ramda] or [`lodash/fp`][lodashfp].
 
 ```sh
@@ -25,17 +26,16 @@ npm i @flybondi/flynamo
 
 ## Basic usage
 
-Wrap an instance of `AWS.DynamoDB` client with `createFlynamo` and you're good to go. The result will be an object exposing all of Flynamo's own API.
+Wrap an instance of an `AWS.DynamoDB` client with `flynamo` and you're good to go. The result will be an object exposing all of Flynamo's own API.
 
 ```js
 const AWS = require('aws-sdk');
-const createFlynamo = require('@flybondi/flynamo');
+const flynamo = require('@flybondi/flynamo');
 
-const { forTable } = createFlynamo(new AWS.DynamoDB());
-
+const { forTable } = flynamo(new AWS.DynamoDB());
 const { insert, update, remove } = forTable('SomeTable');
 
-(async function() {
+(async function () {
   // Insert a document into `SomeTable`
   await insert({ id: 42, name: 'Bob' });
 
@@ -57,6 +57,7 @@ Made with 💛 by [Flybondi][flybondi].
 
 [aws]: https://aws.amazon.com/
 [dynamodb]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/Welcome.html
+[typings]: https://github.com/flybondi/flynamo/blob/master/index.d.ts
 [ramda]: http://ramdajs.com/
 [lodashfp]: https://github.com/lodash/lodash/wiki/FP-Guide
 [flynamo-jsdoc]: https://flybondi.github.io/flynamo/

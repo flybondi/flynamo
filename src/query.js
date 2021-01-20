@@ -46,9 +46,9 @@ function createQuerier(dynamoWrapper) {
      *
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
-     * @param {Object=} options The configuration options parameters.
-     * @param {number=} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean=} options.raw Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
+     * @param {Object} [options] The configuration options parameters.
+     * @param {number} [options.groupDelayMs=100] The delay between individual requests. Defaults to 100 ms.
+     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
     query: createQuery(query),
@@ -64,9 +64,9 @@ function createQuerier(dynamoWrapper) {
      *  await queryFor('SomeTable')({
      *    KeyConditionExpression: "id = :identifier AND birthDate BETWEEN :d1 AND :d2",
      *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      d1: { S: '1985-01-01' },
-     *      d2: { S: '2019-01-01' }
+     *      ':identifier': { N: 42 },
+     *      ':d1': { S: '1985-01-01' },
+     *      ':d2': { S: '2019-01-01' }
      *    }
      *  });
      *
@@ -77,9 +77,9 @@ function createQuerier(dynamoWrapper) {
      *  await query({
      *    KeyConditionExpression: "id = :identifier AND postedBy BETWEEN :p1 AND :p2",
      *    ExpressionAttributeValues: {
-     *      identifier: { N: 42 },
-     *      p1: { S: 'Alice' },
-     *      p2: { S: 'Dave' }
+     *      ':identifier': { N: 42 },
+     *      ':p1': { S: 'Alice' },
+     *      ':p2': { S: 'Dave' }
      *    }
      *  });
      *
@@ -87,9 +87,9 @@ function createQuerier(dynamoWrapper) {
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {String} tableName The name of the table to perform the operation on
      * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
-     * @param {Object=} options The configuration options parameters.
-     * @param {number=} options.groupDelayMs The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean=} options.raw Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
+     * @param {Object} [options] The configuration options parameters.
+     * @param {number} [options.groupDelayMs=100] The delay between individual requests. Defaults to 100 ms.
+     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
     queryFor: createQueryFor(query)
