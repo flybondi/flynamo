@@ -3,7 +3,8 @@ import DynamoDBWrapper from 'dynamodb-wrapper';
 
 declare module "@flybondi/flynamo" {
   module Flynamo {
-    export type Key = string | number | { [key: string]: string | number } | { Key: { [key: string]: string | number } }
+    export type KeyAttributes = { [key: string]: string | number };
+    export type Key = string | number | KeyAttributes | { Key: KeyAttributes };
     export type Item = { [key: string]: any };
 
     export interface BatchGetItemInput {
