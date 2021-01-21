@@ -8,11 +8,11 @@
 const { bind, curry, mergeRight } = require('ramda');
 const { unwrapAll, unwrapOverAll } = require('./wrapper');
 const addTableName = require('./table-name');
-const withPaginationHelper = require('./with-pagination-helper');
+const withPaginatorHelper = require('./with-paginator-helper');
 
 const DEFAULT_OPTIONS = {
-  raw: false,
-  pagination: true
+  autopagination: true,
+  raw: false
 };
 const mergeWithDefaults = mergeRight(DEFAULT_OPTIONS);
 
@@ -21,7 +21,7 @@ const mergeWithDefaults = mergeRight(DEFAULT_OPTIONS);
  */
 const createQuery = query => (params, options = {}) => {
   options = mergeWithDefaults(options);
-  return withPaginationHelper('query', params, options.pagination).then(
+  return withPaginatorHelper(query, params, options.autopagination).then(
     options.raw ? unwrapOverAll('Items') : unwrapAll('Items')
   );
 };
@@ -58,7 +58,7 @@ function createQuerier(dynamodb) {
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
      * @param {Object} [options] The configuration options parameters.
-     * @param {number} [options.pagination=true] Wheter to return all the DynamoDB response pages or just one page.
+     * @param {boolean} [options.autopagination=true] Whether to return all the DynamoDB response pages or just one page.
      * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */
@@ -99,7 +99,7 @@ function createQuerier(dynamodb) {
      * @param {String} tableName The name of the table to perform the operation on
      * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
      * @param {Object} [options] The configuration options parameters.
-     * @param {number} [options.pagination=true] Wheter to return all the DynamoDB response pages or just one page.
+     * @param {boolean} [options.autopagination=true] Wheter to return all the DynamoDB response pages or just one page.
      * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to the response from DynamoDB.
      */

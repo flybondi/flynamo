@@ -6,13 +6,12 @@
  */
 const { curry, compose, bind, prop } = require('ramda');
 const addTableName = require('./table-name');
-const withPaginationHelper = require('./with-pagination-helper');
+const withPaginatorHelper = require('./with-paginator-helper');
 
 /**
  * @private
  */
-const createCount = scan => params =>
-  withPaginationHelper('scan', params, true).then(prop('Count'));
+const createCount = scan => params => withPaginatorHelper(scan, params, true).then(prop('Count'));
 
 /**
  * @private
