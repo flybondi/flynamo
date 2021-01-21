@@ -3,14 +3,16 @@ const createUpdater = require('./update');
 
 describe('the update function', () => {
   test('should call `updateItem` internally', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue({});
+    const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update();
     expect(mockUpdateItem).toHaveBeenCalled();
   });
 
   test('should generate a wrapped `Key` attribute from the first argument', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update({ id: 5 });
     expect(mockUpdateItem).toHaveBeenCalledWith(
@@ -21,7 +23,8 @@ describe('the update function', () => {
   });
 
   test('should default to `id` when generating `Key attribute`', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update(5);
     expect(mockUpdateItem).toHaveBeenCalledWith(
@@ -32,7 +35,8 @@ describe('the update function', () => {
   });
 
   test('should generate SET `UpdateExpression` from second argument', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update(5, { foo: 'bar' });
     expect(mockUpdateItem).toHaveBeenCalledWith(
@@ -46,7 +50,8 @@ describe('the update function', () => {
   });
 
   test('should honor existing `UpdateExpression` if provided', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update(5, {
       UpdateExpression: 'SET #bar = :bar'
@@ -60,7 +65,8 @@ describe('the update function', () => {
   });
 
   test('should run the helper to generate `UpdateExpression` if the second argument is a function', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     const expressionBuilder = () => ({
       UpdateExpression: 'SET #bar = :bar'
@@ -75,7 +81,8 @@ describe('the update function', () => {
   });
 
   test('should merge the first three arguments and pass the rest as is', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update(5, {}, { bar: 'baz' }, { meh: 42 });
     expect(mockUpdateItem).toHaveBeenCalledWith(
@@ -93,7 +100,8 @@ describe('the update function', () => {
 
 describe('the updateFor function', () => {
   test('should add `TableName` automatically to any request', async () => {
-    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockUpdateItem = jest.fn().mockReturnValue(mockRequest);
     const { updateFor } = createUpdater({ updateItem: mockUpdateItem });
     await updateFor('some_table')({ id: 5 });
     expect(mockUpdateItem).toHaveBeenCalledWith(
