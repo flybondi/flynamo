@@ -319,10 +319,9 @@ declare module '@flybondi/flynamo' {
   }
 
   /**
-   * Wraps an `AWS.DynamoDB` instance and returns a new `Flynamo` client.
-   * Configurable `options` for `dynamodb-wrapper` may be provided.
+   * Grabs an AWS DynamoDB `client` and returns Flynamo's API to access
+   * its methods.
    *
-   * @see https://github.com/Shadowblazen/dynamodb-wrapper#setup
    * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
    * @param client - A `AWS.DynamoDB` client.
    */

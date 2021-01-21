@@ -10,10 +10,9 @@ const createWriteBatcher = require('./batch-write-item');
 const createGetBatcher = require('./batch-get-item');
 
 /**
- * Wraps an AWS DynamoDB `client` and returns Flynamo's API to access
- * its methods. Optionally, a `config` object for `dynamodb-wrapper` may be provided.
+ * Grabs an AWS DynamoDB `client` and returns Flynamo's API to access
+ * its methods.
  *
- * @see https://github.com/Shadowblazen/dynamodb-wrapper#setup
  * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
  * @param {Object} client A DynamoDB client
  */
