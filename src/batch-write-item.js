@@ -92,11 +92,16 @@ const generateRequestItems = table =>
   );
 
 const createBatchWriteFor = curry((batchWriteItem, table) =>
-  compose(apply(batchWriteItem), mapMergeFirstPairOfArgs(generateRequestItems(table)))
+  compose(
+    request => request.promise(),
+    apply(batchWriteItem),
+    mapMergeFirstPairOfArgs(generateRequestItems(table))
+  )
 );
 
 const createBatchRequestFor = curry((batchWriteItem, requestType, table) =>
   compose(
+    request => request.promise(),
     apply(batchWriteItem),
     mapMergeFirstPairOfArgs(compose(generateRequestItems(table), objOf(requestType)))
   )

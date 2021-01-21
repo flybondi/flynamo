@@ -8,7 +8,6 @@ const createUpdater = require('./update');
 const createCounter = require('./count');
 const createWriteBatcher = require('./batch-write-item');
 const createGetBatcher = require('./batch-get-item');
-const DynamoDBWrapper = require('dynamodb-wrapper');
 
 /**
  * Wraps an AWS DynamoDB `client` and returns Flynamo's API to access
@@ -17,20 +16,17 @@ const DynamoDBWrapper = require('dynamodb-wrapper');
  * @see https://github.com/Shadowblazen/dynamodb-wrapper#setup
  * @see https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
  * @param {Object} client A DynamoDB client
- * @param {Object} [config={}]  `DynamoDBWrapper` configuration (optional).
  */
-function flynamo(client, config = {}) {
-  const clientWrapper = new DynamoDBWrapper(client, config);
-
-  const { get, getFor } = createGetter(clientWrapper);
-  const { getAll, getAllFor } = createAllGetter(clientWrapper);
-  const { insert, insertFor } = createInserter(clientWrapper);
-  const { query, queryFor } = createQuerier(clientWrapper);
-  const { remove, removeFor } = createRemover(clientWrapper);
-  const { update, updateFor } = createUpdater(clientWrapper);
-  const { count, countFor } = createCounter(clientWrapper);
-  const { batchWriteFor, batchRemoveFor, batchInsertFor } = createWriteBatcher(clientWrapper);
-  const { batchGetFor } = createGetBatcher(clientWrapper);
+function flynamo(client) {
+  const { get, getFor } = createGetter(client);
+  const { getAll, getAllFor } = createAllGetter(client);
+  const { insert, insertFor } = createInserter(client);
+  const { query, queryFor } = createQuerier(client);
+  const { remove, removeFor } = createRemover(client);
+  const { update, updateFor } = createUpdater(client);
+  const { count, countFor } = createCounter(client);
+  const { batchWriteFor, batchRemoveFor, batchInsertFor } = createWriteBatcher(client);
+  const { batchGetFor } = createGetBatcher(client);
 
   function forTable(table) {
     return {

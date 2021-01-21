@@ -12,7 +12,8 @@ const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 /**
  * @private
  */
-const createInsert = putItem => compose(apply(putItem), mapMergeFirstPairOfArgs(generateItem));
+const createInsert = putItem =>
+  compose(request => request.promise(), apply(putItem), mapMergeFirstPairOfArgs(generateItem));
 
 /**
  * @private

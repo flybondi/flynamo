@@ -4,14 +4,25 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
  * @module Scan
  */
-const { curry, bind, pipeP, compose } = require('ramda');
-const { unwrapAll } = require('./wrapper');
+const { curry, bind, compose, mergeRight } = require('ramda');
+const { unwrapAll, unwrapOverAll } = require('./wrapper');
 const addTableName = require('./table-name');
+const withPaginationHelper = require('./with-pagination-helper');
 
+const DEFAULT_OPTIONS = {
+  raw: false,
+  pagination: true
+};
+const mergeWithDefaults = mergeRight(DEFAULT_OPTIONS);
 /**
  * @private
  */
-const createGetAll = scan => pipeP(scan, unwrapAll('Items'));
+const createGetAll = scan => (params, options = {}) => {
+  options = mergeWithDefaults(options);
+  return withPaginationHelper('scan', params, options.pagination).then(
+    options.raw ? unwrapOverAll('Items') : unwrapAll('Items')
+  );
+};
 
 /**
  * @private
@@ -32,6 +43,9 @@ function createAllGetter(dynamoWrapper) {
      *
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html#API_Scan_RequestSyntax
      * @param {Object} request Parameters as expected by DynamoDB `Scan` operation.
+     * @param {Object} [options] The configuration options parameters.
+     * @param {number} [options.pagination=true] Wheter to return all the DynamoDB response pages or just one page.
+     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to an array of `Items` returned by the DynamoDB response
      */
     getAll: createGetAll(scan),
@@ -49,6 +63,9 @@ function createAllGetter(dynamoWrapper) {
      * @param tableName The name of the table to perform the operation on. This will override any `TableName`
      *  attribute set on `request`.
      * @param {Object=} request Parameters as expected by DynamoDB `Scan` operation.
+     * @param {Object} [options] The configuration options parameters.
+     * @param {number} [options.pagination=true] Wheter to return all the DynamoDB response pages or just one page.
+     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
      * @returns {Promise} A promise that resolves to an array of `Items` returned by the DynamoDB response
      */
     getAllFor: createGetAllFor(scan)

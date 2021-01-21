@@ -36,6 +36,7 @@ const generateKeys = compose(
 
 const createBatchGetFor = curry((batchGetItem, table) =>
   compose(
+    request => request.promise(),
     apply(batchGetItem),
     overFirst(compose(objOf('RequestItems'), objOf(table))),
     mapMergeFirstPairOfArgs(generateKeys)

@@ -4,13 +4,15 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
  * @module Count
  */
-const { curry, compose, pipeP, bind, prop } = require('ramda');
+const { curry, compose, bind, prop } = require('ramda');
 const addTableName = require('./table-name');
+const withPaginationHelper = require('./with-pagination-helper');
 
 /**
  * @private
  */
-const createCount = scan => pipeP(scan, prop('Count'));
+const createCount = scan => params =>
+  withPaginationHelper('scan', params, true).then(prop('Count'));
 
 /**
  * @private
