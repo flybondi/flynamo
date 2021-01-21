@@ -39,8 +39,8 @@ const createRemoveFor = curry((deleteItem, table) =>
   )
 );
 
-function createRemover(dynamoWrapper) {
-  const deleteItem = bind(dynamoWrapper.deleteItem, dynamoWrapper);
+function createRemover(dynamodb) {
+  const deleteItem = bind(dynamodb.deleteItem, dynamodb);
   return {
     /**
      * Deletes a single item in a table by primary key. Returns the `Attributes` present in the

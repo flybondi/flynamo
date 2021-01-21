@@ -32,8 +32,8 @@ const createGetFor = curry((getItem, table) =>
   )
 );
 
-function createGetter(dynamoWrapper) {
-  const getItem = bind(dynamoWrapper.getItem, dynamoWrapper);
+function createGetter(dynamodb) {
+  const getItem = bind(dynamodb.getItem, dynamodb);
   return {
     /**
      * Returns a set of attributes for the item with the given primary key.

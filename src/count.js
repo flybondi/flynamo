@@ -18,8 +18,8 @@ const createCount = scan => params => withPaginatorHelper(scan, params, true).th
  */
 const createCountFor = curry((scan, table) => compose(createCount(scan), addTableName(table)));
 
-function createCounter(dynamoWrapper) {
-  const scan = bind(dynamoWrapper.scan, dynamoWrapper);
+function createCounter(dynamodb) {
+  const scan = bind(dynamodb.scan, dynamodb);
   return {
     /**
      * Return the number of elements in a table or a secondary index. This function

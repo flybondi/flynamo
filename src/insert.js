@@ -22,8 +22,8 @@ const createInsertFor = curry((putItem, table) =>
   compose(apply(putItem), mapMergeFirstPairOfArgs(compose(addTableName(table), generateItem)))
 );
 
-function createInserter(dynamoWrapper) {
-  const putItem = bind(dynamoWrapper.putItem, dynamoWrapper);
+function createInserter(dynamodb) {
+  const putItem = bind(dynamodb.putItem, dynamodb);
   return {
     /**
      * Creates a new item, or replaces an old item with a new item.

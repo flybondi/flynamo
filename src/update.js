@@ -93,8 +93,8 @@ const createUpdateFor = curry((updateItem, table) =>
   )
 );
 
-function createUpdater(dynamoWrapper) {
-  const updateItem = bind(dynamoWrapper.updateItem, dynamoWrapper);
+function createUpdater(dynamodb) {
+  const updateItem = bind(dynamodb.updateItem, dynamodb);
   return {
     /**
      * Edits an existing item's attributes, or adds a new item to the table if it does not

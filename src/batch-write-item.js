@@ -111,11 +111,11 @@ const createBatchRequestFor = curry((batchWriteItem, requestType, table) =>
  * Creates functions to allow removal and insertions of documents in a single batch.
  *
  * @private
- * @param {Object} dynamoWrapper The AWS DynamoDB client
+ * @param {Object} dynamodb The AWS DynamoDB client
  * @returns {Object}
  */
-function createWriteBatcher(dynamoWrapper) {
-  const batchWriteItem = bind(dynamoWrapper.batchWriteItem, dynamoWrapper);
+function createWriteBatcher(dynamodb) {
+  const batchWriteItem = bind(dynamodb.batchWriteItem, dynamodb);
   return {
     /**
      * Returns a function that puts or deletes multiple items in a table. It expects a single

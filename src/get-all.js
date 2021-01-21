@@ -29,8 +29,8 @@ const createGetAll = scan => (params, options = {}) => {
  */
 const createGetAllFor = curry((scan, table) => compose(createGetAll(scan), addTableName(table)));
 
-function createAllGetter(dynamoWrapper) {
-  const scan = bind(dynamoWrapper.scan, dynamoWrapper);
+function createAllGetter(dynamodb) {
+  const scan = bind(dynamodb.scan, dynamodb);
   return {
     /**
      * Returns all items in a table or a secondary index. This uses `Scan` internally.
