@@ -7,6 +7,7 @@
 const { curry, bind, compose, mergeRight } = require('ramda');
 const { rejectNilOrEmpty } = require('@flybondi/ramda-land');
 const { unwrapAll, unwrapOverAll } = require('./wrapper');
+const { toPromise } = require('./and-then');
 const addTableName = require('./table-name');
 const withPaginator = require('./with-paginator');
 
@@ -21,7 +22,7 @@ const mergeWithDefaults = compose(mergeRight(DEFAULT_OPTIONS), rejectNilOrEmpty)
  */
 const createGetAll = scan => (params, options = {}) => {
   const { raw, autopagination } = mergeWithDefaults(options);
-  const scanFn = autopagination ? withPaginator(scan) : scan;
+  const scanFn = autopagination ? withPaginator(scan) : compose(toPromise, scan);
   return scanFn(params).then(raw ? unwrapOverAll('Items') : unwrapAll('Items'));
 };
 

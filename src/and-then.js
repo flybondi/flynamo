@@ -1,5 +1,5 @@
 'use strict';
-const { compose, invoker, andThen: RAndThen } = require('ramda');
+const { compose, invoker, andThen: RAndThen, when, hasIn } = require('ramda');
 
 /**
  * Invokes `promise` on the given object passing
@@ -8,7 +8,7 @@ const { compose, invoker, andThen: RAndThen } = require('ramda');
  * @param {object} obj The obj to invoke `promise` on.
  * @returns {Promise.<*>} A `Promise` as returned by a call to `promise`.
  */
-const toPromise = invoker(0, 'promise');
+const toPromise = when(hasIn('promise'), invoker(0, 'promise'));
 
 /**
  * Returns the result of applying an `fn` function to the value inside a fulfilled promise,
