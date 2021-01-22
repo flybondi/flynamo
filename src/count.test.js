@@ -9,7 +9,7 @@ test('should call `scan` internally', async () => {
   expect(mockScan).toHaveBeenCalled();
 });
 
-test('should return `undefined` if no items are returned', async () => {
+test.only('should return `undefined` if no items are returned', async () => {
   const mockRequest = { promise: jest.fn().mockResolvedValue({ Items: [] }) };
   const mockScan = jest.fn().mockReturnValue(mockRequest);
   const { count } = createCounter({ scan: mockScan });

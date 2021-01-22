@@ -7,18 +7,18 @@
  * @module DeleteItem
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html
  */
-const { apply, bind, compose, curry, andThen } = require('ramda');
+const { apply, bind, compose, curry } = require('ramda');
 const { unwrapProp } = require('./wrapper');
 const addTableName = require('./table-name');
 const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 const generateKey = require('./generate-key');
 const addReturnValues = require('./return-values');
-
+const { andThen } = require('./and-then');
 /**
  * @private
  */
 const removeAndUnwrapAttributes = deleteItem =>
-  compose(andThen(unwrapProp('Attributes')), request => request.promise(), apply(deleteItem));
+  compose(andThen(unwrapProp('Attributes')), apply(deleteItem));
 
 /**
  * @private

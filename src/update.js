@@ -5,31 +5,20 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html
  * @module UpdateItem
  */
-const {
-  andThen,
-  apply,
-  applyTo,
-  bind,
-  compose,
-  curry,
-  ifElse,
-  is,
-  unless,
-  has,
-  partial
-} = require('ramda');
+const { apply, applyTo, bind, compose, curry, ifElse, is, unless, has, partial } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
 const addTableName = require('./table-name');
 const addReturnValues = require('./return-values');
 const { mapMergeNArgs } = require('./map-merge-args');
 const generateKey = require('./generate-key');
+const { andThen } = require('./and-then');
 
 /**
  * @private
  */
 const updateAndUnwrapAttributes = updateItem =>
-  compose(andThen(unwrapProp('Attributes')), request => request.promise(), apply(updateItem));
+  compose(andThen(unwrapProp('Attributes')), apply(updateItem));
 
 /**
  * @private

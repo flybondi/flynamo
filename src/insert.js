@@ -8,12 +8,13 @@ const { curry, bind, compose, apply } = require('ramda');
 const generateItem = require('./generate-item');
 const addTableName = require('./table-name');
 const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
+const { toPromise } = require('./and-then');
 
 /**
  * @private
  */
 const createInsert = putItem =>
-  compose(request => request.promise(), apply(putItem), mapMergeFirstPairOfArgs(generateItem));
+  compose(toPromise, apply(putItem), mapMergeFirstPairOfArgs(generateItem));
 
 /**
  * @private

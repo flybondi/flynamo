@@ -10,11 +10,11 @@ describe('the getAllFor function', () => {
     expect(mockScan).toHaveBeenCalled();
   });
 
-  test('should return `[]` if no items are returned', async () => {
+  test('should return `undefined` if no items are returned', async () => {
     const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
     const mockScan = jest.fn().mockReturnValue(mockRequest);
     const { getAll } = createAllGetter({ scan: mockScan });
-    expect(await getAll()).toStrictEqual([]);
+    expect(await getAll()).toBeUndefined();
   });
 
   test('should return unwrapped items', async () => {

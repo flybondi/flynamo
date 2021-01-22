@@ -10,11 +10,11 @@ describe('the query function', () => {
     expect(mockQuery).toHaveBeenCalled();
   });
 
-  test('should return `[]` if no items are returned', async () => {
+  test('should return `undefined` if no items are returned', async () => {
     const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
     const mockQuery = jest.fn().mockReturnValue(mockRequest);
     const { query } = createQuerier({ query: mockQuery });
-    expect(await query()).toStrictEqual([]);
+    expect(await query()).toBeUndefined();
   });
 
   test('should return unwrapped items', async () => {

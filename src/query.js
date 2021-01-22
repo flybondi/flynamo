@@ -5,25 +5,25 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
  * @module Query
  */
-const { bind, curry, mergeRight } = require('ramda');
+const { curry, bind, compose, mergeRight } = require('ramda');
+const { rejectNilOrEmpty } = require('@flybondi/ramda-land');
 const { unwrapAll, unwrapOverAll } = require('./wrapper');
 const addTableName = require('./table-name');
-const withPaginatorHelper = require('./with-paginator-helper');
+const withPaginator = require('./with-paginator');
 
-const DEFAULT_OPTIONS = {
+const DEFAULT_OPTIONS = Object.freeze({
   autopagination: true,
   raw: false
-};
-const mergeWithDefaults = mergeRight(DEFAULT_OPTIONS);
+});
+const mergeWithDefaults = compose(mergeRight(DEFAULT_OPTIONS), rejectNilOrEmpty);
 
 /**
  * @private
  */
-const createQuery = query => (params, options = {}) => {
-  options = mergeWithDefaults(options);
-  return withPaginatorHelper(query, params, options.autopagination).then(
-    options.raw ? unwrapOverAll('Items') : unwrapAll('Items')
-  );
+const createQuery = query => (params, options) => {
+  const { raw, autopagination } = mergeWithDefaults(options);
+  const queryFn = autopagination ? withPaginator(query) : query;
+  return queryFn(params).then(raw ? unwrapOverAll('Items') : unwrapAll('Items'));
 };
 
 /**

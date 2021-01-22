@@ -5,23 +5,24 @@
  * @module Scan
  */
 const { curry, bind, compose, mergeRight } = require('ramda');
+const { rejectNilOrEmpty } = require('@flybondi/ramda-land');
 const { unwrapAll, unwrapOverAll } = require('./wrapper');
 const addTableName = require('./table-name');
-const withPaginatorHelper = require('./with-paginator-helper');
+const withPaginator = require('./with-paginator');
 
-const DEFAULT_OPTIONS = {
+const DEFAULT_OPTIONS = Object.freeze({
   autopagination: true,
   raw: false
-};
-const mergeWithDefaults = mergeRight(DEFAULT_OPTIONS);
+});
+const mergeWithDefaults = compose(mergeRight(DEFAULT_OPTIONS), rejectNilOrEmpty);
+
 /**
  * @private
  */
 const createGetAll = scan => (params, options = {}) => {
-  options = mergeWithDefaults(options);
-  return withPaginatorHelper(scan, params, options.autopagination).then(
-    options.raw ? unwrapOverAll('Items') : unwrapAll('Items')
-  );
+  const { raw, autopagination } = mergeWithDefaults(options);
+  const scanFn = autopagination ? withPaginator(scan) : scan;
+  return scanFn(params).then(raw ? unwrapOverAll('Items') : unwrapAll('Items'));
 };
 
 /**
