@@ -13,14 +13,18 @@ const { toPromise } = require('./and-then');
 /**
  * @private
  */
-const createInsert = putItem =>
-  compose(toPromise, apply(putItem), mapMergeFirstPairOfArgs(generateItem));
+const insert = putItem => compose(toPromise, apply(putItem));
+
+/**
+ * @private
+ */
+const createInsert = putItem => compose(insert(putItem), mapMergeFirstPairOfArgs(generateItem));
 
 /**
  * @private
  */
 const createInsertFor = curry((putItem, table) =>
-  compose(apply(putItem), mapMergeFirstPairOfArgs(compose(addTableName(table), generateItem)))
+  compose(insert(putItem), mapMergeFirstPairOfArgs(compose(addTableName(table), generateItem)))
 );
 
 function createInserter(dynamodb) {
