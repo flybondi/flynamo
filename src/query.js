@@ -5,15 +5,27 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html
  * @module Query
  */
-const { bind, curry } = require('ramda');
+const { curry, bind, compose, mergeRight } = require('ramda');
+const { rejectNilOrEmpty } = require('@flybondi/ramda-land');
 const { unwrapAll, unwrapOverAll } = require('./wrapper');
+const { toPromise } = require('./and-then');
 const addTableName = require('./table-name');
+const withPaginator = require('./with-paginator');
+
+const DEFAULT_OPTIONS = Object.freeze({
+  autopagination: true,
+  raw: false
+});
+const mergeWithDefaults = compose(mergeRight(DEFAULT_OPTIONS), rejectNilOrEmpty);
 
 /**
  * @private
  */
-const createQuery = query => (params, options) =>
-  query(params, options).then(options && options.raw ? unwrapOverAll('Items') : unwrapAll('Items'));
+const createQuery = query => (params, options) => {
+  const { raw, autopagination } = mergeWithDefaults(options);
+  const queryFn = autopagination ? withPaginator(query) : compose(toPromise, query);
+  return queryFn(params).then(raw ? unwrapOverAll('Items') : unwrapAll('Items'));
+};
 
 /**
  * @private
@@ -24,8 +36,8 @@ const createQueryFor = curry((query, table) => {
   return (params, options) => queryFn(withTableName(params), options);
 });
 
-function createQuerier(dynamoWrapper) {
-  const query = bind(dynamoWrapper.query, dynamoWrapper);
+function createQuerier(dynamodb) {
+  const query = bind(dynamodb.query, dynamodb);
   return {
     /**
      * Finds items based on primary key values.
@@ -45,11 +57,11 @@ function createQuerier(dynamoWrapper) {
      *  });
      *
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
-     * @param {Object} request Parameters as expected by DynamoDB `Query` operation. Must contain, at least, `TableName` attribute.
+     * @param {Object} request Parameters as expected by dynamodb `Query` operation. Must contain, at least, `TableName` attribute.
      * @param {Object} [options] The configuration options parameters.
-     * @param {number} [options.groupDelayMs=100] The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
-     * @returns {Promise} A promise that resolves to the response from DynamoDB.
+     * @param {boolean} [options.autopagination=true] Whether to return all the dynamodb response pages or just one page.
+     * @param {boolean} [options.raw=false] Whether to return the full dynamodb response object when `true` or just the `Items` property value.
+     * @returns {Promise} A promise that resolves to the response from dynamodb.
      */
     query: createQuery(query),
 
@@ -86,11 +98,11 @@ function createQuerier(dynamoWrapper) {
      *
      * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html#API_Query_RequestSyntax
      * @param {String} tableName The name of the table to perform the operation on
-     * @param {Object=} request Parameters as expected by DynamoDB `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
+     * @param {Object=} request Parameters as expected by dynamodb `Query` operation. A `TableName` attributes specified here will override `tableName` argument.
      * @param {Object} [options] The configuration options parameters.
-     * @param {number} [options.groupDelayMs=100] The delay between individual requests. Defaults to 100 ms.
-     * @param {boolean} [options.raw=false] Whether to return the full DynamoDB response object when `true` or just the `Items` property value.
-     * @returns {Promise} A promise that resolves to the response from DynamoDB.
+     * @param {boolean} [options.autopagination=true] Wheter to return all the dynamodb response pages or just one page.
+     * @param {boolean} [options.raw=false] Whether to return the full dynamodb response object when `true` or just the `Items` property value.
+     * @returns {Promise} A promise that resolves to the response from dynamodb.
      */
     queryFor: createQueryFor(query)
   };

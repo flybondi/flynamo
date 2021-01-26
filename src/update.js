@@ -5,30 +5,20 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html
  * @module UpdateItem
  */
-const {
-  apply,
-  applyTo,
-  bind,
-  compose,
-  curry,
-  ifElse,
-  is,
-  pipeP,
-  unless,
-  has,
-  partial
-} = require('ramda');
+const { apply, applyTo, bind, compose, curry, ifElse, is, unless, has, partial } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
 const addTableName = require('./table-name');
 const addReturnValues = require('./return-values');
 const { mapMergeNArgs } = require('./map-merge-args');
 const generateKey = require('./generate-key');
+const { andThen } = require('./and-then');
 
 /**
  * @private
  */
-const updateAndUnwrapAttributes = updateItem => pipeP(apply(updateItem), unwrapProp('Attributes'));
+const updateAndUnwrapAttributes = updateItem =>
+  compose(andThen(unwrapProp('Attributes')), apply(updateItem));
 
 /**
  * @private
@@ -92,8 +82,8 @@ const createUpdateFor = curry((updateItem, table) =>
   )
 );
 
-function createUpdater(dynamoWrapper) {
-  const updateItem = bind(dynamoWrapper.updateItem, dynamoWrapper);
+function createUpdater(dynamodb) {
+  const updateItem = bind(dynamodb.updateItem, dynamodb);
   return {
     /**
      * Edits an existing item's attributes, or adds a new item to the table if it does not

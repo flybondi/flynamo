@@ -36,6 +36,7 @@ const generateKeys = compose(
 
 const createBatchGetFor = curry((batchGetItem, table) =>
   compose(
+    request => request.promise(),
     apply(batchGetItem),
     overFirst(compose(objOf('RequestItems'), objOf(table))),
     mapMergeFirstPairOfArgs(generateKeys)
@@ -46,11 +47,11 @@ const createBatchGetFor = curry((batchGetItem, table) =>
  * Creates a function to allow retrieval of several documents in a single batch.
  *
  * @private
- * @param {Object} dynamoWrapper The AWS DynamoDB client
+ * @param {Object} dynamodb The AWS DynamoDB client
  * @returns {Object}
  */
-function createGetBatcher(dynamoWrapper) {
-  const batchGetItem = bind(dynamoWrapper.batchGetItem, dynamoWrapper);
+function createGetBatcher(dynamodb) {
+  const batchGetItem = bind(dynamodb.batchGetItem, dynamodb);
   return {
     /**
      * Returns the attributes of one or more items from a table. Requested items are identified by primary key.

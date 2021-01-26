@@ -7,17 +7,18 @@
  * @module DeleteItem
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html
  */
-const { apply, bind, compose, curry, pipeP } = require('ramda');
+const { apply, bind, compose, curry } = require('ramda');
 const { unwrapProp } = require('./wrapper');
 const addTableName = require('./table-name');
 const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 const generateKey = require('./generate-key');
 const addReturnValues = require('./return-values');
-
+const { andThen } = require('./and-then');
 /**
  * @private
  */
-const removeAndUnwrapAttributes = deleteItem => pipeP(apply(deleteItem), unwrapProp('Attributes'));
+const removeAndUnwrapAttributes = deleteItem =>
+  compose(andThen(unwrapProp('Attributes')), apply(deleteItem));
 
 /**
  * @private
@@ -38,8 +39,8 @@ const createRemoveFor = curry((deleteItem, table) =>
   )
 );
 
-function createRemover(dynamoWrapper) {
-  const deleteItem = bind(dynamoWrapper.deleteItem, dynamoWrapper);
+function createRemover(dynamodb) {
+  const deleteItem = bind(dynamodb.deleteItem, dynamodb);
   return {
     /**
      * Deletes a single item in a table by primary key. Returns the `Attributes` present in the

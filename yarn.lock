@@ -437,6 +437,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@flybondi/ramda-land@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@flybondi/ramda-land/-/ramda-land-4.0.6.tgz#ad5d12d1020371ff4c6b9c1822a4045e261518a5"
+  integrity sha512-jfrSsXUedanMSmS/QeWQLjyy/o8I1PbI1OQUiw/x6XN7MMr91rHlD9c/Q3NHf2bL8b2wFqcCL/mFjZOFamFDkQ==
+  dependencies:
+    yn "^4.0.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -1636,11 +1643,6 @@ dynamodb-update-expression@^0.1.21:
   dependencies:
     deepmerge "^1.2.0"
     lodash "^4.16.1"
-
-dynamodb-wrapper@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/dynamodb-wrapper/-/dynamodb-wrapper-1.4.1.tgz#e4835f2d84dc06181879dd8a1c1e6db953569a54"
-  integrity sha1-5INfLYTcBhgYed2KHB5tuVNWmlQ=
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -5504,6 +5506,11 @@ yargs@^15.1.0, yargs@^15.4.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+yn@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/yn/-/yn-4.0.0.tgz#611480051ea43b510da1dfdbe177ed159f00a979"
+  integrity sha512-huWiiCS4TxKc4SfgmTwW1K7JmXPPAmuXWYy4j9qjQo4+27Kni8mGhAAi1cloRWmBe2EqcLgt3IGqQoRL/MtPgg==
 
 yocto-queue@^0.1.0:
   version "0.1.0"

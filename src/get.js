@@ -4,16 +4,17 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html
  * @module GetItem
  */
-const { curry, bind, pipeP, compose, apply } = require('ramda');
+const { curry, bind, compose, apply } = require('ramda');
 const { unwrapProp } = require('./wrapper');
 const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
+const { andThen } = require('./and-then');
 const generateKey = require('./generate-key');
 const addTableName = require('./table-name');
 
 /**
  * @private
  */
-const getUnwrappedItem = getItem => pipeP(apply(getItem), unwrapProp('Item'));
+const getUnwrappedItem = getItem => compose(andThen(unwrapProp('Item')), apply(getItem));
 
 /**
  * @private
@@ -31,8 +32,8 @@ const createGetFor = curry((getItem, table) =>
   )
 );
 
-function createGetter(dynamoWrapper) {
-  const getItem = bind(dynamoWrapper.getItem, dynamoWrapper);
+function createGetter(dynamodb) {
+  const getItem = bind(dynamodb.getItem, dynamodb);
   return {
     /**
      * Returns a set of attributes for the item with the given primary key.

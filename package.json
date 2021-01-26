@@ -61,9 +61,9 @@
     ]
   },
   "dependencies": {
+    "@flybondi/ramda-land": "^4.0.6",
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
-    "dynamodb-wrapper": "^1.4.1",
     "ramda": "^0.27.1"
   },
   "devDependencies": {

@@ -3,7 +3,8 @@ const createWriteBatcher = require('./batch-write-item');
 
 describe('the `batchWriteFor` function', () => {
   test('should generate valid `RequestItems` with mixed `PutRequest` and `DeleteRequest` from given input', async () => {
-    const mockBatchWriteItem = jest.fn().mockResolvedValue({});
+    const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+    const mockBatchWriteItem = jest.fn().mockReturnValue(mockRequest);
     const { batchWriteFor } = createWriteBatcher({ batchWriteItem: mockBatchWriteItem });
     const batchWrite = batchWriteFor('some_table');
     await batchWrite({
@@ -24,7 +25,8 @@ describe('the `batchWriteFor` function', () => {
 
 describe('the `batchRemoveFor` function', () => {
   test('should generate valid `RequestItems` with `DeleteRequest` exclusively from given input', async () => {
-    const mockBatchWriteItem = jest.fn().mockResolvedValue({});
+    const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+    const mockBatchWriteItem = jest.fn().mockReturnValue(mockRequest);
     const { batchRemoveFor } = createWriteBatcher({ batchWriteItem: mockBatchWriteItem });
     const batchRemove = batchRemoveFor('some_table');
     await batchRemove([1, 2]);
@@ -39,7 +41,8 @@ describe('the `batchRemoveFor` function', () => {
   });
 
   test('should support removing using composite keys as input', async () => {
-    const mockBatchWriteItem = jest.fn().mockResolvedValue({});
+    const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+    const mockBatchWriteItem = jest.fn().mockReturnValue(mockRequest);
     const { batchRemoveFor } = createWriteBatcher({ batchWriteItem: mockBatchWriteItem });
     const batchRemove = batchRemoveFor('some_table');
     await batchRemove([

@@ -2,7 +2,8 @@
 const createGetBatcher = require('./batch-get-item');
 
 test('should generate valid `RequestItems` with generated keys', async () => {
-  const mockBatchGetItem = jest.fn().mockResolvedValue({});
+  const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+  const mockBatchGetItem = jest.fn().mockReturnValue(mockRequest);
   const { batchGetFor } = createGetBatcher({ batchGetItem: mockBatchGetItem });
   const batchGet = batchGetFor('some_table');
   await batchGet([42, 33]);
@@ -16,7 +17,8 @@ test('should generate valid `RequestItems` with generated keys', async () => {
 });
 
 test('should support sending a single key as its first argument', async () => {
-  const mockBatchGetItem = jest.fn().mockResolvedValue({});
+  const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+  const mockBatchGetItem = jest.fn().mockReturnValue(mockRequest);
   const { batchGetFor } = createGetBatcher({ batchGetItem: mockBatchGetItem });
   const batchGet = batchGetFor('some_table');
   await batchGet(42);
@@ -30,7 +32,8 @@ test('should support sending a single key as its first argument', async () => {
 });
 
 test('should support retrieving documents with composite keys', async () => {
-  const mockBatchGetItem = jest.fn().mockResolvedValue({});
+  const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+  const mockBatchGetItem = jest.fn().mockReturnValue(mockRequest);
   const { batchGetFor } = createGetBatcher({ batchGetItem: mockBatchGetItem });
   const batchGet = batchGetFor('some_table');
   await batchGet([
@@ -50,7 +53,8 @@ test('should support retrieving documents with composite keys', async () => {
 });
 
 test('should allow sending additional request properties as its sencond argument', async () => {
-  const mockBatchGetItem = jest.fn().mockResolvedValue({});
+  const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+  const mockBatchGetItem = jest.fn().mockReturnValue(mockRequest);
   const { batchGetFor } = createGetBatcher({ batchGetItem: mockBatchGetItem });
   const batchGet = batchGetFor('some_table');
   await batchGet([42, 33], { ProjectionExpression: 'name, messages, views', ConsistentRead: true });
@@ -65,7 +69,8 @@ test('should allow sending additional request properties as its sencond argument
   });
 });
 test('should forward any additional arguments to the original `batchGetItem` function', async () => {
-  const mockBatchGetItem = jest.fn().mockResolvedValue({});
+  const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+  const mockBatchGetItem = jest.fn().mockReturnValue(mockRequest);
   const { batchGetFor } = createGetBatcher({ batchGetItem: mockBatchGetItem });
   const batchGet = batchGetFor('some_table');
   await batchGet([42, 33], { ProjectionExpression: 'name' }, { extra: true }, 42);

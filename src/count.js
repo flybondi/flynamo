@@ -4,21 +4,22 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
  * @module Count
  */
-const { curry, compose, pipeP, bind, prop } = require('ramda');
+const { andThen, curry, compose, bind, prop } = require('ramda');
 const addTableName = require('./table-name');
+const withPaginator = require('./with-paginator');
 
 /**
  * @private
  */
-const createCount = scan => pipeP(scan, prop('Count'));
+const createCount = scan => compose(andThen(prop('Count')), withPaginator(scan));
 
 /**
  * @private
  */
 const createCountFor = curry((scan, table) => compose(createCount(scan), addTableName(table)));
 
-function createCounter(dynamoWrapper) {
-  const scan = bind(dynamoWrapper.scan, dynamoWrapper);
+function createCounter(dynamodb) {
+  const scan = bind(dynamodb.scan, dynamodb);
   return {
     /**
      * Return the number of elements in a table or a secondary index. This function

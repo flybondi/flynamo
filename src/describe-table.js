@@ -14,8 +14,8 @@ const createDescribeTableFor = curry((describeTable, table) =>
   compose(describeTable, addTableName(table))
 );
 
-function createDescribers(dynamoWrapper) {
-  const describeTable = bind(dynamoWrapper.describeTable, dynamoWrapper);
+function createDescribers(dynamodb) {
+  const describeTable = bind(dynamodb.describeTable, dynamodb);
   return {
     /**
      * Retrieves information about the table.

@@ -3,14 +3,16 @@ const createGetter = require('./get');
 
 describe('the get function', () => {
   test('should call `getItem` internally', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { get } = createGetter({ getItem: mockGetItem });
     await get();
     expect(mockGetItem).toHaveBeenCalled();
   });
 
   test('should generate a wrapped `Key` attribute from the first argument', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { get } = createGetter({ getItem: mockGetItem });
     await get({ id: 5 });
     expect(mockGetItem).toHaveBeenCalledWith({
@@ -19,7 +21,8 @@ describe('the get function', () => {
   });
 
   test('should default to `id` when generating `Key attribute`', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { get } = createGetter({ getItem: mockGetItem });
     await get('41ab0092-45bc-4cf7-8d5c-9bd4fcfa37ae');
     expect(mockGetItem).toHaveBeenCalledWith({
@@ -28,7 +31,8 @@ describe('the get function', () => {
   });
 
   test('should accept and merge additional request attributes', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue(true);
+    const mockRequest = { promise: jest.fn().mockResolvedValue(true) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { get } = createGetter({ getItem: mockGetItem });
     await get(5, { foo: 'bar' });
     expect(mockGetItem).toHaveBeenCalledWith({
@@ -38,13 +42,15 @@ describe('the get function', () => {
   });
 
   test('should return `undefined` if no item is returned', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue({});
+    const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { get } = createGetter({ getItem: mockGetItem });
     expect(await get()).toBeUndefined();
   });
 
   test('should return an unwrapped item', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue({ Item: { foo: { S: 'bar' } } });
+    const mockRequest = { promise: jest.fn().mockResolvedValue({ Item: { foo: { S: 'bar' } } }) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { get } = createGetter({ getItem: mockGetItem });
     expect(await get()).toEqual({ foo: 'bar' });
   });
@@ -52,7 +58,8 @@ describe('the get function', () => {
 
 describe('the getFor function', () => {
   test('should add `TableName` automatically to any request', async () => {
-    const mockGetItem = jest.fn().mockResolvedValue({});
+    const mockRequest = { promise: jest.fn().mockResolvedValue({}) };
+    const mockGetItem = jest.fn().mockReturnValue(mockRequest);
     const { getFor } = createGetter({ getItem: mockGetItem });
     await getFor('some_table')({});
     expect(mockGetItem).toHaveBeenCalledWith(

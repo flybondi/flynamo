@@ -8,21 +8,27 @@ const { curry, bind, compose, apply } = require('ramda');
 const generateItem = require('./generate-item');
 const addTableName = require('./table-name');
 const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
+const { toPromise } = require('./and-then');
 
 /**
  * @private
  */
-const createInsert = putItem => compose(apply(putItem), mapMergeFirstPairOfArgs(generateItem));
+const insert = putItem => compose(toPromise, apply(putItem));
+
+/**
+ * @private
+ */
+const createInsert = putItem => compose(insert(putItem), mapMergeFirstPairOfArgs(generateItem));
 
 /**
  * @private
  */
 const createInsertFor = curry((putItem, table) =>
-  compose(apply(putItem), mapMergeFirstPairOfArgs(compose(addTableName(table), generateItem)))
+  compose(insert(putItem), mapMergeFirstPairOfArgs(compose(addTableName(table), generateItem)))
 );
 
-function createInserter(dynamoWrapper) {
-  const putItem = bind(dynamoWrapper.putItem, dynamoWrapper);
+function createInserter(dynamodb) {
+  const putItem = bind(dynamodb.putItem, dynamodb);
   return {
     /**
      * Creates a new item, or replaces an old item with a new item.
