@@ -1,13 +1,6 @@
 {
-  "extends": [
-    "standard",
-    "prettier/standard",
-    "plugin:ramda/recommended",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": [
-    "ramda"
-  ],
+  "extends": ["standard", "plugin:ramda/recommended", "plugin:prettier/recommended"],
+  "plugins": ["ramda"],
   "parserOptions": {
     "sourceType": "script"
   },
@@ -16,22 +9,13 @@
     "jest": true
   },
   "rules": {
-    "semi": [
-      2,
-      "always"
-    ],
+    "semi": [2, "always"],
     "no-extra-semi": 2,
-    "strict": [
-      "error",
-      "global"
-    ],
+    "strict": ["error", "global"],
     "no-console": [
       "error",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ]
   }

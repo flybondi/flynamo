@@ -1,7 +1,7 @@
 'use strict';
 const createUpdater = require('./update');
 
-describe('the update function', () => {
+describe.only('the update function', () => {
   test('should call `updateItem` internally', async () => {
     const mockUpdateItem = jest.fn().mockResolvedValue({});
     const { update } = createUpdater({ updateItem: mockUpdateItem });
