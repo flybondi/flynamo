@@ -52,7 +52,7 @@ describe('the update function', () => {
     await update(5, { 'foo-bar': 'baz', 'bar-foo': 'faz' });
     expect(mockUpdateItem).toHaveBeenCalledWith(
       expect.objectContaining({
-        ExpressionAttributeNames: { '#barFoo': 'barFoo', '#fooBar': 'fooBar' },
+        ExpressionAttributeNames: { '#barFoo': 'bar-foo', '#fooBar': 'foo-bar' },
         ExpressionAttributeValues: { ':barFoo': { S: 'faz' }, ':fooBar': { S: 'baz' } },
         Key: { id: { N: '5' } },
         ReturnValues: 'ALL_NEW',

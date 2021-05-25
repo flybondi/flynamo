@@ -16,11 +16,14 @@ const {
   pipeP,
   unless,
   has,
-  partial,
   map,
   fromPairs,
   adjust,
-  toPairs
+  toPairs,
+  zipObj,
+  evolve,
+  keys,
+  flip
 } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
@@ -43,6 +46,11 @@ const mapKeys = curry((fn, obj) => fromPairs(map(adjust(0, fn), toPairs(obj))));
 /**
  * @private
  */
+const zipObject = flip(zipObj);
+
+/**
+ * @private
+ */
 const generateUpdateExpression = unless(
   has('UpdateExpression'),
   // Generate an `UpdateExpression`, `ExpressionAttributeNames` and
@@ -50,13 +58,19 @@ const generateUpdateExpression = unless(
   // The `original` argument is assumed to be an empty object so only `SET`
   // expressions are supported by default
   // @see https://github.com/4ossiblellc/dynamodb-update-expression/blob/master/README.md#usage
-  compose(
-    wrapOver('ExpressionAttributeValues'),
-    partial(getUpdateExpression, [{}]),
-    // NOTE: DynamoDB doesn't support special charecters in the `UpdateExpression` string and the `dynamodb-update-expression` doesn't handle this cases,
-    // in order to support, at least, camel-cases object key is necessary to transform them into camelCase instead.
-    mapKeys(camelCase)
-  )
+  compose(wrapOver('ExpressionAttributeValues'), params => {
+    return evolve(
+      {
+        ExpressionAttributeNames: compose(
+          // NOTE: DynamoDB doesn't support special charecters in the `UpdateExpression` string and the `dynamodb-update-expression` doesn't handle this cases,
+          // in order to support, at least, camel-cases object key is necessary to transform them into camelCase instead.
+          zipObject(Object.keys(params)),
+          keys
+        )
+      },
+      getUpdateExpression({}, mapKeys(camelCase, params))
+    );
+  })
 );
 
 /**
