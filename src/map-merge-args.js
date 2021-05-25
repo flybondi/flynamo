@@ -7,7 +7,7 @@ const {
   converge,
   lensIndex,
   reduce,
-  mergeDeepLeft,
+  mergeDeepRight,
   over,
   take,
   drop,
@@ -21,10 +21,10 @@ const {
 const castArray = require('./cast-array');
 
 /**
- * Returns deeply merged object by merging all objects in a passed list. Merging is applied from the left.
+ * Returns deeply merged object by merging all objects in a passed list. Merging is applied from the right.
  *
  * @private
- * @see https://ramdajs.com/docs/#mergeDeepLeft
+ * @see https://ramdajs.com/docs/#mergeDeepRight
  * @param {Array} list Array of objects
  * @returns {Object} Merged object
  *
@@ -38,10 +38,10 @@ const castArray = require('./cast-array');
  * 	 	// 	fooA: { bar: 'a' },
  * 		// 	fooB: { bar: 'b' },
  * 		// 	fooC: { bar: 'c' },
- * 		// 	shared: { baz: 1 },
+ * 		// 	shared: { baz: 3 },
  * 		// }
  */
-const mergeDeepAll = reduce(mergeDeepLeft, {});
+const mergeDeepAll = reduce(mergeDeepRight, {});
 
 /**
  * Takes the first N elements of an array and deep merge them

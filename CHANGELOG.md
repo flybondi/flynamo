@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/flybondi/flynamo/compare/v1.5.3...v1.5.4) (2021-05-25)
+
+
+### Bug Fixes
+
+* merge from right instead ([#38](https://github.com/flybondi/flynamo/issues/38)) ([841fcc2](https://github.com/flybondi/flynamo/commit/841fcc2da86a8223c141739dc38af8c1a9dee4f9))
+
 ## [1.5.3](https://github.com/flybondi/flynamo/compare/v1.5.2...v1.5.3) (2021-05-25)
 
 ## [1.5.2](https://github.com/flybondi/flynamo/compare/v1.5.1...v1.5.2) (2021-05-25)
