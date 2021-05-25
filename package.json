@@ -58,6 +58,7 @@
     "dynamodb-data-types": "^3.0.1",
     "dynamodb-update-expression": "^0.1.21",
     "dynamodb-wrapper": "^1.4.1",
+    "lodash.camelcase": "^4.3.0",
     "ramda": "^0.27.1"
   },
   "devDependencies": {
@@ -73,7 +74,7 @@
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-ramda": "^2.5.1",
     "eslint-plugin-standard": "^5.0.0",
     "husky": "^6.0.0",
