@@ -53,6 +53,8 @@ const generateUpdateExpression = unless(
   compose(
     wrapOver('ExpressionAttributeValues'),
     partial(getUpdateExpression, [{}]),
+    // NOTE: DynamoDB doesn't support special charecters in the `UpdateExpression` string and the `dynamodb-update-expression` doesn't handle this cases,
+    // in order to support, at least, camel-cases object key is necessary to transform them into camelCase instead.
     mapKeys(camelCase)
   )
 );
