@@ -16,19 +16,29 @@ const {
   pipeP,
   unless,
   has,
-  partial
+  partial,
+  map,
+  fromPairs,
+  adjust,
+  toPairs
 } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
+const { mapMergeNArgs } = require('./map-merge-args');
 const addTableName = require('./table-name');
 const addReturnValues = require('./return-values');
-const { mapMergeNArgs } = require('./map-merge-args');
 const generateKey = require('./generate-key');
+const camelCase = require('lodash.camelcase');
 
 /**
  * @private
  */
 const updateAndUnwrapAttributes = updateItem => pipeP(apply(updateItem), unwrapProp('Attributes'));
+
+/**
+ * @private
+ */
+const mapKeys = curry((fn, obj) => fromPairs(map(adjust(0, fn), toPairs(obj))));
 
 /**
  * @private
@@ -40,7 +50,11 @@ const generateUpdateExpression = unless(
   // The `original` argument is assumed to be an empty object so only `SET`
   // expressions are supported by default
   // @see https://github.com/4ossiblellc/dynamodb-update-expression/blob/master/README.md#usage
-  compose(wrapOver('ExpressionAttributeValues'), partial(getUpdateExpression, [{}]))
+  compose(
+    wrapOver('ExpressionAttributeValues'),
+    partial(getUpdateExpression, [{}]),
+    mapKeys(camelCase)
+  )
 );
 
 /**

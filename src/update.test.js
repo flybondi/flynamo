@@ -1,7 +1,7 @@
 'use strict';
 const createUpdater = require('./update');
 
-describe.only('the update function', () => {
+describe('the update function', () => {
   test('should call `updateItem` internally', async () => {
     const mockUpdateItem = jest.fn().mockResolvedValue({});
     const { update } = createUpdater({ updateItem: mockUpdateItem });
@@ -38,9 +38,25 @@ describe.only('the update function', () => {
     expect(mockUpdateItem).toHaveBeenCalledWith(
       expect.objectContaining({
         Key: { id: { N: '5' } },
-        UpdateExpression: 'SET #foo = :foo',
         ExpressionAttributeNames: { '#foo': 'foo' },
-        ExpressionAttributeValues: { ':foo': { S: 'bar' } }
+        ExpressionAttributeValues: { ':foo': { S: 'bar' } },
+        ReturnValues: 'ALL_NEW',
+        UpdateExpression: 'SET #foo = :foo'
+      })
+    );
+  });
+
+  test('should transform snake-case key name to camelCase for `ExpressionAttributeNames`, `ExpressionAttributeValues` and `UpdateExpression`', async () => {
+    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const { update } = createUpdater({ updateItem: mockUpdateItem });
+    await update(5, { 'foo-bar': 'baz', 'bar-foo': 'faz' });
+    expect(mockUpdateItem).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ExpressionAttributeNames: { '#barFoo': 'barFoo', '#fooBar': 'fooBar' },
+        ExpressionAttributeValues: { ':barFoo': { S: 'faz' }, ':fooBar': { S: 'baz' } },
+        Key: { id: { N: '5' } },
+        ReturnValues: 'ALL_NEW',
+        UpdateExpression: 'SET #fooBar = :fooBar, #barFoo = :barFoo'
       })
     );
   });
