@@ -6,24 +6,24 @@
  * @module UpdateItem
  */
 const {
+  adjust,
   apply,
   applyTo,
   bind,
   compose,
   curry,
+  evolve,
+  flip,
+  fromPairs,
+  has,
   ifElse,
   is,
-  pipeP,
-  unless,
-  has,
-  map,
-  fromPairs,
-  adjust,
-  toPairs,
-  zipObj,
-  evolve,
   keys,
-  flip
+  map,
+  pipeP,
+  toPairs,
+  unless,
+  zipObj
 } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
@@ -53,21 +53,17 @@ const zipObjWithValues = flip(zipObj);
  */
 const generateUpdateExpression = unless(
   has('UpdateExpression'),
-  // Generate an `UpdateExpression`, `ExpressionAttributeNames` and
-  // `ExpressionAttributeValues` objects
-  // The `original` argument is assumed to be an empty object so only `SET`
-  // expressions are supported by default
-  // @see https://github.com/4ossiblellc/dynamodb-update-expression/blob/master/README.md#usage
   compose(wrapOver('ExpressionAttributeValues'), params => {
     return evolve(
       {
-        ExpressionAttributeNames: compose(
-          // NOTE: DynamoDB doesn't support special charecters in the `UpdateExpression` string and the `dynamodb-update-expression` doesn't handle this cases,
-          // in order to support, at least, camel-cases object key is necessary to transform them into camelCase instead.
-          zipObjWithValues(Object.keys(params)),
-          keys
-        )
+        ExpressionAttributeNames: compose(zipObjWithValues(keys(params)), keys)
       },
+      // Generate an `UpdateExpression`, `ExpressionAttributeNames` and ExpressionAttributeValues` objects
+      // The `original` argument to `getUpdateExpression` is assumed to be an empty object so only `SET`
+      // expressions are supported by default
+      // See https://github.com/4ossiblellc/dynamodb-update-expression/blob/master/README.md#usage
+      // NOTE: DynamoDB doesn't support special characters in the `UpdateExpression` string and  `dynamodb-update-expression`
+      // doesn't handle these cases - so in order to support kebab-case object keys we'll transform them to camelCase
       getUpdateExpression({}, mapKeys(camelCase, params))
     );
   })
