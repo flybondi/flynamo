@@ -64,6 +64,16 @@ describe('the `mapMergeNArgs`', () => {
     ]);
   });
 
+  test('should merge from the rigth first N arguments after mapping', () => {
+    const addXandMapFoo = mapMergeNArgs(3, [
+      params => ({ ...params, x: 'y' }),
+      params => ({ foo: params.foo })
+    ]);
+    expect(addXandMapFoo({ id: 2 }, { foo: 'bar' }, { x: 'x' })).toEqual([
+      { id: 2, foo: 'bar', x: 'x' }
+    ]);
+  });
+
   test('should leave all arguments after the nth one untouched', () => {
     const add40ToX = obj => ({ ...obj, x: obj.x + 40 });
     const sum40ToXInFirstArg = mapMergeNArgs(3, [add40ToX]);
