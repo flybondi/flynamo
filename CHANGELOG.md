@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/flybondi/flynamo/compare/v1.5.1...v1.5.2) (2021-05-25)
+
+
+### Bug Fixes
+
+* improve type definitions ([#36](https://github.com/flybondi/flynamo/issues/36)) ([18ecb25](https://github.com/flybondi/flynamo/commit/18ecb2597f137f01cbf59a8d386f843b9024475b))
+
 ## [1.5.1](https://github.com/flybondi/flynamo/compare/v1.5.0...v1.5.1) (2021-05-10)
 
 # [1.5.0](https://github.com/flybondi/flynamo/compare/v1.4.1...v1.5.0) (2021-01-20)
