@@ -46,7 +46,7 @@ const mapKeys = curry((fn, obj) => fromPairs(map(adjust(0, fn), toPairs(obj))));
 /**
  * @private
  */
-const zipObject = flip(zipObj);
+const zipObjWithValues = flip(zipObj);
 
 /**
  * @private
@@ -64,7 +64,7 @@ const generateUpdateExpression = unless(
         ExpressionAttributeNames: compose(
           // NOTE: DynamoDB doesn't support special charecters in the `UpdateExpression` string and the `dynamodb-update-expression` doesn't handle this cases,
           // in order to support, at least, camel-cases object key is necessary to transform them into camelCase instead.
-          zipObject(Object.keys(params)),
+          zipObjWithValues(Object.keys(params)),
           keys
         )
       },
