@@ -488,6 +488,8 @@ declare module '@flybondi/flynamo' {
      */
     forTable(tableName: string): ForFlynamoClient;
   }
+  
+  export type Flynamo = FlynamoClient & ForTable;
 
   /**
    * Wraps an `AWS.DynamoDB` instance and returns a new `Flynamo` client.
@@ -501,7 +503,7 @@ declare module '@flybondi/flynamo' {
   export declare function flynamo(
     dynamodb: DynamoDB,
     options?: DynamoDBWrapper.IDynamoDBWrapperOptions
-  ): FlynamoClient & ForTable;
+  ): Flynamo;
 
   export = flynamo;
 }
