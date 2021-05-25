@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/flybondi/flynamo/compare/v1.5.4...v1.5.5) (2021-05-25)
+
+
+### Bug Fixes
+
+* transform object keys to camelCase on update expressions ([#39](https://github.com/flybondi/flynamo/issues/39)) ([1856c69](https://github.com/flybondi/flynamo/commit/1856c692b3578e1ef316bd12b72468d843c4ad9b))
+
 ## [1.5.4](https://github.com/flybondi/flynamo/compare/v1.5.3...v1.5.4) (2021-05-25)
 
 
