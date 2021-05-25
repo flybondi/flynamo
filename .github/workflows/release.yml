@@ -28,6 +28,7 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ secrets.GIT_EMAIL }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_NELSON }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          HUSKY: 0
         with:
           semantic_version: 17.0.7
           extra_plugins: |
