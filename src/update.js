@@ -23,7 +23,9 @@ const {
   pipeP,
   toPairs,
   unless,
-  zipObj
+  zipObj,
+  reject,
+  equals
 } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
@@ -51,12 +53,17 @@ const zipObjWithValues = flip(zipObj);
 /**
  * @private
  */
+const getKeysFrom = compose(keys, reject(equals(undefined)));
+
+/**
+ * @private
+ */
 const generateUpdateExpression = unless(
   has('UpdateExpression'),
   compose(wrapOver('ExpressionAttributeValues'), params => {
     return evolve(
       {
-        ExpressionAttributeNames: compose(zipObjWithValues(keys(params)), keys)
+        ExpressionAttributeNames: compose(zipObjWithValues(getKeysFrom(params)), keys)
       },
       // Generate an `UpdateExpression`, `ExpressionAttributeNames` and ExpressionAttributeValues` objects
       // The `original` argument to `getUpdateExpression` is assumed to be an empty object so only `SET`
