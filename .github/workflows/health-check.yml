@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.0.2
       - name: ESLint
-        uses: reviewdog/action-eslint@v1.17.2
+        uses: reviewdog/action-eslint@v1.17.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-check
