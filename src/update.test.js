@@ -46,7 +46,7 @@ describe('the update function', () => {
     );
   });
 
-  test('should transform snake-case key name to camelCase for `ExpressionAttributeNames`, `ExpressionAttributeValues` and `UpdateExpression`', async () => {
+  test('should transform kebab-case key name to camelCase for `ExpressionAttributeNames`, `ExpressionAttributeValues` and `UpdateExpression`', async () => {
     const mockUpdateItem = jest.fn().mockResolvedValue(true);
     const { update } = createUpdater({ updateItem: mockUpdateItem });
     await update(5, { 'foo-bar': 'baz', 'bar-foo': 'faz' });
@@ -57,6 +57,21 @@ describe('the update function', () => {
         Key: { id: { N: '5' } },
         ReturnValues: 'ALL_NEW',
         UpdateExpression: 'SET #fooBar = :fooBar, #barFoo = :barFoo'
+      })
+    );
+  });
+
+  test('should not transform key name to camelCase when value is undefined', async () => {
+    const mockUpdateItem = jest.fn().mockResolvedValue(true);
+    const { update } = createUpdater({ updateItem: mockUpdateItem });
+    await update(5, { 'foo-bar': null, 'bar-foo': undefined });
+    expect(mockUpdateItem).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ExpressionAttributeNames: { '#fooBar': 'foo-bar' },
+        ExpressionAttributeValues: { ':fooBar': { NULL: true } },
+        Key: { id: { N: '5' } },
+        ReturnValues: 'ALL_NEW',
+        UpdateExpression: 'SET #fooBar = :fooBar'
       })
     );
   });
