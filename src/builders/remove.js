@@ -1,5 +1,5 @@
 'use strict';
-const { evolve, merge, curry } = require('ramda');
+const { evolve, mergeRight, curry } = require('ramda');
 const catcon = require('./catcon');
 
 /**
@@ -16,10 +16,10 @@ const catcon = require('./catcon');
 function remove(attribute) {
   return evolve({
     UpdateExpression: catcon(`#${attribute}, `),
-    ExpressionAttributeNames: merge({
+    ExpressionAttributeNames: mergeRight({
       [`#${attribute}`]: attribute
     }),
-    ExpressionAttributeValues: merge({})
+    ExpressionAttributeValues: mergeRight({})
   });
 }
 
