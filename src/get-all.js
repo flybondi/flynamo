@@ -4,15 +4,14 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
  * @module Scan
  */
-const { curry, bind, pipeWith, andThen, compose } = require('ramda');
+const { curry, bind, compose } = require('ramda');
 const { unwrapAll } = require('./wrapper');
 const addTableName = require('./table-name');
-const pipeP = pipeWith(andThen);
 
 /**
  * @private
  */
-const createGetAll = scan => pipeP([scan, unwrapAll('Items')]);
+const createGetAll = scan => params => scan(params).then(unwrapAll('Items'));
 
 /**
  * @private

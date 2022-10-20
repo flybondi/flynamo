@@ -4,17 +4,16 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html
  * @module GetItem
  */
-const { curry, bind, pipeWith, andThen, compose, apply } = require('ramda');
+const { curry, bind, compose } = require('ramda');
 const { unwrapProp } = require('./wrapper');
 const { mapMergeFirstPairOfArgs } = require('./map-merge-args');
 const generateKey = require('./generate-key');
 const addTableName = require('./table-name');
-const pipeP = pipeWith(andThen);
 
 /**
  * @private
  */
-const getUnwrappedItem = getItem => pipeP([apply(getItem), unwrapProp('Item')]);
+const getUnwrappedItem = getItem => params => getItem(...params).then(unwrapProp('Item'));
 
 /**
  * @private
