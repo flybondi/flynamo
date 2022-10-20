@@ -7,7 +7,6 @@
  */
 const {
   adjust,
-  apply,
   applyTo,
   bind,
   compose,
@@ -20,13 +19,11 @@ const {
   is,
   keys,
   map,
-  pipeWith,
   toPairs,
   unless,
   zipObj,
   reject,
-  equals,
-  andThen
+  equals
 } = require('ramda');
 const { getUpdateExpression } = require('dynamodb-update-expression');
 const { unwrapProp, wrapOver } = require('./wrapper');
@@ -35,13 +32,12 @@ const addTableName = require('./table-name');
 const addReturnValues = require('./return-values');
 const generateKey = require('./generate-key');
 const camelCase = require('lodash.camelcase');
-const pipeP = pipeWith(andThen);
 
 /**
  * @private
  */
-const updateAndUnwrapAttributes = updateItem =>
-  pipeP([apply(updateItem), unwrapProp('Attributes')]);
+const updateAndUnwrapAttributes = updateItem => params =>
+  updateItem(...params).then(unwrapProp('Attributes'));
 
 /**
  * @private
