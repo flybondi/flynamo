@@ -7,7 +7,6 @@
  */
 const {
   adjust,
-  apply,
   applyTo,
   bind,
   compose,
@@ -20,7 +19,6 @@ const {
   is,
   keys,
   map,
-  pipeP,
   toPairs,
   unless,
   zipObj,
@@ -38,7 +36,8 @@ const camelCase = require('lodash.camelcase');
 /**
  * @private
  */
-const updateAndUnwrapAttributes = updateItem => pipeP(apply(updateItem), unwrapProp('Attributes'));
+const updateAndUnwrapAttributes = updateItem => params =>
+  updateItem(...params).then(unwrapProp('Attributes'));
 
 /**
  * @private

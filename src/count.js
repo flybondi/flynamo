@@ -4,13 +4,13 @@
  * @see https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
  * @module Count
  */
-const { curry, compose, pipeP, bind, prop } = require('ramda');
+const { curry, compose, bind, prop } = require('ramda');
 const addTableName = require('./table-name');
 
 /**
  * @private
  */
-const createCount = scan => pipeP(scan, prop('Count'));
+const createCount = scan => params => scan(params).then(prop('Count'));
 
 /**
  * @private
