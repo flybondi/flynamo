@@ -1,4 +1,4 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDB } from '@aws-sdk/client-dynamodb';
 import DynamoDBWrapper from 'dynamodb-wrapper';
 
 declare module '@flybondi/flynamo' {
@@ -488,7 +488,7 @@ declare module '@flybondi/flynamo' {
      */
     forTable(tableName: string): ForFlynamoClient;
   }
-  
+
   export type Flynamo = FlynamoClient & ForTable;
 
   /**

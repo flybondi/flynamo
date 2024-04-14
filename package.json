@@ -62,11 +62,11 @@
     "ramda": "^0.28.0"
   },
   "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.554.0",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@types/aws-sdk": "^2.7.0",
     "@types/jest": "^29.1.2",
-    "aws-sdk": "^2.1232.0",
     "docdash": "^1.2.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
@@ -87,10 +87,10 @@
     "prettier": "^2.7.1"
   },
   "peerDependencies": {
-    "aws-sdk": "2.x"
+    "@aws-sdk/client-dynamodb": "3.x"
   },
   "engines": {
-    "node": ">=7"
+    "node": ">=18"
   },
   "release": {
     "branches": [
