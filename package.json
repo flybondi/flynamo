@@ -1,6 +1,6 @@
 {
   "name": "@flybondi/flynamo",
-  "version": "1.5.5",
+  "version": "2.0.0-alpha.3",
   "description": "An AWS DynamoDB client wrapper",
   "keywords": [
     "flybondi",
@@ -57,7 +57,7 @@
   "dependencies": {
     "dynamodb-data-types": "^4.0.0",
     "dynamodb-update-expression": "^0.1.21",
-    "dynamodb-wrapper": "^1.4.1",
+    "@flybondi/dynamodb-wrapper": "^2.0.0",
     "lodash.camelcase": "^4.3.0",
     "ramda": "^0.28.0"
   },

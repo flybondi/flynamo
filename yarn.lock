@@ -988,6 +988,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@flybondi/dynamodb-wrapper@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@flybondi/dynamodb-wrapper/-/dynamodb-wrapper-2.0.0.tgz#4f13894a8d47f6d98d0e70036514f5cca46bbf08"
+  integrity sha512-1CYUfoOa0HcJDSEz7Uf5vhCCRjQf8xhF6IRWwrULNkU2VKFtN1rzAjT3/W+zCfwaQ5AC/GAGe62RMzUTef/sOQ==
+
 "@humanwhocodes/config-array@^0.10.5":
   version "0.10.7"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.10.7.tgz#6d53769fd0c222767e6452e8ebda825c22e9f0dc"
@@ -2565,11 +2570,6 @@ dynamodb-update-expression@^0.1.21:
   dependencies:
     deepmerge "^1.2.0"
     lodash "^4.16.1"
-
-dynamodb-wrapper@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/dynamodb-wrapper/-/dynamodb-wrapper-1.4.1.tgz#e4835f2d84dc06181879dd8a1c1e6db953569a54"
-  integrity sha1-5INfLYTcBhgYed2KHB5tuVNWmlQ=
 
 eastasianwidth@^0.2.0:
   version "0.2.0"
