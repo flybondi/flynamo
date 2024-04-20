@@ -8,7 +8,7 @@ const createUpdater = require('./update');
 const createCounter = require('./count');
 const createWriteBatcher = require('./batch-write-item');
 const createGetBatcher = require('./batch-get-item');
-const DynamoDBWrapper = require('dynamodb-wrapper');
+const DynamoDBWrapper = require('@flybondi/dynamodb-wrapper');
 
 /**
  * Wraps an AWS DynamoDB `client` and returns Flynamo's API to access

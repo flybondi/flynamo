@@ -17,8 +17,8 @@ Read [the docs][flynamo-jsdoc].
 - 🙌 Plays well with functional libraries like [`ramda`][ramda] or [`lodash/fp`][lodashfp].
 
 ```sh
-# Install AWS SDK
-npm i aws-sdk
+# Install the DynamoDb client from AWS SDK
+npm i @aws-sdk/client-dynamodb
 
 # Install Flynamo
 npm i @flybondi/flynamo
@@ -29,10 +29,10 @@ npm i @flybondi/flynamo
 Wrap an instance of an `AWS.DynamoDB` client with `flynamo` and you're good to go. The result will be an object exposing all of Flynamo's own API.
 
 ```js
-const AWS = require('aws-sdk');
+const { DynamoDB } = require('@aws-sdk/client-dynamodb');
 const flynamo = require('@flybondi/flynamo');
 
-const { forTable } = flynamo(new AWS.DynamoDB());
+const { forTable } = flynamo(new DynamoDB());
 const { insert, update, remove } = forTable('SomeTable');
 
 (async function () {
