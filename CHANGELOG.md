@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/flybondi/flynamo/compare/v1.5.5...v2.0.0) (2024-04-20)
+
+
+### Bug Fixes
+
+* remove undefined values before getting keys ([#40](https://github.com/flybondi/flynamo/issues/40)) ([9991a5f](https://github.com/flybondi/flynamo/commit/9991a5f2459ee52ab491f299085979aa430e0e75))
+
+
+### Features
+
+* upgrade min node and move to aws-sdk v3 ([#57](https://github.com/flybondi/flynamo/issues/57)) ([5c1c9d6](https://github.com/flybondi/flynamo/commit/5c1c9d6b92c0eeda6e6701d405d3079d45a9adc8))
+
+
+### BREAKING CHANGES
+
+* drop support for older node versions
+
+* build: switch to dynamodb-wrapper fork
+
 ## [1.5.5](https://github.com/flybondi/flynamo/compare/v1.5.4...v1.5.5) (2021-05-25)
 
 
