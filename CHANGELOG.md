@@ -1,3 +1,5 @@
+## [2.0.1](https://github.com/flybondi/flynamo/compare/v2.0.0...v2.0.1) (2024-08-02)
+
 # [2.0.0](https://github.com/flybondi/flynamo/compare/v1.5.5...v2.0.0) (2024-04-20)
 
 
