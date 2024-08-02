@@ -988,10 +988,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@flybondi/dynamodb-wrapper@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@flybondi/dynamodb-wrapper/-/dynamodb-wrapper-2.0.0.tgz#4f13894a8d47f6d98d0e70036514f5cca46bbf08"
-  integrity sha512-1CYUfoOa0HcJDSEz7Uf5vhCCRjQf8xhF6IRWwrULNkU2VKFtN1rzAjT3/W+zCfwaQ5AC/GAGe62RMzUTef/sOQ==
+"@flybondi/dynamodb-wrapper@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@flybondi/dynamodb-wrapper/-/dynamodb-wrapper-2.0.1.tgz#f8e614b23abdf243faeb5601e077af16e1c21145"
+  integrity sha512-o0ny84KzRFqHSgPmi0E8dJg8TCHIZmjaz2b7SXqrgIuKGrQJu18HvNnhD/bfOqt2H+Q6nJHYoxvExh3NdIe4eg==
 
 "@humanwhocodes/config-array@^0.10.5":
   version "0.10.7"

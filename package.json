@@ -57,7 +57,7 @@
   "dependencies": {
     "dynamodb-data-types": "^4.0.0",
     "dynamodb-update-expression": "^0.1.21",
-    "@flybondi/dynamodb-wrapper": "^2.0.0",
+    "@flybondi/dynamodb-wrapper": "^2.0.1",
     "lodash.camelcase": "^4.3.0",
     "ramda": "^0.28.0"
   },
