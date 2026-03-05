@@ -1,3 +1,15 @@
+## [2.0.2](https://github.com/flybondi/flynamo/compare/v2.0.1...v2.0.2) (2026-03-05)
+
+
+### Build System
+
+* set minimum node version to 22 ([#60](https://github.com/flybondi/flynamo/issues/60)) ([1137719](https://github.com/flybondi/flynamo/commit/1137719f3ffb23922fe1529e49a843a7c1c61e1b))
+
+
+### BREAKING CHANGES
+
+* drop support for node < 22
+
 ## [2.0.1](https://github.com/flybondi/flynamo/compare/v2.0.0...v2.0.1) (2024-08-02)
 
 # [2.0.0](https://github.com/flybondi/flynamo/compare/v1.5.5...v2.0.0) (2024-04-20)
