@@ -104,7 +104,17 @@
           "releaseRules": [
             {
               "type": "docs",
+              "breaking": true,
+              "release": "major"
+            },
+            {
+              "type": "docs",
               "release": "patch"
+            },
+            {
+              "type": "build",
+              "breaking": true,
+              "release": "major"
             },
             {
               "type": "build",
