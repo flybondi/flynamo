@@ -9,13 +9,16 @@ jobs:
   jest:
     name: Unit test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22, 24]
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         uses: borales/actions-yarn@v5.0.0
         with:
