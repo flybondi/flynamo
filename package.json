@@ -90,7 +90,7 @@
     "@aws-sdk/client-dynamodb": "3.x"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "release": {
     "branches": [
