@@ -32,13 +32,13 @@
   ],
   "scripts": {
     "docs": "jsdoc -c jsdoc.json",
-    "lint": "eslint src index.js --ext js",
+    "lint": "eslint src index.js",
     "prettier": "prettier --write \"src/**/*.js\" index.js",
     "report": "yarn test:coverage coverage",
     "test": "jest --env=node src/",
     "test:coverage": "yarn test --coverage --coverageDirectory .coverage",
     "test:watch": "yarn test --watchAll",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky"
   },
   "commitlint": {
     "extends": [
@@ -55,36 +55,30 @@
     ]
   },
   "dependencies": {
+    "@flybondi/dynamodb-wrapper": "^2.0.1",
     "dynamodb-data-types": "^4.0.0",
     "dynamodb-update-expression": "^0.1.21",
-    "@flybondi/dynamodb-wrapper": "^2.0.1",
     "lodash.camelcase": "^4.3.0",
     "ramda": "^0.28.0"
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.554.0",
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
+    "@commitlint/cli": "^19",
+    "@commitlint/config-conventional": "^19",
     "@types/aws-sdk": "^2.7.0",
     "@types/jest": "^29.1.2",
     "docdash": "^1.2.0",
-    "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.0",
-    "eslint-plugin-ramda": "^2.5.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "husky": "^8.0.1",
+    "eslint": "^9",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9",
     "is-ci": "^3.0.1",
     "jest": "^29.1.2",
     "jsdoc": "^3.6.11",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^15",
+    "neostandard": "^0.13.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.7.1"
+    "prettier": "^3"
   },
   "peerDependencies": {
     "@aws-sdk/client-dynamodb": "3.x"
