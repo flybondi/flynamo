@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/flybondi/flynamo/compare/v2.0.2...v3.0.0) (2026-03-05)
+
+
+### Build System
+
+* add major release rule for breaking changes in build and docs commits ([#65](https://github.com/flybondi/flynamo/issues/65)) ([67856c4](https://github.com/flybondi/flynamo/commit/67856c4566a98d251dd1973a5f22091d5133bc45))
+
+
+### BREAKING CHANGES
+
+* drop node < 22 support
+
 ## [2.0.2](https://github.com/flybondi/flynamo/compare/v2.0.1...v2.0.2) (2026-03-05)
 
 
