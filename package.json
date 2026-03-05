@@ -59,7 +59,7 @@
     "dynamodb-data-types": "^4.0.0",
     "dynamodb-update-expression": "^0.1.21",
     "lodash.camelcase": "^4.3.0",
-    "ramda": "^0.30"
+    "ramda": "^0.32.0"
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.554.0",
