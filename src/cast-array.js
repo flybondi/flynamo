@@ -1,5 +1,5 @@
 'use strict';
-const { unless, is, of } = require('ramda');
+const { unless, is } = require('ramda');
 
 /**
  * Wraps any value in an `Array` if it's not already one.
@@ -9,6 +9,6 @@ const { unless, is, of } = require('ramda');
  * @returns {Array} An `Array` containing the given `value`
  *  or the same given input if it was already an `Array`.
  */
-const castArray = unless(is(Array), of);
+const castArray = unless(is(Array), Array.of);
 
 module.exports = castArray;

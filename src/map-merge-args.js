@@ -3,7 +3,6 @@ const {
   compose,
   unapply,
   concat,
-  of,
   converge,
   lensIndex,
   reduce,
@@ -13,9 +12,6 @@ const {
   drop,
   partial,
   map,
-  call,
-  head,
-  last,
   zip
 } = require('ramda');
 const castArray = require('./cast-array');
@@ -54,7 +50,7 @@ const mergeDeepAll = reduce(mergeDeepRight, {});
  *  // -> [{ foo: 'bar', baz: 'db' }, 42]
  *
  */
-const mergeN = n => converge(concat, [compose(of, mergeDeepAll, take(n)), drop(n)]);
+const mergeN = n => converge(concat, [compose(Array.of, mergeDeepAll, take(n)), drop(n)]);
 
 /**
  * Updates the first element of the input array and returns a new array
@@ -86,7 +82,11 @@ const overFirst = fn => over(lensIndex(0), fn);
  */
 const overAll = fns =>
   converge(concat, [
-    compose(map(converge(call, [head, last])), zip(fns), take(fns.length)),
+    compose(
+      map(([fn, val]) => fn(val)),
+      zip(fns),
+      take(fns.length)
+    ),
     drop(fns.length)
   ]);
 
