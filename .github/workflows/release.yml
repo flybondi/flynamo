@@ -24,7 +24,7 @@ jobs:
         with:
           cmd: install --pure-lockfile
       - name: Semantic release
-        uses: cycjimmy/semantic-release-action@v4.1.0
+        uses: cycjimmy/semantic-release-action@v6
         env:
           GIT_AUTHOR_NAME: ${{ secrets.GIT_USERNAME }}
           GIT_AUTHOR_EMAIL: ${{ secrets.GIT_EMAIL }}
@@ -34,8 +34,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           HUSKY: 0
         with:
-          semantic_version: 17.0.7
+          semantic_version: 25.0.3
           extra_plugins: |
-            @semantic-release/exec@5.0.0
-            @semantic-release/changelog@5.0.1
-            @semantic-release/git@9.0.0
+            @semantic-release/exec@7.1.0
+            @semantic-release/changelog@6.0.3
+            @semantic-release/git@10.0.1
