@@ -20,6 +20,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
     <script src="scripts/nav.js" defer></script>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -35,7 +36,9 @@
     
     <input type="text" id="nav-search" placeholder="Search" />
     
+    
     <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BatchGetItem.html">BatchGetItem</a><ul class='methods'><li data-type='method'><a href="module-BatchGetItem.html#~batchGetFor">batchGetFor</a></li></ul></li><li><a href="module-BatchWriteItem.html">BatchWriteItem</a><ul class='methods'><li data-type='method'><a href="module-BatchWriteItem.html#~batchInsertFor">batchInsertFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchRemoveFor">batchRemoveFor</a></li><li data-type='method'><a href="module-BatchWriteItem.html#~batchWriteFor">batchWriteFor</a></li></ul></li><li><a href="module-Builders.html">Builders</a><ul class='methods'><li data-type='method'><a href="module-Builders.html#.append">append</a></li><li data-type='method'><a href="module-Builders.html#.put">put</a></li><li data-type='method'><a href="module-Builders.html#.remove">remove</a></li><li data-type='method'><a href="module-Builders.html#.updateExpression">updateExpression</a></li></ul></li><li><a href="module-Count.html">Count</a><ul class='methods'><li data-type='method'><a href="module-Count.html#~count">count</a></li><li data-type='method'><a href="module-Count.html#~countFor">countFor</a></li></ul></li><li><a href="module-DeleteItem.html">DeleteItem</a><ul class='methods'><li data-type='method'><a href="module-DeleteItem.html#~remove">remove</a></li><li data-type='method'><a href="module-DeleteItem.html#~removeFor">removeFor</a></li></ul></li><li><a href="module-DescribeTable.html">DescribeTable</a><ul class='methods'><li data-type='method'><a href="module-DescribeTable.html#~describeTable">describeTable</a></li><li data-type='method'><a href="module-DescribeTable.html#~describeTableFor">describeTableFor</a></li></ul></li><li><a href="module-GetItem.html">GetItem</a><ul class='methods'><li data-type='method'><a href="module-GetItem.html#~get">get</a></li><li data-type='method'><a href="module-GetItem.html#~getFor">getFor</a></li></ul></li><li><a href="module-PutItem.html">PutItem</a><ul class='methods'><li data-type='method'><a href="module-PutItem.html#~insert">insert</a></li><li data-type='method'><a href="module-PutItem.html#~insertFor">insertFor</a></li></ul></li><li><a href="module-Query.html">Query</a><ul class='methods'><li data-type='method'><a href="module-Query.html#~query">query</a></li><li data-type='method'><a href="module-Query.html#~queryFor">queryFor</a></li></ul></li><li><a href="module-Scan.html">Scan</a><ul class='methods'><li data-type='method'><a href="module-Scan.html#~getAll">getAll</a></li><li data-type='method'><a href="module-Scan.html#~getAllFor">getAllFor</a></li></ul></li><li><a href="module-UpdateItem.html">UpdateItem</a><ul class='methods'><li data-type='method'><a href="module-UpdateItem.html#~update">update</a></li><li data-type='method'><a href="module-UpdateItem.html#~updateFor">updateFor</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#flynamo">flynamo</a></li><li><a href="global.html#forTable">forTable</a></li></ul>
+    
 </nav>
 
 <div id="main">
@@ -74,6 +77,11 @@ You can put or add attribute values.</p></div>
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Edit an existing item's attributes, or add a new item to a table if it does not already exist.
+You can put or add attribute values.</p></li></ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
@@ -149,8 +157,6 @@ You can put or add attribute values.</p></div>
 
 
 
-
-
             
         
         </div>
@@ -178,7 +184,7 @@ You can put or add attribute values.</p></div>
 
     
 
-    <h4 class="name" id="~update"><span class="type-signature">(inner) </span>update<span class="signature">(key, itemOrBuilder, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~update"><span class="type-signature type-signature-inner">(inner) </span>update<span class="signature">(key, itemOrBuilder, request)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -186,6 +192,14 @@ You can put or add attribute values.</p></div>
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Edits an existing item's attributes, or adds a new item to the table if it does not
+already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
+Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
+so it returns all of the attributes of the item, as they appear after the update operation. This function
+uses the <code>UpdateItem</code> operation internally.</p></li></ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
@@ -236,23 +250,13 @@ You can put or add attribute values.</p></div>
 
 
 
-<div class="description usertext">
-    <p>Edits an existing item's attributes, or adds a new item to the table if it does not
-already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
-Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
-so it returns all of the attributes of the item, as they appear after the update operation. This function
-uses the <code>UpdateItem</code> operation internally.</p>
-</div>
 
 
 
 
 
 
-
-
-
-    <h5>Examples</h5>
+    <h5 class="h5-examples">Examples</h5>
     
     <pre class="prettyprint"><code>// Updates item with primary key `{id: 42}` in `SomeTable`.
  await update(42, { foo: 'bar' }, { TableName: 'SomeTable' });</code></pre>
@@ -266,7 +270,7 @@ uses the <code>UpdateItem</code> operation internally.</p>
 
 
 
-    <h5>Parameters:</h5>
+    <h5 class="h5-parameters">Parameters:</h5>
     
 
 <table class="params">
@@ -300,6 +304,7 @@ uses the <code>UpdateItem</code> operation internally.</p>
 <span class="param-type">*</span>
 
 
+
             
             </td>
 
@@ -326,6 +331,7 @@ uses the <code>UpdateItem</code> operation internally.</p>
 <span class="param-type">function</span>
 
 
+
             
             </td>
 
@@ -349,6 +355,7 @@ removing attributes from an item is only supported through manually defining an 
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -380,7 +387,7 @@ removing attributes from an item is only supported through manually defining an 
 
 
 
-<h5>Returns:</h5>
+<h5 class="h5-returns">Returns:</h5>
 
         
 <div class="param-desc">
@@ -398,6 +405,7 @@ removing attributes from an item is only supported through manually defining an 
 <span class="param-type">Promise</span>
 
 
+
     </dd>
 </dl>
 
@@ -410,7 +418,7 @@ removing attributes from an item is only supported through manually defining an 
 
     
 
-    <h4 class="name" id="~updateFor"><span class="type-signature">(inner) </span>updateFor<span class="signature">(key, payload, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="~updateFor"><span class="type-signature type-signature-inner">(inner) </span>updateFor<span class="signature">(key, payload, request<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
@@ -418,6 +426,15 @@ removing attributes from an item is only supported through manually defining an 
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Returns a function that edits an existing item's attributes, or adds a new item to the table if it does not
+already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
+Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
+so it returns all of the attributes of the item, as they appear after the update operation. This function
+uses the <code>UpdateItem</code> operation internally.
+You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p></li></ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
@@ -468,24 +485,13 @@ removing attributes from an item is only supported through manually defining an 
 
 
 
-<div class="description usertext">
-    <p>Returns a function that edits an existing item's attributes, or adds a new item to the table if it does not
-already exist by its primary key. The primary key name defaults to <code>id</code> if not explicitly provided.
-Returns the <code>Attributes</code> value from the DynamoDB response. By default, it sets <code>ReturnValues</code> to <code>ALL_NEW</code>
-so it returns all of the attributes of the item, as they appear after the update operation. This function
-uses the <code>UpdateItem</code> operation internally.
-You would typically use this function through <a href="global.html#forTable"><code>forTable</code></a>.</p>
-</div>
 
 
 
 
 
 
-
-
-
-    <h5>Examples</h5>
+    <h5 class="h5-examples">Examples</h5>
     
     <pre class="prettyprint"><code>// Updates item with primary key `{id: 42}` in `SomeTable`.
  await updateFor('SomeTable')(42, { foo: 'bar' });</code></pre>
@@ -497,7 +503,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 
 
 
-    <h5>Parameters:</h5>
+    <h5 class="h5-parameters">Parameters:</h5>
     
 
 <table class="params">
@@ -533,6 +539,7 @@ You would typically use this function through <a href="global.html#forTable"><co
 <span class="param-type">*</span>
 
 
+
             
             </td>
 
@@ -562,6 +569,7 @@ You would typically use this function through <a href="global.html#forTable"><co
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -595,6 +603,7 @@ removing attributes from an item is only supported through manually defining an 
             
                 
 <span class="param-type">Object</span>
+
 
 
             
@@ -636,7 +645,7 @@ removing attributes from an item is only supported through manually defining an 
 
 
 
-<h5>Returns:</h5>
+<h5 class="h5-returns">Returns:</h5>
 
         
 <div class="param-desc">
@@ -652,6 +661,7 @@ removing attributes from an item is only supported through manually defining an 
     <dd>
         
 <span class="param-type">Promise</span>
+
 
 
     </dd>
@@ -681,7 +691,7 @@ removing attributes from an item is only supported through manually defining an 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Fri Mar 06 2026 20:03:43 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Fri Mar 06 2026 20:34:22 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
