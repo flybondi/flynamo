@@ -23,12 +23,12 @@ jobs:
         uses: borales/actions-yarn@v5.0.0
         with:
           cmd: install --pure-lockfile
-      - name: Jest
-        uses: mattallty/jest-github-action@v1.0.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tests with coverage
+        run: yarn test:coverage --coverageReporters json-summary
+      - name: Jest coverage comment
+        uses: MishaKav/jest-coverage-comment@v1
         with:
-          test-command: yarn test
+          summary-path: ./.coverage/coverage-summary.json
 
   eslint:
     name: Lint
