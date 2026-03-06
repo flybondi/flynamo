@@ -28,7 +28,7 @@ jobs:
       - name: Jest coverage comment
         uses: MishaKav/jest-coverage-comment@v1
         with:
-          summary-path: ./.coverage/coverage-summary.json
+          coverage-summary-path: ./.coverage/coverage-summary.json
 
   eslint:
     name: Lint
