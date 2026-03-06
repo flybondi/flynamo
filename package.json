@@ -1,6 +1,6 @@
 {
   "name": "@flybondi/flynamo",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "An AWS DynamoDB client wrapper",
   "keywords": [
     "flybondi",
