@@ -34,6 +34,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           HUSKY: 0
         with:
+          semantic_version: 25.0.3
           extra_plugins: |
             @semantic-release/exec@7.1.0
             @semantic-release/changelog@6.0.3
