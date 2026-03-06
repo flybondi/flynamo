@@ -63,8 +63,8 @@
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.1003.0",
-    "@commitlint/cli": "^19",
-    "@commitlint/config-conventional": "^19",
+    "@commitlint/cli": "^20.4.3",
+    "@commitlint/config-conventional": "^20.4.3",
     "@types/aws-sdk": "^2.7.4",
     "@types/jest": "^30.0.0",
     "docdash": "^1.2.0",
