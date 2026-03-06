@@ -14,30 +14,30 @@ jobs:
         node-version: [22, 24]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         uses: borales/actions-yarn@v5.0.0
         with:
           cmd: install --pure-lockfile
-      - name: Jest
-        uses: mattallty/jest-github-action@v1.0.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tests with coverage
+        run: yarn test:coverage --coverageReporters json-summary
+      - name: Jest coverage comment
+        uses: MishaKav/jest-coverage-comment@v1
         with:
-          test-command: yarn test
+          coverage-summary-path: ./.coverage/coverage-summary.json
 
   eslint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6
       - name: ESLint
-        uses: reviewdog/action-eslint@v1.23.0
+        uses: reviewdog/action-eslint@v1.34.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-check
